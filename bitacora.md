@@ -3,3 +3,4 @@ Trabajos hechos por Alonso:
 
 
 Trabajos hechos por Iván:
+02/04/2025 - Creación landing Page en Figma y definicion de colores
