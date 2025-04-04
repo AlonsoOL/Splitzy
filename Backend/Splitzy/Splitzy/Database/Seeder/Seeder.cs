@@ -40,7 +40,7 @@ public class Seeder
                 Password = "prueba",
                 Address = "Su otra casa",
                 Birthday = null,
-                Role = "Admin",
+                Role = "User",
             },
         ];
 

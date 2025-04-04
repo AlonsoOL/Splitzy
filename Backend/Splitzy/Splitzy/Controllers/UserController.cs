@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Splitzy.Database;
 
 namespace Splitzy.Controllers;
@@ -14,6 +15,7 @@ public class UserController : ControllerBase
         _dbContext = dbContext;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IEnumerable<User> GetUsers()
     {
