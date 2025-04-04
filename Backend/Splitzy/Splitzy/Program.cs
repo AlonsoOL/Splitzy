@@ -1,5 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Splitzy.Database;
 using Splitzy.Database.Seeder;
+using Swashbuckle.AspNetCore.Filters;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Splitzy
@@ -15,6 +20,33 @@ namespace Splitzy
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
+
+            builder.Services.AddAuthentication()
+                .AddJwtBearer(options => 
+                {
+                    string key = Environment.GetEnvironmentVariable("JWT_KEY");
+
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+                    };
+                });
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    BearerFormat = "JWT",
+                    Name = "Authorization",
+                    Description = "Escribe **_SOLO_** tu token JWT",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme
+                });
+                options.OperationFilter<SecurityRequirementsOperationFilter>(true, JwtBearerDefaults.AuthenticationScheme);
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -32,6 +64,7 @@ namespace Splitzy
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
