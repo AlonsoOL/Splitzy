@@ -6,3 +6,4 @@ Trabajos hechos por Alonso:
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia
 02/04/2025 - Creación landing Page en Figma y definicion de colores
+07/04/2025 - UserFlow de la aplicación
