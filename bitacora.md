@@ -1,6 +1,8 @@
 Trabajos hechos por Alonso:
 25/03/2025 - Creación del gráfico E/R para poder hacer la base de datos en un futuro
 02/04/2025 - Creación de la base de datos y de un seeder con 3 usuarios por default para hacer pruebas
+04/04/2025 - Creación de la función "Login" en el back para unirla en el front en el futuro
+08/04/2025 - Comienzo de la fidelidad baja en figma
 
 
 Trabajos hechos por Iván:
