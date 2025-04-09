@@ -10,3 +10,4 @@ Trabajos hechos por Iván:
 02/04/2025 - Creación landing Page en Figma y definicion de colores
 07/04/2025 - UserFlow de la aplicación
 08/04/2025 - Kit UI
+09/04/2025 - Vista Landing Page, Login y Register alta fidelidad
