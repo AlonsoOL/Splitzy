@@ -29,5 +29,11 @@ export default [
         { allowConstantExport: true },
       ],
     },
+    compilerOptions: {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    }
   },
 ]
