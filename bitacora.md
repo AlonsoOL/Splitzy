@@ -4,6 +4,8 @@ Trabajos hechos por Alonso:
 04/04/2025 - Creación de la función "Login" en el back para unirla en el front en el futuro
 08/04/2025 - Comienzo de la fidelidad baja en figma
 16/04/2025 - Creación de la vista menú admin y la vista grupo en alta fidelidad en figma
+21/04/2025 - Intento de instalación de tailwind
+23/04/2025 - Intento de instalación de tailwind y shadcn por segunda vez
 
 
 Trabajos hechos por Iván:
