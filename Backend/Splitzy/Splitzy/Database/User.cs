@@ -10,6 +10,7 @@ public class User
     public string Password { get; set; }
     public string Email { get; set; }
     public string Address { get; set; }
+    public int Phone { get; set; }
     public string? Birthday { get; set; }
     public string Role { get; set; }
 }
