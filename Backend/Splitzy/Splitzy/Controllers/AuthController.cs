@@ -60,6 +60,51 @@ public class AuthController : Controller
         string tokenString = tokenHandler.WriteToken(token);
 
         return Ok(tokenString);
+    }
 
+    [HttpPost("register")]
+    public ActionResult<string> Register([FromBody] RegisterDto data)
+    {
+        var existingUser = _dbContext.Users.SingleOrDefault(u => u.Email == data.Email);
+
+        if (existingUser != null)
+        {
+            return Conflict("El correo electrónico introducido ya está registrado.");
+        }
+
+        var NewUser = new User
+        {
+            Name = data.Name,
+            Email = data.Email,
+            Password = data.Password,
+            Phone = data.Phone,
+            Role = "User",
+            Address = data.Address,
+            Birthday = data.Birthday,
+        };
+
+        _dbContext.Users.Add(NewUser);
+        _dbContext.SaveChanges();
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Claims = new Dictionary<string, object>
+            {
+                {"id", NewUser.Id},
+                {ClaimTypes.Name, NewUser.Name},
+                {ClaimTypes.Email, NewUser.Email},
+                {ClaimTypes.Role, NewUser.Role},
+            },
+            Expires = DateTime.UtcNow.AddDays(5),
+            SigningCredentials = new SigningCredentials(
+                _tokenParameters.IssuerSigningKey,
+                SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+        SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+        string tokenString = tokenHandler.WriteToken(token);
+
+        return Ok(tokenString);
     }
 }
