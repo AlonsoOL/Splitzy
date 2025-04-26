@@ -6,6 +6,7 @@ Trabajos hechos por Alonso:
 16/04/2025 - Creación de la vista menú admin y la vista grupo en alta fidelidad en figma
 21/04/2025 - Intento de instalación de tailwind
 23/04/2025 - Intento de instalación de tailwind y shadcn por segunda vez
+26/04/2025 - Instalación de tailwind y shadcn definitiva y creación de la función registro de usuario en el back
 
 
 Trabajos hechos por Iván:
