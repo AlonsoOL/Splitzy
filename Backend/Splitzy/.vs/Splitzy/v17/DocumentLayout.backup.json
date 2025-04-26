@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 204,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,13 +38,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Seeder.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Seeder\\Seeder.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Seeder\\Seeder.cs",
               "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Seeder\\Seeder.cs",
               "RelativeToolTip": "Splitzy\\Database\\Seeder\\Seeder.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAxwCMAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-02T18:57:50.593Z",
               "EditorCaption": ""
@@ -64,13 +64,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Program.cs",
               "RelativeDocumentMoniker": "Splitzy\\Program.cs",
-              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Program.cs*",
-              "RelativeToolTip": "Splitzy\\Program.cs*",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAgwBMAAAAmAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Program.cs",
+              "RelativeToolTip": "Splitzy\\Program.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAABAAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-02T18:36:22.826Z",
               "EditorCaption": ""
