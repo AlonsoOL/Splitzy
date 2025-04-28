@@ -7,6 +7,7 @@ Trabajos hechos por Alonso:
 21/04/2025 - Intento de instalación de tailwind
 23/04/2025 - Intento de instalación de tailwind y shadcn por segunda vez
 26/04/2025 - Instalación de tailwind y shadcn definitiva y creación de la función registro de usuario en el back
+27/04/2025 - Estructura de la página de Registro de usuario
 
 
 Trabajos hechos por Iván:
