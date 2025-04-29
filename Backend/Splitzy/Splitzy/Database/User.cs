@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Splitzy.Database;
 
@@ -13,5 +14,7 @@ public class User
     public int? Phone { get; set; }
     public string? Birthday { get; set; }
     public string Role { get; set; }
+
+    [NotMapped]
     public IFormFile? ImageUrl { get; set; }
 }

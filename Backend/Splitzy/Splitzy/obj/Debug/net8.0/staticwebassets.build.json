@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rpcDI9I7I6+cQo7PSxPs40P5M8K8UaE/HnFNrXSp5OA=",
+  "Hash": "lcUJynkbIiNXkGxKIjR09Xu9svbHJFqLMj+BD3gzwXU=",
   "Source": "Splitzy",
   "BasePath": "_content/Splitzy",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Splitzy\\wwwroot",
       "Source": "Splitzy",
-      "ContentRoot": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
       "BasePath": "_content/Splitzy",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_1.png",
+      "Identity": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_1.png",
       "SourceId": "Splitzy",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
       "BasePath": "_content/Splitzy",
       "RelativePath": "Images/defaultprofile_1.png",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\defaultprofile_1.png"
     },
     {
-      "Identity": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_2.png",
+      "Identity": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_2.png",
       "SourceId": "Splitzy",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
       "BasePath": "_content/Splitzy",
       "RelativePath": "Images/defaultprofile_2.png",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\defaultprofile_2.png"
     },
     {
-      "Identity": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_3.png",
+      "Identity": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_3.png",
       "SourceId": "Splitzy",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
       "BasePath": "_content/Splitzy",
       "RelativePath": "Images/defaultprofile_3.png",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\defaultprofile_3.png"
     },
     {
-      "Identity": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_4.png",
+      "Identity": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\Images\\defaultprofile_4.png",
       "SourceId": "Splitzy",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\wwwroot\\",
       "BasePath": "_content/Splitzy",
       "RelativePath": "Images/defaultprofile_4.png",
       "AssetKind": "All",
