@@ -16,3 +16,4 @@ Trabajos hechos por Iván:
 07/04/2025 - UserFlow de la aplicación
 08/04/2025 - Kit UI
 09/04/2025 - Vista Landing Page, Login y Register alta fidelidad
+29/04/2025 - Creación de la página login y lógica de conexión de front con backend
