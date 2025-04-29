@@ -2,10 +2,10 @@ import { LoginForm } from "@/components/login-form"
 
 export default function Login() {
     return (
-      <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
-        <div className="w-full max-w-sm md:max-w-3xl">
+        <main className="w-screen min-h-screen bg-[url(/fondo-splitzy.png)] bg-cover flex justify-center items-center p-6">
+        <div className="w-full max-w-4xl">
           <LoginForm />
         </div>
-      </div>
+      </main>
     )
   }
