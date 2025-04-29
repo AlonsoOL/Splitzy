@@ -63,7 +63,7 @@ public class AuthController : Controller
     }
 
     [HttpPost("register")]
-    public ActionResult<string> Register([FromBody] RegisterDto data)
+    public async Task<ActionResult<string>> Register([FromForm] RegisterDto data)
     {
         var existingUser = _dbContext.Users.SingleOrDefault(u => u.Email == data.Email);
 
@@ -72,15 +72,35 @@ public class AuthController : Controller
             return Conflict("El correo electrónico introducido ya está registrado.");
         }
 
+        string imagePath;
+
+        if (data.ImageUrl == null)
+        {
+            Random rand = new Random();
+            int randomnumber = rand.Next(1, 5);
+
+            imagePath = $"/Image/defaultprofile_{randomnumber}.png";
+        }
+        else
+        {
+            var extension = Path.GetExtension(data.ImageUrl.FileName);
+            var fileName = $"{data.Name}_profilepicture{extension}";
+            var filePath = Path.Combine("wwwroot/Images", fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await data.ImageUrl.CopyToAsync(stream);
+            }
+            imagePath = $"/Images/{fileName}";
+        }
+
         var NewUser = new User
         {
             Name = data.Name,
             Email = data.Email,
             Password = data.Password,
-            Phone = data.Phone,
             Role = "User",
-            Address = data.Address,
-            Birthday = data.Birthday,
+            ImageUrl = data.ImageUrl,
         };
 
         _dbContext.Users.Add(NewUser);

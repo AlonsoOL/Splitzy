@@ -24,6 +24,7 @@ public class Seeder
                 Birthday = null,
                 Phone = 333333333,
                 Role = "Admin",
+                ImageUrl = null,
             },
             new User
             {
@@ -34,6 +35,7 @@ public class Seeder
                 Birthday = null,
                 Phone = 432543098,
                 Role = "Admin",
+                ImageUrl = null
             },
             new User
             {
@@ -44,6 +46,7 @@ public class Seeder
                 Birthday = null,
                 Phone = 606961948,
                 Role = "User",
+                ImageUrl = null
             },
         ];
 

@@ -9,10 +9,10 @@ function Header(){
                 </a>
             </div>
             <div className="flex flex-row-reverse w-1/2 space-x-8 items-center">
-                <a>Amigos</a>
-                <a className="ml-8">Perfil</a>
-                <a>Grupos</a>
-                
+                <a href="">Amigos</a>
+                <a href="">Actividad</a>
+                <a href="" className="ml-8">Perfil</a>
+                <a href="">Grupos</a>
             </div>
             <div className="w-1/6"></div>
         </div>

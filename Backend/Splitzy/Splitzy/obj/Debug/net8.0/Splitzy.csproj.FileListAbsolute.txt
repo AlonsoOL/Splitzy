@@ -197,3 +197,4 @@ C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bi
 C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\Scrutor.dll
 C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\Splitzy.staticwebassets.runtime.json
