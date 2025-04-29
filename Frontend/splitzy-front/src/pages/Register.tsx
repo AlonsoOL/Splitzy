@@ -198,7 +198,7 @@ function Register(){
                             </form>
                         </Form>
                         <br/>
-                        <a href="#" className="mt-4">¿Ya tienes cuenta? Logeate.</a>
+                        <a href="/login" className="mt-4">¿Ya tienes cuenta? Logeate.</a>
                     </div>
                 </div>
                 <div className="bg-[url(/cangrejo-form.png)] bg-cover bg-no-repeat rounded-r-[40px] w-1/2">
