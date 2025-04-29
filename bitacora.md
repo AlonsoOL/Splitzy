@@ -8,7 +8,7 @@ Trabajos hechos por Alonso:
 23/04/2025 - Intento de instalación de tailwind y shadcn por segunda vez
 26/04/2025 - Instalación de tailwind y shadcn definitiva y creación de la función registro de usuario en el back
 27/04/2025 - Estructura de la página de Registro de usuario
-
+28 - Seguir con la estructura de la página de usuario
 
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia
