@@ -13,5 +13,5 @@ public class User
     public int? Phone { get; set; }
     public string? Birthday { get; set; }
     public string Role { get; set; }
-    public IFormFile? ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
 }

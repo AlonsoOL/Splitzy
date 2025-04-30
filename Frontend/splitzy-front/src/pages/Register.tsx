@@ -49,61 +49,50 @@ function Register(){
     
       // 2. Define a submit handler.
       async function onSubmit(values: z.infer<typeof formSchema>) {
+        const formData = new FormData()
+        formData.append('name', values.name)
+        formData.append('email', values.email)
+        formData.append('password', values.password)
         
         if(values.avatar && values.avatar.length > 0){
             const file = values.avatar[0]
+            console.log(file)
+            console.log(file.type)
             const extension = file.name.substring(file.name.lastIndexOf('.'))
             console.log("esta es la extensión", extension)
             const customFileName = `${values.name}_profilepicture${extension}`
             console.log("este es el nombre del archivo", customFileName)
 
-            const formData = new FormData()
-            formData.append('name', values.name)
-            formData.append('email', values.email)
-            formData.append('password', values.password)
-            formData.append('imageUrl', customFileName)
+            const renamedFile = new File([file], customFileName, { type: file.type })
+            console.log(renamedFile)
+            formData.append('imageUrl', renamedFile)
 
-            try{
-                const response = await fetch("https://localhost:7044/register", {
-                    method: 'POST',
-                    body: formData,
-                });
 
-                if(!response.ok){
-                    const errorText = await response.text();
-                    throw new Error(errorText)
-                }
-
-                setSuccesMessage("El resgistro se ha completado con éxito.")
-                setTimeout(() =>{
-                    navigate("/")
-                }, 3000)
-            }
-            catch (error){
-                throw new Error("Hay un problema en el servidor:" + error)
-            }
 
         }else{
-            try{
-                const response = await fetch("https://localhost:7044/register", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(values),
-                });
+            console.log("estoy en el else")
+            formData.append('imageUrl', values.avatar)
 
-                if(!response.ok){
-                    const errorText = await response.text();
-                    throw new Error(errorText)
-                }
+        }
 
-                setSuccesMessage("El resgistro se ha completado con éxito.")
-                setTimeout(() =>{
-                    navigate("/")
-                }, 3000)
+        try{
+            const response = await fetch("https://localhost:7044/register", {
+                method: 'POST',
+                body: formData,
+            });
+
+            if(!response.ok){
+                const errorText = await response.text();
+                throw new Error(errorText)
             }
-            catch (error){
-                throw new Error("Hay un problema en el servidor:" + error)
-            }
+
+            setSuccesMessage("El resgistro se ha completado con éxito.")
+            setTimeout(() =>{
+                navigate("/login")
+            }, 3000)
+        }
+        catch (error){
+            throw new Error("Hay un problema en el servidor:" + error)
         }
         
       }
@@ -198,11 +187,15 @@ function Register(){
                             </form>
                         </Form>
                         <br/>
-                        <a href="/login" className="mt-4">¿Ya tienes cuenta? Logeate.</a>
+                        <div className="text-center text-sm text-gray-300">
+                            Ya tienes una cuenta?{" "}
+                            <a href="/login" className="underline underline-offset-4 hover:text-white">
+                            Logeate.
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div className="bg-[url(/cangrejo-form.png)] bg-cover bg-no-repeat rounded-r-[40px] w-1/2">
-                </div>
+                <div className="bg-[url(/cangrejo-form.png)] bg-cover bg-no-repeat rounded-r-[40px] w-1/2"></div>
             </div>
         </div>
     )
