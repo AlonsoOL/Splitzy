@@ -79,7 +79,7 @@ public class AuthController : Controller
             Random rand = new Random();
             int randomnumber = rand.Next(1, 5);
 
-            imagePath = $"/Image/defaultprofile_{randomnumber}.png";
+            imagePath = $"/Images/defaultprofile_{randomnumber}.png";
         }
         else
         {
@@ -100,7 +100,7 @@ public class AuthController : Controller
             Email = data.Email,
             Password = data.Password,
             Role = "User",
-            ImageUrl = data.ImageUrl,
+            ImageUrl = imagePath,
         };
 
         _dbContext.Users.Add(NewUser);
