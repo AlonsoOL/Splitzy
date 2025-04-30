@@ -97,7 +97,7 @@ function Register(){
         
       }
     return(
-        <div className="w-screen bg-[url(/fondo-splitzy.png)] bg-cover flex justify-center">
+        <div className="min-h-screen w-screen bg-[url(/fondo-splitzy.png)] bg-cover flex justify-center">
             <div className="flex flex-row rounded-[40px] bg-[#242424e0] w-[60%] mt-10 mb-10">
                 <div className="p-6 w-1/2">
                     <div className="flex flex-row items-center">
@@ -111,7 +111,7 @@ function Register(){
                         <div className="w-1/3"></div>
                     </div>
                     <div className="w-full">
-                        {succesMessage && <p className="text-green-600 bg-green-300 border-4 border-green-600">{succesMessage}</p>}
+                        {succesMessage && <p className="text-green-600 bg-green-300 border-4 border-green-600 rounded-[8px]">{succesMessage}</p>}
                     </div>
                     <div className="mt-4">
                         <Form {...form}>
@@ -177,6 +177,7 @@ function Register(){
                                     <FormControl>
                                         <Input type="file"
                                         accept="image/png, image/jpeg" 
+                                        className="file:hidden"
                                         onChange={(e) => field.onChange(e.target.files)}/>
                                     </FormControl>
                                     <FormMessage />

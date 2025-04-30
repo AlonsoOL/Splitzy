@@ -64,8 +64,7 @@
               "ViewState": "AgIAAFYAAAAAAAAAAAApwGcAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-29T10:56:07.846Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -85,8 +84,7 @@
               "RelativeToolTip": "Splitzy\\Models\\RegisterDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T17:13:13.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-26T17:13:13.24Z"
             },
             {
               "$type": "Document",
@@ -111,8 +109,7 @@
               "RelativeToolTip": "Splitzy\\Controllers\\UserController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:52:36.098Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T18:52:36.098Z"
             },
             {
               "$type": "Document",
@@ -124,8 +121,7 @@
               "RelativeToolTip": "Splitzy\\Database\\User.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAqwA8AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:46:37.377Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T18:46:37.377Z"
             },
             {
               "$type": "Document",
