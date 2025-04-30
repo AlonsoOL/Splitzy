@@ -17,38 +17,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string, rememberMe: boolean) => {
     try {
-     
       const response = await fetch("https://localhost:7044/login", {
         method: "POST",
         headers: {
-          accept: "text/plain",
+          accept: "text/plain", 
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       })
-
+  
       if (!response.ok) {
         throw new Error("Credenciales inválidas")
       }
-
-      const userData = await response.json()
-
+  
+      const token = await response.text() 
+      const userData = {
+        email,
+        token,
+      }
+  
       setUser(userData)
-      console.log("Usuario:", userData);
-      
       setIsAuthenticated(true)
-
-
+  
       if (rememberMe) {
         localStorage.setItem("user", JSON.stringify(userData))
       } else {
         sessionStorage.setItem("user", JSON.stringify(userData))
       }
+  
+      console.log("Token recibido:", token)
     } catch (error) {
       console.error("Error en login:", error)
       throw error
     }
   }
+  
 
   const logout = () => {
     setUser(null)
