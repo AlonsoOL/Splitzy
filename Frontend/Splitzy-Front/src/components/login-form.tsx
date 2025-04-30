@@ -39,8 +39,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
               <img src="/logo-splitzy.png" alt="Logo" className="w-20 mr-10" />
             </div>
             <div className="text-center w-1/2">
-              <h1 className="mb-2 text-white">Hola de nuevo</h1>
-              <h3 className="text-gray-300">Conectate con tu cuenta</h3>
+              <h1 className="mb-4 text-white">Conéctate</h1>
+              <h3 className="text-gray-300">Inicia sesión con tu cuenta</h3>
             </div>
             <div className="w-1/3"></div>
           </div>
