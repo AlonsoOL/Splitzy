@@ -7,6 +7,7 @@ import { AuthProvider } from "@/context/AuthContext"
 import Footer from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import MenuUser from "@/pages/MenuUser"
 
 function Home() {
   return (
@@ -20,7 +21,8 @@ function Home() {
           <p className="w-1/3 my-12 text-lg">
             LLeva un seguimiento preciso de los gastos grupales y deja de preocuparte sobre quien paga más y quien paga menos
           </p>
-          <Button>Comenzar</Button>
+          <a href="/register"><Button>Comenzar</Button></a>
+          
           
         </div>      
       </div>
@@ -91,6 +93,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/menu-user" element={<MenuUser/>}/>
         </Routes>
       </AuthProvider>
       <Footer />

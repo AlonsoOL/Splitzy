@@ -12,7 +12,7 @@ function Header(){
                 <a href="">Amigos</a>
                 <a href="">Actividad</a>
                 <a href="" className="ml-8">Perfil</a>
-                <a href="">Grupos</a>
+                <a href="/menu-user">Grupos</a>
             </div>
             <div className="w-1/6"></div>
         </div>
