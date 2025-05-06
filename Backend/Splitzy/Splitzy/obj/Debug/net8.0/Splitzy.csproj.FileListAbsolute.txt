@@ -398,3 +398,7 @@ C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\obj\Debug\net8
 C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\obj\Debug\net8.0\Splitzy.pdb
 C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\obj\Debug\net8.0\Splitzy.genruntimeconfig.cache
 C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\obj\Debug\net8.0\ref\Splitzy.dll
+C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\wwwroot\Images\defaultprofile_1.png
+C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\wwwroot\Images\defaultprofile_2.png
+C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\wwwroot\Images\defaultprofile_3.png
+C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\wwwroot\Images\defaultprofile_4.png

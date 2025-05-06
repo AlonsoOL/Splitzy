@@ -47,7 +47,8 @@ public class AuthController : Controller
                 {"id", existingUser.Id },
                 {ClaimTypes.Name, existingUser.Name },
                 {ClaimTypes.Email, existingUser.Email },
-                {ClaimTypes.Role, existingUser.Role }
+                {ClaimTypes.Role, existingUser.Role },
+                {"imageUrl", existingUser.ImageUrl }
             },
             Expires = DateTime.UtcNow.AddDays(5),
             SigningCredentials = new SigningCredentials(
@@ -106,25 +107,6 @@ public class AuthController : Controller
         _dbContext.Users.Add(NewUser);
         _dbContext.SaveChanges();
 
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Claims = new Dictionary<string, object>
-            {
-                {"id", NewUser.Id},
-                {ClaimTypes.Name, NewUser.Name},
-                {ClaimTypes.Email, NewUser.Email},
-                {ClaimTypes.Role, NewUser.Role},
-            },
-            Expires = DateTime.UtcNow.AddDays(5),
-            SigningCredentials = new SigningCredentials(
-                _tokenParameters.IssuerSigningKey,
-                SecurityAlgorithms.HmacSha256Signature)
-        };
-
-        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-        string tokenString = tokenHandler.WriteToken(token);
-
-        return Ok(tokenString);
+        return Ok();
     }
 }

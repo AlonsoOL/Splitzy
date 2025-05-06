@@ -39,10 +39,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(userData)
       setIsAuthenticated(true)
   
+      // Cambio de  JSON.stringify(userData) a token para poder guardar directamente el token, sin necesidad de meter el correo suelto
+      // puesto que ya se encuentra dentro del toekn
       if (rememberMe) {
-        localStorage.setItem("user", JSON.stringify(userData))
+        localStorage.setItem("user", token)
       } else {
-        sessionStorage.setItem("user", JSON.stringify(userData))
+        sessionStorage.setItem("user", token)
       }
   
       console.log("Token recibido:", token)

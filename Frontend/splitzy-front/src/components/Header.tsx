@@ -1,4 +1,24 @@
+import { useEffect, useState } from "react"
+import { jwtDecode } from "jwt-decode"
+
+interface JwtPayload{
+    name: string,
+    mail: string,
+    role: string,
+    imageUrl: string,
+}
+
 function Header(){
+    const [user, setUser] = useState<JwtPayload | null>(null)
+    
+    useEffect(() => {
+        const token = localStorage.getItem("user")
+        if (token){
+            const decoded = jwtDecode<JwtPayload>(token)
+            setUser(decoded)
+        }
+    }, [])
+
     return(
         <div className="w-screen flex flex-row bg-transparent">
             <div className="w-1/6"></div>
@@ -9,10 +29,19 @@ function Header(){
                 </a>
             </div>
             <div className="flex flex-row-reverse w-1/2 space-x-8 items-center">
-                <a href="">Amigos</a>
+                {user ?(
+                    <img
+                    src={`https://localhost:7044${user.imageUrl}`}
+                    alt="Perfil"
+                    className="w-12 h-12 rounded-full"
+                    />
+                ) : (
+                    <a href="/login">Perfil</a>
+                    )}
                 <a href="">Actividad</a>
-                <a href="" className="ml-8">Perfil</a>
+                <a href="" className="ml-8">Amigos</a>
                 <a href="/menu-user">Grupos</a>
+                
             </div>
             <div className="w-1/6"></div>
         </div>

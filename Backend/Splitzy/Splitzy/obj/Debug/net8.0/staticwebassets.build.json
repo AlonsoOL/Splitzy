@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rpcDI9I7I6+cQo7PSxPs40P5M8K8UaE/HnFNrXSp5OA=",
+  "Hash": "aYzBlrRcx/QnSYIMpUh3oPL0kaH1twxEKxTkd39BteY=",
   "Source": "Splitzy",
   "BasePath": "_content/Splitzy",
   "Mode": "Default",
@@ -31,7 +31,7 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
+      "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\defaultprofile_1.png"
     },
@@ -50,7 +50,7 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
+      "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\defaultprofile_2.png"
     },
@@ -69,7 +69,7 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
+      "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\defaultprofile_3.png"
     },
@@ -88,7 +88,7 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
+      "CopyToOutputDirectory": "Always",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\defaultprofile_4.png"
     }
