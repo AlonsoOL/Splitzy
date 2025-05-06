@@ -1,4 +1,5 @@
 import "./App.css"
+import "./menuUser.css"
 import { Route, Routes } from "react-router-dom"
 import Register from "../pages/Register"
 import Header from "../components/Header"
