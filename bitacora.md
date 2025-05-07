@@ -12,7 +12,7 @@ Trabajos hechos por Alonso:
 30/04/2025 - Grabación para mostrar avance de la web
 05/05/2025 - Inicio de la página de menú usuario de forma estática
 06/05/2025 - Implementación de la foto de perfil de usuario
-07/05/2025 - Implementación de la función cerrar sesión y acabar la página menú usuario de manera estática
+07/05/2025 - Implementación de la función cerrar sesión y acabar la página menú usuario de manera estática. Implementación de un icono para que los admins puedan acceder a la administración de usuarios
 
 
 Trabajos hechos por Iván:
