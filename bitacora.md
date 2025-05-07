@@ -14,7 +14,6 @@ Trabajos hechos por Alonso:
 06/05/2025 - Implementación de la foto de perfil de usuario
 07/05/2025 - Implementación de la función cerrar sesión y acabar la página menú usuario de manera estática. Implementación de un icono para que los admins puedan acceder a la administración de usuarios
 
-
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia
 02/04/2025 - Creación landing Page en Figma y definicion de colores

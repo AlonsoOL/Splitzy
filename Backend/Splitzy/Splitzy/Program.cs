@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Splitzy.Database;
@@ -14,6 +15,8 @@ namespace Splitzy
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            Directory.SetCurrentDirectory(AppContext.BaseDirectory);
 
             // Add services to the container.
 
@@ -49,6 +52,17 @@ namespace Splitzy
                 options.OperationFilter<SecurityRequirementsOperationFilter>(true, JwtBearerDefaults.AuthenticationScheme);
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    });
+                });
+            }
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<MyDbContext>();
@@ -63,6 +77,14 @@ namespace Splitzy
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))
+            });
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -22,7 +22,9 @@ public class Seeder
                 Password = "alonso",
                 Address = "Mi casa",
                 Birthday = null,
+                Phone = 333333333,
                 Role = "Admin",
+                ImageUrl = null,
             },
             new User
             {
@@ -31,7 +33,9 @@ public class Seeder
                 Password = "ivan",
                 Address = "Su casa",
                 Birthday = null,
+                Phone = 432543098,
                 Role = "Admin",
+                ImageUrl = null
             },
             new User
             {
@@ -40,7 +44,9 @@ public class Seeder
                 Password = "prueba",
                 Address = "Su otra casa",
                 Birthday = null,
+                Phone = 606961948,
                 Role = "User",
+                ImageUrl = null
             },
         ];
 

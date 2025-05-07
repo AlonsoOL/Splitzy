@@ -47,7 +47,8 @@ public class AuthController : Controller
                 {"id", existingUser.Id },
                 {ClaimTypes.Name, existingUser.Name },
                 {ClaimTypes.Email, existingUser.Email },
-                {ClaimTypes.Role, existingUser.Role }
+                {ClaimTypes.Role, existingUser.Role },
+                {"imageUrl", existingUser.ImageUrl }
             },
             Expires = DateTime.UtcNow.AddDays(5),
             SigningCredentials = new SigningCredentials(
@@ -60,6 +61,52 @@ public class AuthController : Controller
         string tokenString = tokenHandler.WriteToken(token);
 
         return Ok(tokenString);
+    }
 
+    [HttpPost("register")]
+    public async Task<ActionResult<string>> Register([FromForm] RegisterDto data)
+    {
+        var existingUser = _dbContext.Users.SingleOrDefault(u => u.Email == data.Email);
+
+        if (existingUser != null)
+        {
+            return Conflict("El correo electrónico introducido ya está registrado.");
+        }
+
+        string imagePath;
+
+        if (data.ImageUrl == null)
+        {
+            Random rand = new Random();
+            int randomnumber = rand.Next(1, 5);
+
+            imagePath = $"/Images/defaultprofile_{randomnumber}.png";
+        }
+        else
+        {
+            var extension = Path.GetExtension(data.ImageUrl.FileName);
+            var fileName = $"{data.Name}_profilepicture{extension}";
+            var filePath = Path.Combine("wwwroot/Images", fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await data.ImageUrl.CopyToAsync(stream);
+            }
+            imagePath = $"/Images/{fileName}";
+        }
+
+        var NewUser = new User
+        {
+            Name = data.Name,
+            Email = data.Email,
+            Password = data.Password,
+            Role = "User",
+            ImageUrl = imagePath,
+        };
+
+        _dbContext.Users.Add(NewUser);
+        _dbContext.SaveChanges();
+
+        return Ok();
     }
 }
