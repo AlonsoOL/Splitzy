@@ -68,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         sessionStorage.setItem("user", token)
       }
   
-      console.log("Token recibido:", token)
+      // console.log("Token recibido:", token)
     } catch (error) {
       console.error("Error en login:", error)
       throw error
