@@ -8,7 +8,11 @@ Trabajos hechos por Alonso:
 23/04/2025 - Intento de instalación de tailwind y shadcn por segunda vez
 26/04/2025 - Instalación de tailwind y shadcn definitiva y creación de la función registro de usuario en el back
 27/04/2025 - Estructura de la página de Registro de usuario
-28 - Seguir con la estructura de la página de usuario
+29/04/2025 - Terminar página register con su funcionalidad
+30/04/2025 - Grabación para mostrar avance de la web
+05/05/2025 - Inicio de la página de menú usuario de forma estática
+06/05/2025 - Implementación de la foto de perfil de usuario
+07/05/2025 - Implementación de la función cerrar sesión y acabar la página menú usuario de manera estática. Implementación de un icono para que los admins puedan acceder a la administración de usuarios
 
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia
@@ -16,3 +20,4 @@ Trabajos hechos por Iván:
 07/04/2025 - UserFlow de la aplicación
 08/04/2025 - Kit UI
 09/04/2025 - Vista Landing Page, Login y Register alta fidelidad
+29/04/2025 - Creación de la página login y lógica de conexión de front con backend
