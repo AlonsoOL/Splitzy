@@ -20,6 +20,32 @@
     ]
   },
   {
+    "ContainingType": "Splitzy.Controllers.UserController",
+    "Method": "GetCurrentUser",
+    "RelativePath": "api/User/GetCurrentUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Splitzy.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "login",

@@ -96,7 +96,7 @@ function Register(){
         
       }
     return(
-        <div className="min-h-screen w-screen bg-[url(/fondo-splitzy.png)] bg-cover flex justify-center">
+        <div className="min-h-screen w-full bg-[url(/fondo-splitzy.png)] bg-cover flex justify-center">
             <div className="flex flex-row rounded-[40px] bg-[#242424e0] w-[60%] mt-10 mb-10">
                 <div className="p-6 w-1/2">
                     <div className="flex flex-row items-center">

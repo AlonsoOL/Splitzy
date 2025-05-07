@@ -9,10 +9,13 @@ import Footer from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import MenuUser from "@/pages/MenuUser"
+import MenuAdmin from "@/pages/MenuAdmin"
+import ProtectRoute from "@/components/ProtectedRoute"
+import UserProfile from "@/pages/userProfile"
 
 function Home() {
   return (
-    <main className="min-h-screen w-screen">
+    <main className="min-h-screen w-full">
       <div className="bg-[url(/fondo-splitzy.png)] bg-cover">
         <div className="min-h-screen flex flex-col backdrop-blur-2xl items-center justify-center">
           <h1 className="uppercase">
@@ -95,7 +98,18 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/menu-user" element={<MenuUser/>}/>
+          <Route path="/menu-user" element={
+            <ProtectRoute>
+              <MenuUser/>
+            </ProtectRoute>}/>
+          <Route path="/menu-admin" element={
+            <ProtectRoute>
+              <MenuAdmin/>
+            </ProtectRoute>}/>
+          <Route path="/user-profile" element={
+            <ProtectRoute>
+              <UserProfile/>
+            </ProtectRoute>}/>
         </Routes>
         <Footer />
       </AuthProvider>

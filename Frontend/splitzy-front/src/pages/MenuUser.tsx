@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 
 function MenuUser(){
     return(
-        <div className="w-screen bg-[url(/fondo-splitzy.png)] bg-cover">
+        <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full flex flex-row items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
                 <div className="w-1/6"></div>
                 <div className="w-1/2 flex flex-col xl:gap-10 md:gap-5">
