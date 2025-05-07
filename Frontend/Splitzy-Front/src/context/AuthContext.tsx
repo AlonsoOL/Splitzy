@@ -1,6 +1,8 @@
 "use client"
 
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { jwtDecode } from "jwt-decode"
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { useNavigate } from "react-router-dom"
 
 interface AuthContextType {
   isAuthenticated: boolean
@@ -14,6 +16,23 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState<any | null>(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("user") || sessionStorage.getItem("user")
+    if (storedToken) {
+      try{
+        const decodedUser = jwtDecode(storedToken)
+        setUser(decodedUser)
+        setIsAuthenticated(true)
+      }
+      catch(err){
+        console.log("token inválido")
+        setUser(null)
+        setIsAuthenticated(false)
+      }
+    }
+  }, [])
 
   const login = async (email: string, password: string, rememberMe: boolean) => {
     try {
@@ -31,12 +50,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
   
       const token = await response.text() 
-      const userData = {
-        email,
-        token,
-      }
+      // He quitado userData y he pueso decodedUser para setearlo como usuario y poder cargar la imagen sin recargar página
+      // const userData = {
+      //   email,
+      //   token,
+      // }
+      const decodedUser = jwtDecode(token)
   
-      setUser(userData)
+      setUser(decodedUser)
       setIsAuthenticated(true)
   
       // Cambio de  JSON.stringify(userData) a token para poder guardar directamente el token, sin necesidad de meter el correo suelto
@@ -60,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAuthenticated(false)
     localStorage.removeItem("user")
     sessionStorage.removeItem("user")
+    navigate("/")
   }
 
   return <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>{children}</AuthContext.Provider>

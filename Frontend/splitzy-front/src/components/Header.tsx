@@ -1,24 +1,9 @@
-import { useEffect, useState } from "react"
-import { jwtDecode } from "jwt-decode"
 import { Button } from "./ui/button"
-
-interface JwtPayload{
-    name: string,
-    mail: string,
-    role: string,
-    imageUrl: string,
-}
+import { useAuth } from "@/context/AuthContext"
 
 function Header(){
-    const [user, setUser] = useState<JwtPayload | null>(null)
-    
-    useEffect(() => {
-        const token = localStorage.getItem("user")
-        if (token){
-            const decoded = jwtDecode<JwtPayload>(token)
-            setUser(decoded)
-        }
-    }, [])
+    const {user, isAuthenticated, logout} = useAuth()
+
 
     return(
         <div className="w-screen flex flex-row bg-transparent">
@@ -30,11 +15,11 @@ function Header(){
                 </a>
             </div>
             <div className="flex flex-row-reverse w-1/2 space-x-8 items-center">
-                {user ?(
+                {user && isAuthenticated ?(
                     <div className="relative group inline-block">
                         <div id="" className="hidden group-hover:flex bg-[#242424] flex-col block absolute top-full right-[-55px] z-10 rounded-[10px]">
                             <a href="#" className="h-full p-2 mt-2 hover:underline decoration-1">Perfil</a>
-                            <Button className="m-2 hover:bg-red-500! hover:text-red-50! hover:border-transparent! hover:transition!">Cerrar sesión</Button>
+                            <Button onClick={logout} className="m-2 hover:bg-red-500! hover:text-red-50! hover:border-transparent! hover:transition!">Cerrar sesión</Button>
                         </div>
                         <img
                         src={`https://localhost:7044${user.imageUrl}`}

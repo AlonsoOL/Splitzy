@@ -88,16 +88,17 @@ function Home() {
 function App() {
   return (
     <>
-      <Header />
+      
       <AuthProvider>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/menu-user" element={<MenuUser/>}/>
         </Routes>
+        <Footer />
       </AuthProvider>
-      <Footer />
     </>
   )
 }

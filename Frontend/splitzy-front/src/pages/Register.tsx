@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -13,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { custom, z } from "zod"
+import { z } from "zod"
 
 const formSchema = z.object({
   name: z.string().min(3, {message: "El usuario tiene que tener al menos tres caracteres",}),
