@@ -24,7 +24,7 @@ public class Seeder
                 Birthday = null,
                 Phone = 333333333,
                 Role = "Admin",
-                ImageUrl = null,
+                ImageUrl = $"/Images/defaultprofile_{randomNumber()}.png",
             },
             new User
             {
@@ -35,7 +35,7 @@ public class Seeder
                 Birthday = null,
                 Phone = 432543098,
                 Role = "Admin",
-                ImageUrl = null
+                ImageUrl = $"/Images/defaultprofile_{randomNumber()}.png",
             },
             new User
             {
@@ -46,11 +46,19 @@ public class Seeder
                 Birthday = null,
                 Phone = 606961948,
                 Role = "User",
-                ImageUrl = null
+                ImageUrl = $"/Images/defaultprofile_{randomNumber()}.png",
             },
         ];
 
         _context.Users.AddRange(users);
         _context.SaveChanges();
+    }
+
+    public int randomNumber()
+    {
+        Random rand = new Random();
+        int randomnumber = rand.Next(1, 5);
+
+        return(randomnumber);
     }
 }

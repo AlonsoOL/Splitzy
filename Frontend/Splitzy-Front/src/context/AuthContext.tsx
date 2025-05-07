@@ -9,6 +9,7 @@ interface AuthContextType {
   user: any | null
   login: (email: string, password: string, rememberMe: boolean) => Promise<void>
   logout: () => void
+  isLoading: boolean
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -17,6 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState<any | null>(null)
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const storedToken = localStorage.getItem("user") || sessionStorage.getItem("user")
@@ -32,6 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsAuthenticated(false)
       }
     }
+    setIsLoading(false)
   }, [])
 
   const login = async (email: string, password: string, rememberMe: boolean) => {
@@ -59,6 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   
       setUser(decodedUser)
       setIsAuthenticated(true)
+      console.log("este usuario está autenticado", !isAuthenticated)
   
       // Cambio de  JSON.stringify(userData) a token para poder guardar directamente el token, sin necesidad de meter el correo suelto
       // puesto que ya se encuentra dentro del toekn
@@ -79,12 +83,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     setUser(null)
     setIsAuthenticated(false)
+    console.log("el usuario autenticado tiene", isAuthenticated)
     localStorage.removeItem("user")
     sessionStorage.removeItem("user")
     navigate("/")
   }
 
-  return <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ isAuthenticated, user, login, logout, isLoading, }}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {

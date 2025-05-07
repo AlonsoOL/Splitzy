@@ -21,4 +21,19 @@ public class UserController : ControllerBase
     {
         return _dbContext.Users;
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("GetCurrentUser")]
+    public async Task<ActionResult<int>>GetCurrentUser(int id) 
+    {
+        var user = await _dbContext.Users
+            .FindAsync(id);
+
+        if (user == null) 
+        {
+            return NotFound("El usuario no se ha podido encontrar");
+        }
+
+        return Ok(user);
+    }
 }
