@@ -69,8 +69,7 @@
               "ViewState": "AgIAADgAAAAAAAAAAAApwFoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-29T10:56:07.846Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -82,8 +81,7 @@
               "RelativeToolTip": "Splitzy\\Controllers\\AuthController.cs",
               "ViewState": "AgIAADwAAAAAAAAAAAAowE0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T17:08:55.286Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-26T17:08:55.286Z"
             },
             {
               "$type": "Document",
@@ -95,8 +93,7 @@
               "RelativeToolTip": "Splitzy\\Controllers\\UserController.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwBgAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:52:36.098Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T18:52:36.098Z"
             },
             {
               "$type": "Document",
