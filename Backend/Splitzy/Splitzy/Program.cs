@@ -3,7 +3,9 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Splitzy.Database;
+using Splitzy.Database.Repositories;
 using Splitzy.Database.Seeder;
+using Splitzy.Services;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -66,6 +68,10 @@ namespace Splitzy
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<MyDbContext>();
+            builder.Services.AddScoped<UnitOfWork>();
+            builder.Services.AddScoped<UserRepository>();
+
+            builder.Services.AddScoped<UserService>();
 
             var app = builder.Build();
 

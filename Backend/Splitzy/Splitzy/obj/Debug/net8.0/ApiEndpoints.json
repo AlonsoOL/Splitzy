@@ -21,6 +21,22 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.UserController",
+    "Method": "DeleteAsyncUser",
+    "RelativePath": "api/User/Delete_User/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.UserController",
     "Method": "GetCurrentUser",
     "RelativePath": "api/User/GetCurrentUser",
     "HttpMethod": "GET",
@@ -36,6 +52,58 @@
     "ReturnTypes": [
       {
         "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.UserController",
+    "Method": "UpdateAsync",
+    "RelativePath": "api/User/Update_User",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "Splitzy.Database.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Splitzy.Database.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.UserController",
+    "Method": "UpdateUserRole",
+    "RelativePath": "api/User/Update_UserRole",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userRole",
+        "Type": "Splitzy.Models.HandleRole",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Splitzy.Database.User",
         "MediaTypes": [
           "text/plain",
           "application/json",
