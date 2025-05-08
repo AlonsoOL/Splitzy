@@ -21,3 +21,4 @@ Trabajos hechos por Iván:
 08/04/2025 - Kit UI
 09/04/2025 - Vista Landing Page, Login y Register alta fidelidad
 29/04/2025 - Creación de la página login y lógica de conexión de front con backend
+08/05/2025 - Funciones de Eliminar usuarios, cambiar rol y modificar usuarios en el back y creacion de repositorio y servicio de usuario
