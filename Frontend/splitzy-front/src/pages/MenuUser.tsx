@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 
 function MenuUser(){
     return(
-        <div className="w-screen bg-[url(/fondo-splitzy.png)] bg-cover">
+        <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full flex flex-row items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
                 <div className="w-1/6"></div>
                 <div className="w-1/2 flex flex-col xl:gap-10 md:gap-5">
@@ -19,7 +19,7 @@ function MenuUser(){
                                 <div className="w-1/8 relative">
                                     {/* Foto de perfil con estado de usuario*/}
                                     <img src="prueba.png" className="w-10 h-10 mr-4 rounded-full"/>
-                                    <div className="bg-green-500 w-4 h-4 rounded-full border border-stone-900 z-40 absolute bottom-0 right-5 lg:right-2"></div>
+                                    <div className="bg-green-500 w-4 h-4 rounded-full border border-stone-900 z-40 absolute bottom-0 xl:right-5 lg:right-2"></div>
                                 </div>
                                 <div className="w-1/2 text-left">
                                     <p>Ivan</p>
@@ -29,7 +29,7 @@ function MenuUser(){
                             <div className="flex flex-row border-bottom items-center border-b-2 pb-2">
                                 <div className="w-1/8 relative">
                                     <img src="prueba.png" className="w-10 h-10 mr-4 rounded-full"/>
-                                    <div className="bg-gray-500 w-4 h-4 rounded-full absolute bottom-0 right-5 border border-stone-900 z-40 lg:right-2"></div>
+                                    <div className="bg-gray-500 w-4 h-4 rounded-full absolute bottom-0 xl:right-5 border border-stone-900 z-40 lg:right-2"></div>
                                 </div>
                                 <div className="w-1/2 text-left">
                                     <p>Alonso</p>
