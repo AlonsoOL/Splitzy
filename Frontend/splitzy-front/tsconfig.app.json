@@ -1,3 +1,5 @@
+// cuando falle usar el siguiente comando: npm install --save-dev @types/babel__core
+
 {
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
