@@ -1,5 +1,69 @@
 [
   {
+    "ContainingType": "Splitzy.Controllers.FriendRequestController",
+    "Method": "AcceptRequest",
+    "RelativePath": "api/FriendRequest/accept",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.FriendRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.FriendRequestController",
+    "Method": "GetPendingRequest",
+    "RelativePath": "api/FriendRequest/pending/{userid}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.FriendRequestController",
+    "Method": "RejectRequest",
+    "RelativePath": "api/FriendRequest/reject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.FriendRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.FriendRequestController",
+    "Method": "RequestFriendship",
+    "RelativePath": "api/FriendRequest/request",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.FriendRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Splitzy.Controllers.UserController",
     "Method": "GetUsers",
     "RelativePath": "api/User",

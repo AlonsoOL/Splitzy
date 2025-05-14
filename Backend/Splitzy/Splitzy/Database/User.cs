@@ -14,4 +14,7 @@ public class User
     public string? Birthday { get; set; }
     public string Role { get; set; }
     public string? ImageUrl { get; set; }
+
+    public ICollection<UserFriend> Friends { get; set; }
+    public ICollection<UserFriend> FriendOf { get; set; }
 }
