@@ -20,6 +20,14 @@ public class FriendService
             throw new Exception("No puedes enviarte una solicitud a ti mismo");
         }
 
+        var senderExists = await _dbContext.Users.AnyAsync(u => u.Id == senderId);
+        var recivedExists = await _dbContext.Users.AnyAsync(u => u.Id == recivedId);
+
+        if (!senderExists || !recivedExists)
+        {
+            throw new Exception("Uno o ambos usuarios no existen");
+        }
+
         var alreadyExists = await _dbContext.FriendRequests
             .AnyAsync(fr =>
                 fr.SenderId == senderId && fr.RecivedId == recivedId && !fr.IsHandled);

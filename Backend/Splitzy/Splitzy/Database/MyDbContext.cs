@@ -37,6 +37,18 @@ public class MyDbContext : DbContext
             .HasForeignKey(uf => uf.FriendId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<FriendRequest>()
+            .HasOne(fr => fr.Sender)
+            .WithMany()
+            .HasForeignKey(fr => fr.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<FriendRequest>()
+            .HasOne(fr => fr.Reciver)
+            .WithMany()
+            .HasForeignKey(fr => fr.RecivedId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Splitzy.Controllers;
 using Splitzy.Database;
 using Splitzy.Database.Repositories;
 using Splitzy.Database.Seeder;
@@ -73,6 +74,8 @@ namespace Splitzy
             builder.Services.AddScoped<UserRepository>();
 
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<FriendService>();
+            builder.Services.AddScoped<FriendRequestController>();
 
             var app = builder.Build();
 
