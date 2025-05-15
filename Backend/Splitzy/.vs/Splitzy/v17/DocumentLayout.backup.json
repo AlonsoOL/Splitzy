@@ -57,14 +57,6 @@
           "SelectedChildIndex": 4,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 10,
               "Title": "Seeder.cs",
@@ -91,6 +83,14 @@
               "IsPinned": true
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "UserController.cs",
@@ -113,8 +113,7 @@
               "RelativeToolTip": "Splitzy\\Controllers\\FriendRequestController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T13:48:47.266Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T13:48:47.266Z"
             },
             {
               "$type": "Document",
@@ -126,8 +125,7 @@
               "RelativeToolTip": "Splitzy\\Services\\FriendServices.cs",
               "ViewState": "AgIAAEEAAAAAAAAAAAAwwFcAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T11:46:29.361Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T11:46:29.361Z"
             },
             {
               "$type": "Document",
