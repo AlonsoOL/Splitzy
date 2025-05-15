@@ -18,7 +18,7 @@
   {
     "ContainingType": "Splitzy.Controllers.FriendRequestController",
     "Method": "GetPendingRequest",
-    "RelativePath": "api/FriendRequest/pending/{userid}",
+    "RelativePath": "api/FriendRequest/pending/{userId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

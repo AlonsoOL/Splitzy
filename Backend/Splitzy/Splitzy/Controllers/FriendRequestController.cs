@@ -20,7 +20,7 @@ public class FriendRequestController : Controller
     public async Task<IActionResult> RequestFriendship([FromBody] FriendRequestDto dto)
     {
         await _friendService.SendFriendServicesAsync(dto.senderId, dto.recivedId);
-        return Ok();
+        return Ok("Solicitud de amistad enviada con éxito");
     }
 
     [HttpPost("accept")]
@@ -37,9 +37,10 @@ public class FriendRequestController : Controller
         return Ok();
     }
 
-    [HttpGet("pending/{userid}")]
+    [HttpGet("pending/{userId}")]
     public async Task<IActionResult> GetPendingRequest(int userId)
     {
+        userId = 2;
         var requests = await _friendService.GetPendingRequestsAsync(userId);
         return Ok(requests);
     }
