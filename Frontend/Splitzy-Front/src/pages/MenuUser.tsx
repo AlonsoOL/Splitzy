@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button"
+import { FriendList } from "@/components/FriendList"
 
 function MenuUser(){
+    const userId = 1
+    const token = JSON.stringify(localStorage.getItem("user"))
+    
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full flex flex-row items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
@@ -36,6 +40,7 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
                             </div>
+                            <FriendList userId={userId}/>
                         </div>
                     </div>
 

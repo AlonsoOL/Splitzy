@@ -64,6 +64,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Splitzy.Controllers.FriendsController",
+    "Method": "GetFriends",
+    "RelativePath": "api/Friends/friends/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Splitzy.Controllers.UserController",
     "Method": "GetUsers",
     "RelativePath": "api/User",

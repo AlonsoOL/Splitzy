@@ -39,6 +39,7 @@ public class FriendRequestController : Controller
 
     [HttpGet("pending/{userId}")]
     public async Task<IActionResult> GetPendingRequest(int userId)
+    
     {
         userId = 2;
         var requests = await _friendService.GetPendingRequestsAsync(userId);

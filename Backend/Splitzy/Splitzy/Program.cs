@@ -76,6 +76,7 @@ namespace Splitzy
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<FriendService>();
             builder.Services.AddScoped<FriendRequestController>();
+            builder.Services.AddScoped<FriendsController>();
 
             var app = builder.Build();
 
