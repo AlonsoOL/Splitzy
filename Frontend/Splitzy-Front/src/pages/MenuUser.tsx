@@ -1,9 +1,25 @@
 import { Button } from "@/components/ui/button"
 import { FriendList } from "@/components/FriendList"
+import { jwtDecode } from "jwt-decode"
+import { useEffect, useState } from "react";
+
+interface JwtPayload{
+    id: number;
+}
 
 function MenuUser(){
-    const userId = 1
-    const token = JSON.stringify(localStorage.getItem("user"))
+    const token = localStorage.getItem("user") || sessionStorage.getItem("user")
+    const [userId, setUserId] = useState<number>(0)
+
+    useEffect(() => {
+        if(token){
+        const decoded = jwtDecode<JwtPayload>(token)
+        setUserId(decoded.id)
+        console.log("este es el id", userId)
+    }
+    }, [])
+    console.log(token)
+    
     
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">

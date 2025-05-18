@@ -15,7 +15,7 @@ function MenuAdmin(){
 
     useEffect(() => {
         const token = localStorage.getItem("user") || sessionStorage.getItem("user")
-        console.log(token)
+        
         const fetchUsers = async() => {
             try{
                 const response = await fetch("https://localhost:7044/api/User",{

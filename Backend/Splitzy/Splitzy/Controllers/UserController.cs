@@ -19,7 +19,7 @@ public class UserController : ControllerBase
     {
         _dbContext = dbContext;
         _service = service;
-    }
+    }   
 
     [Authorize(Roles = "Admin")]
     [HttpGet]
