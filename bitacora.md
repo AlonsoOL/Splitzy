@@ -19,6 +19,9 @@ Trabajos hechos por Alonso:
 13/05/2025 - 3º intento de despliegue de la web, ya se ven las páginas y se puede navegar, falta conectar el back correctamente
 14/05/2025 - Comienzo de la función para enviar solicitudes de amistad en el back
 15/05/2025 - Comienzo para habilitar las solicitudes de amistad en el front y poder gestionarlas
+17/05/2025 - Implementación de la función para ver la lista de amigos sin estilos
+18/05/2025 - Terminar de poner estilos a la lista de amigos
+
 
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia

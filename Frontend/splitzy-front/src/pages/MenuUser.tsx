@@ -2,12 +2,16 @@ import { Button } from "@/components/ui/button"
 import { FriendList } from "@/components/FriendList"
 import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react";
+import { AddFriendModal } from "@/components/AddFriendModal";
+import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
 
 interface JwtPayload{
     id: number;
 }
 
 function MenuUser(){
+    const [modalOpen, setModalOpen] = useState(false)
+    const sendRequest = useSendFriendRequest()
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
     const [userId, setUserId] = useState<number>(0)
 
@@ -15,10 +19,18 @@ function MenuUser(){
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setUserId(decoded.id)
-        console.log("este es el id", userId)
     }
     }, [])
-    console.log(token)
+
+    const handleSendRequest = async (recivedId: number) => {
+        try{
+            await sendRequest(userId, recivedId)
+            alert("solicitud enviada correctamente")
+        }
+        catch{
+            alert("error al enviar la solicitud")
+        }
+    }
     
     
     return(
@@ -30,8 +42,16 @@ function MenuUser(){
                     <div className="bg-[#242424e0] rounded-[21px] overflow-hidden h-75 p-8">
                         <div className="flex flex-row mb-4">
                             <p className="w-1/2 text-left">Amigos</p>
-                            <div className="w-1/2 text-right">
-                                <a href="#">Añadir amigo</a>
+                            <div className="w-1/2 text-right ">
+                                <a className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
+                                <div className="absolute top-0 right-0 bg-black w-full z-50 opacity-50">
+                                    <AddFriendModal 
+                                        isOpen={modalOpen}
+                                        onClose={() => setModalOpen(false)}
+                                        currentUserId={userId}
+                                        onSendRequest={handleSendRequest}>
+                                    </AddFriendModal>
+                                </div>
                             </div>
                         </div>
                         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Splitzy.Models;
 using Splitzy.Services;
 using SQLitePCL;
@@ -39,9 +40,7 @@ public class FriendRequestController : Controller
 
     [HttpGet("pending/{userId}")]
     public async Task<IActionResult> GetPendingRequest(int userId)
-    
     {
-        userId = 2;
         var requests = await _friendService.GetPendingRequestsAsync(userId);
         return Ok(requests);
     }
