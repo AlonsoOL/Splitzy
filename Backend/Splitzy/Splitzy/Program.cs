@@ -2,9 +2,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Splitzy.Controllers;
 using Splitzy.Database;
+using Splitzy.Database.Repositories;
 using Splitzy.Database.Seeder;
+using Splitzy.Services;
 using Swashbuckle.AspNetCore.Filters;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -64,8 +68,15 @@ namespace Splitzy
             }
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
             builder.Services.AddScoped<MyDbContext>();
+            builder.Services.AddScoped<UnitOfWork>();
+            builder.Services.AddScoped<UserRepository>();
+
+            builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<FriendService>();
+            builder.Services.AddScoped<FriendRequestController>();
+            builder.Services.AddScoped<FriendsController>();
 
             var app = builder.Build();
 
@@ -86,9 +97,23 @@ namespace Splitzy
 
             app.UseCors();
 
+            app.UseWebSockets();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/ws" && context.WebSockets.IsWebSocketRequest)
+                {
+                    WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                    await WebSocketHandler.Handle(context, webSocket);
+                }
+                else
+                {
+                    await next();
+                }
+            });
 
             app.MapControllers();
 

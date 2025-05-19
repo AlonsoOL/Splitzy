@@ -13,6 +13,12 @@ Trabajos hechos por Alonso:
 05/05/2025 - Inicio de la página de menú usuario de forma estática
 06/05/2025 - Implementación de la foto de perfil de usuario
 07/05/2025 - Implementación de la función cerrar sesión y acabar la página menú usuario de manera estática. Implementación de un icono para que los admins puedan acceder a la administración de usuarios
+08/05/2025 - Implementación del menú adiminstrador y arreglos generales de la web
+09/05/2025 - Pequeño responsive en alguna parte de la web y 1º intento de despliegue básico
+12/05/2025 - 2º intento de despliegue de la web, se puede acceder pero se queda en blanco
+13/05/2025 - 3º intento de despliegue de la web, ya se ven las páginas y se puede navegar, falta conectar el back correctamente
+14/05/2025 - Comienzo de la función para enviar solicitudes de amistad en el back
+15/05/2025 - Comienzo para habilitar las solicitudes de amistad en el front y poder gestionarlas
 
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia

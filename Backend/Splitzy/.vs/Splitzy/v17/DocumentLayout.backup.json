@@ -3,28 +3,52 @@
   "WorkspaceRootPath": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\services\\friendservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\services\\friendservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\seeder\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\controllers\\friendscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\friendscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\friendrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\friendrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\userfriend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\userfriend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\models\\friendrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\models\\friendrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\websockethandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\websockethandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,21 +58,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 204,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Seeder.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Seeder\\Seeder.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Seeder\\Seeder.cs",
               "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Seeder\\Seeder.cs",
               "RelativeToolTip": "Splitzy\\Database\\Seeder\\Seeder.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAkwDAAAABKAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwCsAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-02T18:57:50.593Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -58,7 +81,7 @@
               "RelativeDocumentMoniker": "Splitzy\\Program.cs",
               "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Program.cs",
               "RelativeToolTip": "Splitzy\\Program.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAApwFoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAApwE4AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-29T10:56:07.846Z",
               "IsPinned": true
@@ -73,51 +96,124 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Splitzy\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Splitzy\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAowE0AAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T17:08:55.286Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\UserController.cs",
               "RelativeToolTip": "Splitzy\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBgAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:52:36.098Z"
+              "WhenOpened": "2025-05-15T11:06:00.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FriendRequestController.cs",
+              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendRequestController.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Controllers\\FriendRequestController.cs",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendRequestController.cs",
+              "RelativeToolTip": "Splitzy\\Controllers\\FriendRequestController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowC0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T13:48:47.266Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "FriendsController.cs",
+              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendsController.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Controllers\\FriendsController.cs",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendsController.cs",
+              "RelativeToolTip": "Splitzy\\Controllers\\FriendsController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBQAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T10:34:38.746Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FriendServices.cs",
+              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\FriendServices.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Services\\FriendServices.cs",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\FriendServices.cs",
+              "RelativeToolTip": "Splitzy\\Services\\FriendServices.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAUwFgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T11:46:29.361Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FriendRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Models\\FriendRequestDto.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Models\\FriendRequestDto.cs",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Models\\FriendRequestDto.cs",
+              "RelativeToolTip": "Splitzy\\Models\\FriendRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T13:41:06.497Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "WebSocketHandler.cs",
+              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\WebSocketHandler.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Database\\WebSocketHandler.cs",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\WebSocketHandler.cs",
+              "RelativeToolTip": "Splitzy\\Database\\WebSocketHandler.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAiwCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T12:55:41.145Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\User.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\User.cs",
               "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\User.cs",
               "RelativeToolTip": "Splitzy\\Database\\User.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAqwA8AAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:46:37.377Z"
+              "WhenOpened": "2025-05-14T12:29:03.523Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
+              "Title": "UserFriend.cs",
+              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\UserFriend.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Database\\UserFriend.cs",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\UserFriend.cs",
+              "RelativeToolTip": "Splitzy\\Database\\UserFriend.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T12:28:27.226Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FriendRequest.cs",
+              "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\FriendRequest.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Database\\FriendRequest.cs",
+              "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\FriendRequest.cs",
+              "RelativeToolTip": "Splitzy\\Database\\FriendRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T11:24:20.494Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "MyDbContext.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\MyDbContext.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\MyDbContext.cs",
               "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\MyDbContext.cs",
               "RelativeToolTip": "Splitzy\\Database\\MyDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAA1wBkAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:41:20.108Z"
+              "WhenOpened": "2025-05-14T10:56:04.602Z"
             }
           ]
         }

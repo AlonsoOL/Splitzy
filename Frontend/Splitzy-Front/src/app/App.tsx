@@ -91,27 +91,28 @@ function Home() {
 function App() {
   return (
     <>
-      
       <AuthProvider>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/menu-user" element={
-            <ProtectRoute>
-              <MenuUser/>
-            </ProtectRoute>}/>
-          <Route path="/menu-admin" element={
-            <ProtectRoute>
-              <MenuAdmin/>
-            </ProtectRoute>}/>
-          <Route path="/user-profile" element={
-            <ProtectRoute>
-              <UserProfile/>
-            </ProtectRoute>}/>
-        </Routes>
-        <Footer />
+        {/* <WebSocketProvider> */}
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/menu-user" element={
+              <ProtectRoute>
+                <MenuUser/>
+              </ProtectRoute>}/>
+            <Route path="/menu-admin" element={
+              <ProtectRoute>
+                <MenuAdmin/>
+              </ProtectRoute>}/>
+            <Route path="/user-profile" element={
+              <ProtectRoute>
+                <UserProfile/>
+              </ProtectRoute>}/>
+          </Routes>
+          <Footer />
+        {/* </WebSocketProvider> */}
       </AuthProvider>
     </>
   )
