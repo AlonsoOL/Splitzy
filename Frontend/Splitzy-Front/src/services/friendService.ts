@@ -11,7 +11,7 @@ export const fetchPendingRequests = async (userId: number) => {
 }
 
 export const fetchRecivedRequests = async (userId: number) =>{
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/pending/${userId}`)
+    const response = await fetch(`https://localhost:7044/api/FriendRequest/request`)
     if (!response.ok) throw new Error ("No se pudo obtener las solicitudes recibidas")
     return response.json()
 }

@@ -9,9 +9,11 @@ export const useSendFriendRequest = () => {
                 type: "friend_request",
                 data: { senderId, recivedId }
             }
+            console.log("así envia los datos al back", payload)
             socket.send(JSON.stringify(payload))
         }
         else{
+             console.log("así envia los datos al back", senderId, recivedId)
             console.warn("WebSocket no está abierto")
         }
     }

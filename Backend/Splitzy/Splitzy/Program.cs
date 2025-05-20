@@ -114,6 +114,7 @@ namespace Splitzy
                 }
                 else
                 {
+                    context.Response.StatusCode = 400;
                     await next();
                 }
             });

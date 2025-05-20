@@ -25,7 +25,6 @@ function MenuUser(){
     const handleSendRequest = async (recivedId: number) => {
         try{
             await sendRequest(userId, recivedId)
-            alert("solicitud enviada correctamente")
         }
         catch{
             alert("error al enviar la solicitud")
@@ -55,9 +54,9 @@ function MenuUser(){
                             </div>
                         </div>
                         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
-                            <div className="flex flex-row border-bottom items-center border-b-2 pb-2">
+                            {/* <div className="flex flex-row border-bottom items-center border-b-2 pb-2">
                                 <div className="w-1/8 relative">
-                                    {/* Foto de perfil con estado de usuario*/}
+                                    Foto de perfil con estado de usuario
                                     <img src="prueba.png" className="w-10 h-10 mr-4 rounded-full"/>
                                     <div className="bg-green-500 w-4 h-4 rounded-full border border-stone-900 z-40 absolute bottom-0 xl:right-5 lg:right-2"></div>
                                 </div>
@@ -75,7 +74,7 @@ function MenuUser(){
                                     <p>Alonso</p>
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
-                            </div>
+                            </div> */}
                             <FriendList userId={userId}/>
                         </div>
                     </div>
