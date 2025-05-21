@@ -7,7 +7,7 @@ export function FriendList({userId}: { userId: number }) {
     useEffect(() =>{
         fetchFriendList(userId).then(setFriends).catch(console.error)
     }, [userId])
-    console.log("estos son mis amigos:", friends.map(friend => friend))
+    // console.log("estos son mis amigos:", friends.map(friend => friend))
     return(
         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
             {friends.length === 0 ?(

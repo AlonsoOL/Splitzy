@@ -4,23 +4,53 @@ import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react";
 import { AddFriendModal } from "@/components/AddFriendModal";
 import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
+import { fetchPendingRequests } from "@/services/friendService";
+import { useWebsocket } from "@/context/WebSocketContext";
 
 interface JwtPayload{
     id: number;
 }
 
+interface FriendRequestDto{
+    id: number,
+    senderId: number,
+    senderName: string,
+    senderImageUrl: string,
+}
+
 function MenuUser(){
+    const socket = useWebsocket()
     const [modalOpen, setModalOpen] = useState(false)
     const sendRequest = useSendFriendRequest()
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
     const [userId, setUserId] = useState<number>(0)
 
+    const [ pending, setPending ] = useState<FriendRequestDto[]>([])
+
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setUserId(decoded.id)
+        fetchPendingRequests(userId).then(setPending)
     }
     }, [])
+    useEffect(() =>{
+        if (!socket) return
+
+        const handler = (event: MessageEvent) => {
+            try {
+                const msg = JSON.parse(event.data)
+                if( msg.Type === "friend_request"){
+                    const {senderId, recivedId} = msg.Data
+                }
+            }catch (e){
+                console.error("ws mensaje inválido", e)
+            }
+        }
+
+        socket.addEventListener("message", handler)
+        return () => { socket.removeEventListener("message", handler)}
+    }, [socket, userId])
 
     const handleSendRequest = async (recivedId: number) => {
         try{
@@ -126,6 +156,26 @@ function MenuUser(){
                         <div className="flex flex-raw w-full gap-x-4 justify-center">
                             <Button className="w-1/3">Aceptar</Button>
                             <Button className="w-1/3">Rechazar</Button>
+                        </div>
+                    </div>
+                    {/* Solicitudes de amistad */}
+                    {pending.length === 0 ? (
+                        <p>No tienes solicitudes de mistad</p>
+                    ) : ( 
+                        <div>
+                        {pending.map((req) =>(
+                            <p>esto es una prueba</p>
+                        ))}
+                        </div>
+                    )}
+                    <div className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
+                        <div className="w-3/4 space-y-2  text-left">
+                            <p><span className="font-bold">Raúl&nbsp;</span>te ha mandado una solicitud de amistad</p>
+                            <p className="text-sm text-stone-400">Soy Raúl el vecino</p>
+                        </div>
+                        <div className="flex flex-raw w-1/4 justify-center gap-x-2">
+                            <Button className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
+                            <Button className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
                         </div>
                     </div>
                     <div className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">

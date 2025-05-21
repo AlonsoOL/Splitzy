@@ -6,6 +6,7 @@ export const fetchFriendList = async (userId: number) => {
 
 export const fetchPendingRequests = async (userId: number) => {
     const response = await fetch(`https://localhost:7044/api/FriendRequest/pending/${userId}`)
+    console.log("Este es el id que recibe la función pendig",userId)
     if (!response.ok) throw new Error ("No se pudo obtener las solicitudes pendientes")
     return response.json()
 }

@@ -16,51 +16,66 @@ namespace Splitzy.Database
             var buffer = new byte[1024 * 4];
             var scopeFactory = context.RequestServices.GetRequiredService<IServiceScopeFactory>();
 
-            while (socket.State == WebSocketState.Open)
+            try
             {
-                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                if (result.MessageType == WebSocketMessageType.Text)
+                while (socket.State == WebSocketState.Open)
                 {
-                    string msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    Console.WriteLine($"Mensaje recibido: {msg}");
+                    var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-                    try
+                    if (result.MessageType == WebSocketMessageType.Text)
                     {
-                        var payload = JsonSerializer.Deserialize<SocketPayload>(msg);
+                        string msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                        Console.WriteLine($"Mensaje recibido: {msg}");
 
-                        if(payload?.Type == "friend_request")
+                        try
                         {
-                            using var scope = scopeFactory.CreateScope();
-                            var service = scope.ServiceProvider.GetRequiredService<FriendService>();
-                            await service.SendFriendServicesAsync(payload.Data.SenderId, payload.Data.RecivedId);
+                            var payload = JsonSerializer.Deserialize<SocketPayload>(msg);
 
-                            Console.WriteLine("Solicitud procesada correctamente");
-                        }
-
-                        foreach (var s in _sockets)
-                        {
-                            if (s.State == WebSocketState.Open)
+                            if (payload == null || payload.Type is null || payload.Data == null)
                             {
-                                await s.SendAsync(
-                                    Encoding.UTF8.GetBytes(msg),
-                                    WebSocketMessageType.Text,
-                                    true,
-                                    CancellationToken.None
-                                   );
+                                Console.WriteLine("Formato de mensaje no válido");
+                                continue;
+                                
+                            }
+
+                            if (payload.Type == "friend_request")
+                            {
+                                using var scope = scopeFactory.CreateScope();
+                                var service = scope.ServiceProvider.GetRequiredService<FriendService>();
+                                await service.SendFriendServicesAsync(payload.Data.SenderId, payload.Data.RecivedId);
+
+                                Console.WriteLine("Solicitud procesada correctamente");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Tipo de mensaje no soportado" + payload.Type);
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error al procesar el mensaje: {ex.Message}");
+                        }
                     }
-                    catch (Exception ex)
+                    else if (result.MessageType == WebSocketMessageType.Close)
                     {
-                        Console.WriteLine($"Error al procesar el mensaje: {ex.Message}");
+                        await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "conexión cerrada", CancellationToken.None);
+                        _sockets.Remove(socket);
+                        break;
                     }
-                }
-                else if(result.MessageType == WebSocketMessageType.Close)
-                {
-                    await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "conexión cerrada", CancellationToken.None);
-                    _sockets.Remove(socket);
                 }
             }
+            finally
+            {
+                if (_sockets.Contains(socket))
+                {
+                    _sockets.Remove(socket);
+                    if (socket.State == WebSocketState.Open)
+                    {
+                        await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Conexión cerrada", CancellationToken.None);
+                    }
+                }
+            }
+            
         }
 
         public class SocketPayload
