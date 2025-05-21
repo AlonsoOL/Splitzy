@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Splitzy.Database;
+using Splitzy.Models;
 
 namespace Splitzy.Services;
 
@@ -84,12 +85,21 @@ public class FriendService
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<FriendRequest>> GetPendingRequestsAsync(int userId)
+    public async Task<List<FriendRequestDto>> GetPendingRequestsAsync(int userId)
     {
-        return await _dbContext.FriendRequests
+        var request = await _dbContext.FriendRequests
             .Where(fr => fr.RecivedId == userId && !fr.IsHandled)
-            .Include(fr => fr.Sender)
+            .Select(fr => new FriendRequestDto
+            {
+                id = fr.Id,
+                recivedId = fr.RecivedId,
+                senderId = fr.SenderId,
+                senderName = fr.Sender.Name,
+                senderImageUrl = fr.Sender.ImageUrl
+            })
             .ToListAsync();
+
+        return request;
     }
 }
 

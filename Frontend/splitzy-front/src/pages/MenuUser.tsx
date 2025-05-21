@@ -31,17 +31,31 @@ function MenuUser(){
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setUserId(decoded.id)
-        fetchPendingRequests(userId).then(setPending)
     }
     }, [])
+
     useEffect(() =>{
         if (!socket) return
 
+        fetchPendingRequests(userId).then((data: FriendRequestDto[]) =>{
+            setPending(data)
+        })
+        
         const handler = (event: MessageEvent) => {
             try {
                 const msg = JSON.parse(event.data)
+                
                 if( msg.Type === "friend_request"){
-                    const {senderId, recivedId} = msg.Data
+                    const request = msg.Data
+
+                    const newRequest: FriendRequestDto = {
+                        id: request.id,
+                        senderId: request.sender.senderId,
+                        senderName: request.sender.name,
+                        senderImageUrl: request.sender.imageUrl
+                    }
+
+                    setPending((prev) => [...prev, newRequest])
                 }
             }catch (e){
                 console.error("ws mensaje inválido", e)
@@ -51,6 +65,8 @@ function MenuUser(){
         socket.addEventListener("message", handler)
         return () => { socket.removeEventListener("message", handler)}
     }, [socket, userId])
+    
+    console.log("esta es la solicitud:", pending)
 
     const handleSendRequest = async (recivedId: number) => {
         try{
@@ -164,30 +180,19 @@ function MenuUser(){
                     ) : ( 
                         <div>
                         {pending.map((req) =>(
-                            <p>esto es una prueba</p>
+                            <div key={req.id} className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
+                                <div className="w-3/4 flex flex-row space-y-2 items-center text-left">
+                                    <img src={`https://localhost:7044${req.senderImageUrl}`} className="w-10 h-10 mr-4 rounded-full"/>
+                                    <p key={req.senderId}><span className="font-bold">{req.senderName}&nbsp;</span>te ha mandado una solicitud de amistad</p>
+                                </div>
+                                <div className="flex flex-raw w-1/4 justify-center gap-x-2">
+                                    <Button className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
+                                    <Button className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
+                                </div>
+                            </div>
                         ))}
                         </div>
                     )}
-                    <div className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
-                        <div className="w-3/4 space-y-2  text-left">
-                            <p><span className="font-bold">Raúl&nbsp;</span>te ha mandado una solicitud de amistad</p>
-                            <p className="text-sm text-stone-400">Soy Raúl el vecino</p>
-                        </div>
-                        <div className="flex flex-raw w-1/4 justify-center gap-x-2">
-                            <Button className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
-                            <Button className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
-                        </div>
-                    </div>
-                    <div className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
-                        <div className="w-3/4 space-y-2  text-left">
-                            <p><span className="font-bold">Raúl&nbsp;</span>te ha mandado una solicitud de amistad</p>
-                            <p className="text-sm text-stone-400">Soy Raúl el vecino</p>
-                        </div>
-                        <div className="flex flex-raw w-1/4 justify-center gap-x-2">
-                            <Button className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
-                            <Button className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
-                        </div>
-                    </div>
                 </div>
                 <div className="w-1/6"></div>
             </div>

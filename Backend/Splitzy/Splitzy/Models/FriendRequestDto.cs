@@ -2,7 +2,9 @@
 
 public class FriendRequestDto
 {
-    public string Action {  get; set; }
+    public int id {  get; set; }
     public int senderId { get; set; }
     public int recivedId {  get; set; }
+    public string senderName { get; set; }
+    public string senderImageUrl { get; set; }
 }
