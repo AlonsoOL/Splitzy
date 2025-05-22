@@ -25,7 +25,7 @@ public class FriendRequestController : Controller
     }
 
     [HttpPost("accept")]
-    public async Task<IActionResult> AcceptRequest([FromBody] FriendRequestDto dto)
+    public async Task<IActionResult> AcceptRequest([FromBody] FriendRequestRejectDto dto)
     {
         await _friendService.AcceptFriendRequestAsync(dto.senderId, dto.recivedId);
         return Ok();

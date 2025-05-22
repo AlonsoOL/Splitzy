@@ -52,11 +52,12 @@ public class FriendService
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task AcceptFriendRequestAsync(int requestId, int userId)
+    public async Task AcceptFriendRequestAsync(int senderId, int recivedId)
     {
         var request = await _dbContext.FriendRequests
             .Include(fr => fr.Sender)
-            .FirstOrDefaultAsync(fr => fr.Id == requestId && fr.RecivedId == userId);
+            .FirstOrDefaultAsync(fr => fr.Sender.Id == senderId && fr.RecivedId == recivedId && !fr.IsHandled);
+        Console.WriteLine("este es el request:", request);
 
         if (request == null || request.IsHandled) 
         {
@@ -72,10 +73,10 @@ public class FriendService
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task RejectFriendRequestAsync(int requestId, int userId)
+    public async Task RejectFriendRequestAsync(int requestId, int senderId)
     {
         var request = await _dbContext.FriendRequests
-            .FirstOrDefaultAsync(fr => fr.Sender.Id == userId && fr.RecivedId == requestId && !fr.IsHandled);
+            .FirstOrDefaultAsync(fr => fr.Sender.Id == senderId && fr.RecivedId == requestId && !fr.IsHandled);
 
         if (request == null || request.IsHandled) 
         {

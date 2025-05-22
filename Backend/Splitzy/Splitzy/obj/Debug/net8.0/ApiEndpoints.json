@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "Splitzy.Models.FriendRequestDto",
+        "Type": "Splitzy.Models.FriendRequestRejectDto",
         "IsRequired": true
       }
     ],

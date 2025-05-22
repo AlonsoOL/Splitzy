@@ -16,9 +16,11 @@ export const fetchRecivedRequests = async (userId: number) =>{
     return response.json()
 }
 
-export const acceptRequest = async (requestId: number) => {
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/accept/${requestId}`, {
-        method: "POST"
+export const acceptRequest = async (recivedId: number, senderId: number) => {
+    const response = await fetch(`https://localhost:7044/api/FriendRequest/accept`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ recivedId, senderId}),
     })
     if (!response.ok) throw new Error ("No se ha podido enviar la solicitud")
 }

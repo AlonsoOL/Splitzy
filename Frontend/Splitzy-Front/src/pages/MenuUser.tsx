@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react";
 import { AddFriendModal } from "@/components/AddFriendModal";
 import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
-import { fetchPendingRequests, rejectRequest } from "@/services/friendService";
+import { acceptRequest, fetchPendingRequests, rejectRequest } from "@/services/friendService";
 import { useWebsocket } from "@/context/WebSocketContext";
 
 interface JwtPayload{
@@ -77,13 +77,23 @@ function MenuUser(){
         }
     }
 
+    const handleAccept = async (recivedId: number, senderId:number, requestId:number) => {
+        try{
+            await acceptRequest(recivedId, senderId)
+            setPending((cur) => cur.filter((r) => r.id !== requestId))
+        }
+        catch(e){
+            console.error("No se ha podido aceptar la solicitud de amistad", e)
+        }
+    }
+
     const handleReject = async (recivedId: number, senderId: number, requestid: number) => {
         try{
             await rejectRequest(recivedId, senderId)
             setPending((cur) => cur.filter((r) => r.id !== requestid))
         }
         catch(e){
-            console.error("no se pudo rechazar la solicitud", e)
+            console.error("No se ha podido rechazar la solicitud", e)
         }
     }
     
@@ -196,7 +206,7 @@ function MenuUser(){
                                     <p key={req.senderId}><span className="font-bold">{req.senderName}&nbsp;</span>te ha mandado una solicitud de amistad</p>
                                 </div>
                                 <div className="flex flex-raw w-1/4 justify-center gap-x-2">
-                                    <Button onClick={() => handleReject(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
+                                    <Button onClick={() => handleAccept(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
                                     <Button onClick={() => handleReject(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
                                 </div>
                             </div>
