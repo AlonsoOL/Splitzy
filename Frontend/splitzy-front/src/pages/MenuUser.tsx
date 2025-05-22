@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react";
 import { AddFriendModal } from "@/components/AddFriendModal";
 import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
-import { fetchPendingRequests } from "@/services/friendService";
+import { fetchPendingRequests, rejectRequest } from "@/services/friendService";
 import { useWebsocket } from "@/context/WebSocketContext";
 
 interface JwtPayload{
@@ -13,6 +13,7 @@ interface JwtPayload{
 
 interface FriendRequestDto{
     id: number,
+    recivedId: number,
     senderId: number,
     senderName: string,
     senderImageUrl: string,
@@ -33,7 +34,7 @@ function MenuUser(){
         setUserId(decoded.id)
     }
     }, [])
-
+    
     useEffect(() =>{
         if (!socket) return
 
@@ -44,12 +45,13 @@ function MenuUser(){
         const handler = (event: MessageEvent) => {
             try {
                 const msg = JSON.parse(event.data)
-                
+
                 if( msg.Type === "friend_request"){
                     const request = msg.Data
-
+                    
                     const newRequest: FriendRequestDto = {
                         id: request.id,
+                        recivedId: request.sender.recivedId,
                         senderId: request.sender.senderId,
                         senderName: request.sender.name,
                         senderImageUrl: request.sender.imageUrl
@@ -65,8 +67,6 @@ function MenuUser(){
         socket.addEventListener("message", handler)
         return () => { socket.removeEventListener("message", handler)}
     }, [socket, userId])
-    
-    console.log("esta es la solicitud:", pending)
 
     const handleSendRequest = async (recivedId: number) => {
         try{
@@ -74,6 +74,16 @@ function MenuUser(){
         }
         catch{
             alert("error al enviar la solicitud")
+        }
+    }
+
+    const handleReject = async (recivedId: number, senderId: number, requestid: number) => {
+        try{
+            await rejectRequest(recivedId, senderId)
+            setPending((cur) => cur.filter((r) => r.id !== requestid))
+        }
+        catch(e){
+            console.error("no se pudo rechazar la solicitud", e)
         }
     }
     
@@ -186,8 +196,8 @@ function MenuUser(){
                                     <p key={req.senderId}><span className="font-bold">{req.senderName}&nbsp;</span>te ha mandado una solicitud de amistad</p>
                                 </div>
                                 <div className="flex flex-raw w-1/4 justify-center gap-x-2">
-                                    <Button className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
-                                    <Button className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
+                                    <Button onClick={() => handleReject(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
+                                    <Button onClick={() => handleReject(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
                                 </div>
                             </div>
                         ))}

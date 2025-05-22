@@ -32,7 +32,7 @@ public class FriendRequestController : Controller
     }
 
     [HttpPost("reject")]
-    public async Task <IActionResult> RejectRequest([FromBody] FriendRequestDto dto)
+    public async Task <IActionResult> RejectRequest([FromBody] FriendRequestRejectDto dto)
     {
         await _friendService.RejectFriendRequestAsync(dto.recivedId, dto.senderId);
         return Ok();

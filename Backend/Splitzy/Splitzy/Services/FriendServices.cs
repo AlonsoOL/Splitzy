@@ -43,6 +43,9 @@ public class FriendService
         {
             SenderId = senderId,
             RecivedId = recivedId,
+            SentAt = DateTime.Now,
+            IsAccepted = false,
+            IsHandled = false
         };
 
         _dbContext.FriendRequests.Add(request);
@@ -72,7 +75,7 @@ public class FriendService
     public async Task RejectFriendRequestAsync(int requestId, int userId)
     {
         var request = await _dbContext.FriendRequests
-            .FirstOrDefaultAsync(fr => fr.Id == requestId && fr.RecivedId == userId);
+            .FirstOrDefaultAsync(fr => fr.Sender.Id == userId && fr.RecivedId == requestId && !fr.IsHandled);
 
         if (request == null || request.IsHandled) 
         {
