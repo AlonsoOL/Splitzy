@@ -196,7 +196,7 @@ function MenuUser(){
                     </div>
                     {/* Solicitudes de amistad */}
                     {pending.length === 0 ? (
-                        <p>No tienes solicitudes de mistad</p>
+                        <div></div>
                     ) : ( 
                         <div>
                         {pending.map((req) =>(

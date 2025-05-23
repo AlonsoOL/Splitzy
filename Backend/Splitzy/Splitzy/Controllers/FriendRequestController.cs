@@ -25,14 +25,14 @@ public class FriendRequestController : Controller
     }
 
     [HttpPost("accept")]
-    public async Task<IActionResult> AcceptRequest([FromBody] FriendRequestRejectDto dto)
+    public async Task<IActionResult> AcceptRequest([FromBody] FriendRequestManageDto dto)
     {
         await _friendService.AcceptFriendRequestAsync(dto.senderId, dto.recivedId);
         return Ok();
     }
 
     [HttpPost("reject")]
-    public async Task <IActionResult> RejectRequest([FromBody] FriendRequestRejectDto dto)
+    public async Task <IActionResult> RejectRequest([FromBody] FriendRequestManageDto dto)
     {
         await _friendService.RejectFriendRequestAsync(dto.recivedId, dto.senderId);
         return Ok();
@@ -43,5 +43,12 @@ public class FriendRequestController : Controller
     {
         var requests = await _friendService.GetPendingRequestsAsync(userId);
         return Ok(requests);
+    }
+
+    [HttpDelete("remove")]
+    public async Task<IActionResult> RemoveFriend([FromBody] FriendDeleteDto dto)
+    {
+        await _friendService.RemoveFriendAsync(dto.UserId, dto.FriendId);
+        return Ok();
     }
 }

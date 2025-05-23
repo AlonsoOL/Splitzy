@@ -105,5 +105,19 @@ public class FriendService
 
         return request;
     }
+
+    public async Task RemoveFriendAsync(int userId, int friendId)
+    {
+        var friendship1 = await _dbContext.UserFriends
+            .FirstOrDefaultAsync(uf => uf.UserId == userId && uf.FriendId == friendId);
+
+        var friendship2 = await _dbContext.UserFriends
+            .FirstOrDefaultAsync(uf => uf.UserId == friendId && uf.FriendId == userId);
+
+        if (friendship1 != null) _dbContext.UserFriends.Remove(friendship1);
+        if (friendship2 != null) _dbContext.UserFriends.Remove(friendship2);
+
+        await _dbContext.SaveChangesAsync();
+    }
 }
 

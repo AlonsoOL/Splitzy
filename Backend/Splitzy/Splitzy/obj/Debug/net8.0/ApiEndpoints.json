@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "Splitzy.Models.FriendRequestRejectDto",
+        "Type": "Splitzy.Models.FriendRequestManageDto",
         "IsRequired": true
       }
     ],
@@ -41,7 +41,23 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "Splitzy.Models.FriendRequestRejectDto",
+        "Type": "Splitzy.Models.FriendRequestManageDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.FriendRequestController",
+    "Method": "RemoveFriend",
+    "RelativePath": "api/FriendRequest/remove",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.FriendDeleteDto",
         "IsRequired": true
       }
     ],
