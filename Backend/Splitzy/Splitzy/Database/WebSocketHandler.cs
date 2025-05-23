@@ -7,12 +7,10 @@ namespace Splitzy.Database
 {
     public static class WebSocketHandler
     {
-        private static readonly List<WebSocket> _sockets = new();
+        private static readonly Dictionary<int, WebSocket> _userSockets = new();
 
         public static async Task Handle(HttpContext context, WebSocket socket)
         {
-            _sockets.Add(socket);
-
             var buffer = new byte[1024 * 4];
             var scopeFactory = context.RequestServices.GetRequiredService<IServiceScopeFactory>();
 
@@ -38,13 +36,26 @@ namespace Splitzy.Database
                                 
                             }
 
+                            if(payload.Type == "init")
+                            {
+                                int userId = payload.Data.SenderId;
+
+                                if (_userSockets.ContainsKey(userId))
+                                {
+                                    _userSockets[userId] = socket;
+                                }
+                                else
+                                {
+                                    _userSockets.Add(userId, socket);
+                                }
+                                Console.WriteLine($"socket registrado para userID: {userId}");
+                            }
+
                             if (payload.Type == "friend_request")
                             {
                                 using var scope = scopeFactory.CreateScope();
                                 var service = scope.ServiceProvider.GetRequiredService<FriendService>();
                                 await service.SendFriendServicesAsync(payload.Data.SenderId, payload.Data.RecivedId);
-
-                                Console.WriteLine("Solicitud procesada correctamente");
                             }
                             else
                             {
@@ -59,23 +70,39 @@ namespace Splitzy.Database
                     else if (result.MessageType == WebSocketMessageType.Close)
                     {
                         await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "conexión cerrada", CancellationToken.None);
-                        _sockets.Remove(socket);
+                        var userEntry = _userSockets.FirstOrDefault(x => x.Value == socket);
+                        if (userEntry.Key != 0)
+                        {
+                            _userSockets.Remove(userEntry.Key);
+                        }
                         break;
                     }
                 }
             }
             finally
             {
-                if (_sockets.Contains(socket))
+                var userEntry = _userSockets.FirstOrDefault(x => x.Value == socket);
+                if (userEntry.Key != 0)
                 {
-                    _sockets.Remove(socket);
-                    if (socket.State == WebSocketState.Open)
-                    {
-                        await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Conexión cerrada", CancellationToken.None);
-                    }
+                    _userSockets.Remove(userEntry.Key);
+                }
+
+                if (socket.State == WebSocketState.Open)
+                {
+                    await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "conexión cerrada", CancellationToken.None);
                 }
             }
             
+        }
+
+        public static async Task SendToUserAsync(int userId, object message)
+        {
+            if (_userSockets.TryGetValue(userId, out var socket) && socket.State == WebSocketState.Open)
+            {
+                var json = JsonSerializer.Serialize(message);
+                var buffer = Encoding.UTF8.GetBytes(json);
+                await socket.SendAsync(new ArraySegment<byte>(buffer),WebSocketMessageType.Text, true, CancellationToken.None);
+            }
         }
 
         public class SocketPayload

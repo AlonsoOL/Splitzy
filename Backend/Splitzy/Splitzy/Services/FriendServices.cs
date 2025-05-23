@@ -50,6 +50,17 @@ public class FriendService
 
         _dbContext.FriendRequests.Add(request);
         await _dbContext.SaveChangesAsync();
+
+        await WebSocketHandler.SendToUserAsync(recivedId, new
+        {
+            Type = "new_friend_request",
+            Data = new
+            {
+                SenderId = senderId,
+                RecivedId = recivedId,
+                SentAt = request.SentAt
+            }
+        });
     }
 
     public async Task AcceptFriendRequestAsync(int senderId, int recivedId)
