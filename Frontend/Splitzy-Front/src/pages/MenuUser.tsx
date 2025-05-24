@@ -25,6 +25,7 @@ function MenuUser(){
     const sendRequest = useSendFriendRequest()
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
     const [userId, setUserId] = useState<number>(0)
+    const [ notification, setNotification ] = useState<string[]>([])
 
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
 
@@ -59,6 +60,13 @@ function MenuUser(){
                     // console.log("esto es lo que envia el back ", newRequest)
 
                     setPending((prev) => [...prev, newRequest])
+                }
+
+                if( msg.Type === "friend_request_reject"){
+                    const { RecivedName } = msg.Data
+                    const message = `${RecivedName} ha rechazado la solicitud de amistad`
+
+                    setNotification(prev => [...prev, message])
                 }
             }catch (e){
                 console.error("ws mensaje inválido", e)
@@ -102,6 +110,13 @@ function MenuUser(){
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full flex flex-row items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
+                {notification.length > 0 && (
+                    <div className="absolute top-5 right-1 bg-black p-4">
+                    {notification.map((note) => (
+                        <div>{note}</div>
+                    ))}
+                    </div>
+                )}
                 <div className="w-1/6"></div>
                 <div className="w-1/2 flex flex-col xl:gap-10 md:gap-5">
                     {/* Sección de los amigos */}

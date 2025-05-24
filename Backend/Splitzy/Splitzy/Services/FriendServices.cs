@@ -64,6 +64,7 @@ public class FriendService
                     SenderId = senderId,
                     RecivedId = recivedId,
                     name = senderUser.Name,
+                    mail = senderUser.Email,
                     imageUrl = senderUser.ImageUrl
                 }
             }
@@ -105,6 +106,19 @@ public class FriendService
         request.IsHandled = true;
 
         await _dbContext.SaveChangesAsync();
+
+        var userReciver = await _dbContext.Users.FindAsync(requestId);
+
+        await WebSocketHandler.SendToUserAsync(senderId, new
+        {
+            Type = "friend_request_reject",
+            Data = new
+            {
+                RecivedId = requestId,
+                RecivedName = userReciver.Name,
+                RecivedMail = userReciver.Email
+            }
+        });
     }
 
     public async Task<List<FriendRequestDto>> GetPendingRequestsAsync(int userId)
