@@ -125,7 +125,7 @@ function MenuUser(){
                             <p className="w-1/2 text-left">Amigos</p>
                             <div className="w-1/2 text-right ">
                                 <a className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
-                                <div className="absolute top-0 right-0 bg-black w-full z-50 opacity-50">
+                                <div className="absolute top-[50%] right-0 bg-black z-50 bg-[#24242468]">
                                     <AddFriendModal 
                                         isOpen={modalOpen}
                                         onClose={() => setModalOpen(false)}
