@@ -24,14 +24,16 @@ function MenuAdmin(){
                         Authorization: `Bearer ${token}`
                     },
                 })
-                console.log("este es el ussuario", response)
+                console.log("este es el ussuario", token)
                 if(!response.ok){
+                    console.log("estoy dentro del if")
                     throw new Error("error al cargar a los usuarios")
                 }
                 const data = await response.json()
                 setUsers(data)
             }
             catch(error){
+                console.log("estoy dentro del catch")
                 console.error("Error al cargar los usuarios:", error)
             }
             finally{

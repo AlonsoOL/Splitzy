@@ -53,6 +53,7 @@ namespace Splitzy.Database
 
                             if (payload.Type == "friend_request")
                             {
+                                Console.WriteLine($"Esta es la solicitud de amistad recibida: {payload.Data}");
                                 using var scope = scopeFactory.CreateScope();
                                 var service = scope.ServiceProvider.GetRequiredService<FriendService>();
                                 await service.SendFriendServicesAsync(payload.Data.SenderId, payload.Data.RecivedId);

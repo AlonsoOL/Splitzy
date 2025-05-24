@@ -51,14 +51,21 @@ public class FriendService
         _dbContext.FriendRequests.Add(request);
         await _dbContext.SaveChangesAsync();
 
+        var senderUser = await _dbContext.Users.FindAsync(senderId);
+
         await WebSocketHandler.SendToUserAsync(recivedId, new
         {
-            Type = "new_friend_request",
+            Type = "friend_request",
             Data = new
             {
-                SenderId = senderId,
-                RecivedId = recivedId,
-                SentAt = request.SentAt
+                id = request.Id,
+                sender = new
+                {
+                    SenderId = senderId,
+                    RecivedId = recivedId,
+                    name = senderUser.Name,
+                    imageUrl = senderUser.ImageUrl
+                }
             }
         });
     }

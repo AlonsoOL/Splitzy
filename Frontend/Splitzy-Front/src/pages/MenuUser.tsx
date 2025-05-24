@@ -51,11 +51,12 @@ function MenuUser(){
                     
                     const newRequest: FriendRequestDto = {
                         id: request.id,
-                        recivedId: request.sender.recivedId,
-                        senderId: request.sender.senderId,
+                        recivedId: userId,
+                        senderId: request.sender.SenderId,
                         senderName: request.sender.name,
                         senderImageUrl: request.sender.imageUrl
                     }
+                    // console.log("esto es lo que envia el back ", newRequest)
 
                     setPending((prev) => [...prev, newRequest])
                 }
