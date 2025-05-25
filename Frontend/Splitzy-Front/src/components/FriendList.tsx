@@ -2,12 +2,16 @@ import { useEffect, useState} from "react"
 import { fetchFriendList, friendDelete } from "@/services/friendService"
 import { Button } from "./ui/button"
 
-export function FriendList({userId}: { userId: number }) {
+export function FriendList({userId, refreshSignal}: { userId: number, refreshSignal: boolean }) {
     const [friends, setFriends] = useState<any[]>([])
 
+    const fetchFriends = () =>{
+        fetchFriendList(userId).then(setFriends)
+    }
+
     useEffect(() =>{
-        fetchFriendList(userId).then(setFriends).catch(console.error)
-    }, [userId])
+        fetchFriends()
+    }, [userId, refreshSignal])
     
     const handleDeleteFriend = async (userId: number, friendId: number) =>{
         try{
@@ -19,6 +23,21 @@ export function FriendList({userId}: { userId: number }) {
             console.log("No se ha podido eliminar al amigo", e)
         }
     }
+
+    useEffect(() => {
+        const socket = new WebSocket("wss://localhost:7044/ws")
+        const handler = (event: MessageEvent) => {
+            const msg = JSON.parse(event.data)
+            if (msg === "friend_request_accept"){
+                fetchFriends()
+            }
+        }
+
+        socket.addEventListener("message", handler)
+        return () =>{
+            socket.removeEventListener("message", handler)
+        }
+    }, [])
 
     return(
         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">

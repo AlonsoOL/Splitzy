@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Splitzy.Database;
@@ -90,6 +91,19 @@ public class FriendService
         _dbContext.Add(new UserFriend { UserId = request.RecivedId, FriendId = request.SenderId });
 
         await _dbContext.SaveChangesAsync();
+
+        var userReciver = await _dbContext.Users.FindAsync(recivedId);
+
+        await WebSocketHandler.SendToUserAsync(senderId, new
+        {
+            Type = "friend_request_accept",
+            Data = new
+            {
+                RecivedId = recivedId,
+                RecivedName = userReciver.Name,
+                RecivedMail = userReciver.Email
+            }
+        });
     }
 
     public async Task RejectFriendRequestAsync(int requestId, int senderId)

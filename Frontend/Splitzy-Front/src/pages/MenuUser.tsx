@@ -26,6 +26,7 @@ function MenuUser(){
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
     const [userId, setUserId] = useState<number>(0)
     const [ notification, setNotification ] = useState<string[]>([])
+    const [refreshFriendList, setRefreshFriendList] = useState(false)
 
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
 
@@ -68,6 +69,15 @@ function MenuUser(){
 
                     setNotification(prev => [...prev, message])
                 }
+
+                if(msg.Type === "friend_request_accept"){
+                    const { RecivedName } = msg.Data
+                    const message = `${RecivedName} ha aceptado la solicitud de amistad`
+
+                    setNotification(prev => [...prev, message])
+                    setRefreshFriendList(prev => !prev)
+                }
+
             }catch (e){
                 console.error("ws mensaje inválido", e)
             }
@@ -76,6 +86,16 @@ function MenuUser(){
         socket.addEventListener("message", handler)
         return () => { socket.removeEventListener("message", handler)}
     }, [socket, userId])
+
+    useEffect(() =>{
+        if (notification.length === 0) return
+
+        const timer = setTimeout(() => {
+            setNotification(prev => prev.slice(1))
+        }, 3600)
+
+        return () =>clearTimeout(timer)
+    }, [notification])
 
     const handleSendRequest = async (recivedId: number) => {
         try{
@@ -90,6 +110,7 @@ function MenuUser(){
         try{
             await acceptRequest(recivedId, senderId)
             setPending((cur) => cur.filter((r) => r.id !== requestId))
+            setRefreshFriendList(prev => prev)
         }
         catch(e){
             console.error("No se ha podido aceptar la solicitud de amistad", e)
@@ -157,7 +178,7 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
                             </div> */}
-                            <FriendList userId={userId}/>
+                            <FriendList userId={userId} refreshSignal={refreshFriendList}/>
                         </div>
                     </div>
 

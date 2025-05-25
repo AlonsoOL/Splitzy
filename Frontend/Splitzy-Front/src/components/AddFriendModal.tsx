@@ -47,7 +47,7 @@ export function AddFriendModal({
         <div className={`${isOpen ? "flex" : "hidden"}`} >
             <div>
                 <input placeholder="Buscar usuarios..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
-                <div className="flex flex-col items-center border-1 border-solid ">
+                <div className="flex flex-col items-center border-1 border-solid bg-blue-500">
                     {filteredUsers.map((user) => (
                         <div key={user.id} className="">
                             <img src={`https://localhost:7044${user.imageUrl}`}  className="w-10 h-10 mr-4 rounded-full"/>
