@@ -164,6 +164,19 @@ public class FriendService
         if (friendship2 != null) _dbContext.UserFriends.Remove(friendship2);
 
         await _dbContext.SaveChangesAsync();
+
+        var userDeleter = await _dbContext.Users.FindAsync(userId);
+
+        await WebSocketHandler.SendToUserAsync(friendId, new
+        {
+            Type = "delete_friend",
+            Data = new
+            {
+                removeById = userId,
+                removeByName = userDeleter.Name,
+                removeByEmail = userDeleter.Email
+            }
+        });
     }
 }
 

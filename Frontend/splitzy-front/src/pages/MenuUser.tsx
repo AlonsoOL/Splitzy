@@ -78,6 +78,14 @@ function MenuUser(){
                     setRefreshFriendList(prev => !prev)
                 }
 
+                if(msg.Type === "delete_friend"){
+                    const {removeByName} = msg.Data
+                    const message = `${removeByName} y tú ya no sois amigos.`
+
+                    setNotification(prev => [...prev, message])
+                    setRefreshFriendList(prev => !prev)
+                }
+
             }catch (e){
                 console.error("ws mensaje inválido", e)
             }
@@ -110,7 +118,7 @@ function MenuUser(){
         try{
             await acceptRequest(recivedId, senderId)
             setPending((cur) => cur.filter((r) => r.id !== requestId))
-            setRefreshFriendList(prev => prev)
+            setRefreshFriendList(prev => !prev)
         }
         catch(e){
             console.error("No se ha podido aceptar la solicitud de amistad", e)
