@@ -10,22 +10,29 @@ export const fetchPendingRequests = async (userId: number) => {
     return response.json()
 }
 
-export const fetchRecivedRequests = async (userId: number) =>{
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/pending/${userId}`)
-    if (!response.ok) throw new Error ("No se pudo obtener las solicitudes recibidas")
-    return response.json()
-}
-
-export const acceptRequest = async (requestId: number) => {
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/accept/${requestId}`, {
-        method: "POST"
+export const acceptRequest = async (recivedId: number, senderId: number) => {
+    const response = await fetch(`https://localhost:7044/api/FriendRequest/accept`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ recivedId, senderId}),
     })
     if (!response.ok) throw new Error ("No se ha podido enviar la solicitud")
 }
 
-export const rejectRequest = async (requestId: number) => {
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/reject/${requestId}`, {
-        method: "POST"
+export const rejectRequest = async (recivedId: number, senderId: number) => {
+    const response = await fetch(`https://localhost:7044/api/FriendRequest/reject`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ recivedId, senderId}),
     })
     if (!response.ok) throw new Error ("No se ha podido rechazar la solicitud")
+}
+
+export const friendDelete = async (userId: number, friendId: number) =>{
+    const response = await fetch(`https://localhost:7044/api/FriendRequest/remove`,{
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ userId, friendId}),
+    })
+    if (!response.ok) throw new Error ("Ha habido un fallo al eliminar la amistad")
 }

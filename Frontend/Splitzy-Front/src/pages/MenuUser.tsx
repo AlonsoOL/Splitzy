@@ -2,42 +2,172 @@ import { Button } from "@/components/ui/button"
 import { FriendList } from "@/components/FriendList"
 import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react";
+import { AddFriendModal } from "@/components/AddFriendModal";
+import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
+import { acceptRequest, fetchPendingRequests, rejectRequest } from "@/services/friendService";
+import { useWebsocket } from "@/context/WebSocketContext";
 
 interface JwtPayload{
     id: number;
 }
 
+interface FriendRequestDto{
+    id: number,
+    recivedId: number,
+    senderId: number,
+    senderName: string,
+    senderImageUrl: string,
+}
+
 function MenuUser(){
+    const socket = useWebsocket()
+    const [modalOpen, setModalOpen] = useState(false)
+    const sendRequest = useSendFriendRequest()
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
     const [userId, setUserId] = useState<number>(0)
+    const [ notification, setNotification ] = useState<string[]>([])
+    const [refreshFriendList, setRefreshFriendList] = useState(false)
+
+    const [ pending, setPending ] = useState<FriendRequestDto[]>([])
 
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setUserId(decoded.id)
-        console.log("este es el id", userId)
     }
     }, [])
-    console.log(token)
+    
+    useEffect(() =>{
+        if (!socket) return
+
+        fetchPendingRequests(userId).then((data: FriendRequestDto[]) =>{
+            setPending(data)
+        })
+        
+        const handler = (event: MessageEvent) => {
+            try {
+                const msg = JSON.parse(event.data)
+
+                if( msg.Type === "friend_request"){
+                    const request = msg.Data
+                    
+                    const newRequest: FriendRequestDto = {
+                        id: request.id,
+                        recivedId: userId,
+                        senderId: request.sender.SenderId,
+                        senderName: request.sender.name,
+                        senderImageUrl: request.sender.imageUrl
+                    }
+                    // console.log("esto es lo que envia el back ", newRequest)
+
+                    setPending((prev) => [...prev, newRequest])
+                }
+
+                if( msg.Type === "friend_request_reject"){
+                    const { RecivedName } = msg.Data
+                    const message = `${RecivedName} ha rechazado la solicitud de amistad`
+
+                    setNotification(prev => [...prev, message])
+                }
+
+                if(msg.Type === "friend_request_accept"){
+                    const { RecivedName } = msg.Data
+                    const message = `${RecivedName} ha aceptado la solicitud de amistad`
+
+                    setNotification(prev => [...prev, message])
+                    setRefreshFriendList(prev => !prev)
+                }
+
+                if(msg.Type === "delete_friend"){
+                    const {removeByName} = msg.Data
+                    const message = `${removeByName} y tú ya no sois amigos.`
+
+                    setNotification(prev => [...prev, message])
+                    setRefreshFriendList(prev => !prev)
+                }
+
+            }catch (e){
+                console.error("ws mensaje inválido", e)
+            }
+        }
+
+        socket.addEventListener("message", handler)
+        return () => { socket.removeEventListener("message", handler)}
+    }, [socket, userId])
+
+    useEffect(() =>{
+        if (notification.length === 0) return
+
+        const timer = setTimeout(() => {
+            setNotification(prev => prev.slice(1))
+        }, 3600)
+
+        return () =>clearTimeout(timer)
+    }, [notification])
+
+    const handleSendRequest = async (recivedId: number) => {
+        try{
+            await sendRequest(userId, recivedId)
+        }
+        catch{
+            alert("error al enviar la solicitud")
+        }
+    }
+
+    const handleAccept = async (recivedId: number, senderId:number, requestId:number) => {
+        try{
+            await acceptRequest(recivedId, senderId)
+            setPending((cur) => cur.filter((r) => r.id !== requestId))
+            setRefreshFriendList(prev => !prev)
+        }
+        catch(e){
+            console.error("No se ha podido aceptar la solicitud de amistad", e)
+        }
+    }
+
+    const handleReject = async (recivedId: number, senderId: number, requestid: number) => {
+        try{
+            await rejectRequest(recivedId, senderId)
+            setPending((cur) => cur.filter((r) => r.id !== requestid))
+        }
+        catch(e){
+            console.error("No se ha podido rechazar la solicitud", e)
+        }
+    }
     
     
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full flex flex-row items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
+                {notification.length > 0 && (
+                    <div className="absolute top-5 right-1 bg-black p-4">
+                    {notification.map((note) => (
+                        <div>{note}</div>
+                    ))}
+                    </div>
+                )}
                 <div className="w-1/6"></div>
                 <div className="w-1/2 flex flex-col xl:gap-10 md:gap-5">
                     {/* Sección de los amigos */}
                     <div className="bg-[#242424e0] rounded-[21px] overflow-hidden h-75 p-8">
                         <div className="flex flex-row mb-4">
                             <p className="w-1/2 text-left">Amigos</p>
-                            <div className="w-1/2 text-right">
-                                <a href="#">Añadir amigo</a>
+                            <div className="w-1/2 text-right ">
+                                <a className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
+                                <div className="absolute top-[50%] right-0 bg-black z-50 bg-[#24242468]">
+                                    <AddFriendModal 
+                                        isOpen={modalOpen}
+                                        onClose={() => setModalOpen(false)}
+                                        currentUserId={userId}
+                                        onSendRequest={handleSendRequest}>
+                                    </AddFriendModal>
+                                </div>
                             </div>
                         </div>
                         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
-                            <div className="flex flex-row border-bottom items-center border-b-2 pb-2">
+                            {/* <div className="flex flex-row border-bottom items-center border-b-2 pb-2">
                                 <div className="w-1/8 relative">
-                                    {/* Foto de perfil con estado de usuario*/}
+                                    Foto de perfil con estado de usuario
                                     <img src="prueba.png" className="w-10 h-10 mr-4 rounded-full"/>
                                     <div className="bg-green-500 w-4 h-4 rounded-full border border-stone-900 z-40 absolute bottom-0 xl:right-5 lg:right-2"></div>
                                 </div>
@@ -55,8 +185,8 @@ function MenuUser(){
                                     <p>Alonso</p>
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
-                            </div>
-                            <FriendList userId={userId}/>
+                            </div> */}
+                            <FriendList userId={userId} refreshSignal={refreshFriendList}/>
                         </div>
                     </div>
 
@@ -109,16 +239,25 @@ function MenuUser(){
                             <Button className="w-1/3">Rechazar</Button>
                         </div>
                     </div>
-                    <div className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
-                        <div className="w-3/4 space-y-2  text-left">
-                            <p><span className="font-bold">Raúl&nbsp;</span>te ha mandado una solicitud de amistad</p>
-                            <p className="text-sm text-stone-400">Soy Raúl el vecino</p>
+                    {/* Solicitudes de amistad */}
+                    {pending.length === 0 ? (
+                        <div></div>
+                    ) : ( 
+                        <div>
+                        {pending.map((req) =>(
+                            <div key={req.id} className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
+                                <div className="w-3/4 flex flex-row space-y-2 items-center text-left">
+                                    <img src={`https://localhost:7044${req.senderImageUrl}`} className="w-10 h-10 mr-4 rounded-full"/>
+                                    <p key={req.senderId}><span className="font-bold">{req.senderName}&nbsp;</span>te ha mandado una solicitud de amistad</p>
+                                </div>
+                                <div className="flex flex-raw w-1/4 justify-center gap-x-2">
+                                    <Button onClick={() => handleAccept(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
+                                    <Button onClick={() => handleReject(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
+                                </div>
+                            </div>
+                        ))}
                         </div>
-                        <div className="flex flex-raw w-1/4 justify-center gap-x-2">
-                            <Button className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>
-                            <Button className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"></Button>
-                        </div>
-                    </div>
+                    )}
                 </div>
                 <div className="w-1/6"></div>
             </div>

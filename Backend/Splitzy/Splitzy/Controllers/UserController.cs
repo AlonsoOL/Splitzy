@@ -23,14 +23,16 @@ public class UserController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpGet]
-    public IEnumerable<User> GetUsers()
+    public async Task<IActionResult> GetUsers()
     {
-        return _dbContext.Users
+        var users =  _dbContext.Users
             .Include(u => u.Friends)
                 .ThenInclude(uf => uf.Friend)
             .Include(u => u.FriendOf)
                 .ThenInclude(uf => uf.User)
             .ToList();
+
+        return Ok(users);
     }
 
     [Authorize(Roles = "Admin")]

@@ -11,11 +11,13 @@ public class FriendsController : Controller
 {
     private MyDbContext _dbContext;
     private readonly UserService _service;
+    private readonly SmartSearchService _smartSearchService;
 
-    public FriendsController(MyDbContext dbContext, UserService service)
+    public FriendsController(MyDbContext dbContext, UserService service, SmartSearchService smartSearchService)
     {
         _dbContext = dbContext;
         _service = service;
+        _smartSearchService = smartSearchService;
     }
 
     [HttpGet("friends/{userId}")]
@@ -39,5 +41,18 @@ public class FriendsController : Controller
         });
 
         return Ok(friends);
+    }
+
+    [HttpGet("GetAllUsers")]
+    public ActionResult<IEnumerable<User>> Search([FromQuery] string? query)
+    {
+        var (users, totalPages) = _smartSearchService.Search(query);
+
+        if (users == null)
+        {
+            return NotFound("El usuario no se ha podido encontrar");
+        }
+
+        return Ok(users);
     }
 }

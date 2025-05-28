@@ -1,13 +1,44 @@
 import { useEffect, useState} from "react"
-import { fetchFriendList } from "@/services/friendService"
+import { fetchFriendList, friendDelete } from "@/services/friendService"
+import { Button } from "./ui/button"
 
-export function FriendList({userId}: { userId: number }) {
+export function FriendList({userId, refreshSignal}: { userId: number, refreshSignal: boolean }) {
     const [friends, setFriends] = useState<any[]>([])
 
+    const fetchFriends = () =>{
+        fetchFriendList(userId).then(setFriends)
+    }
+
     useEffect(() =>{
-        fetchFriendList(userId).then(setFriends).catch(console.error)
-    }, [userId])
-    console.log("estos son mis amigos:", friends.map(friend => friend))
+        fetchFriends()
+    }, [userId, refreshSignal])
+    
+    const handleDeleteFriend = async (userId: number, friendId: number) =>{
+        try{
+            await friendDelete(userId, friendId)
+            setFriends(prev => prev.filter(f => f.id !== friendId))
+        }
+        catch(e){
+            console.log(e)
+            console.log("No se ha podido eliminar al amigo", e)
+        }
+    }
+
+    useEffect(() => {
+        const socket = new WebSocket("wss://localhost:7044/ws")
+        const handler = (event: MessageEvent) => {
+            const msg = JSON.parse(event.data)
+            if (msg === "friend_request_accept"){
+                fetchFriends()
+            }
+        }
+
+        socket.addEventListener("message", handler)
+        return () =>{
+            socket.removeEventListener("message", handler)
+        }
+    }, [])
+
     return(
         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
             {friends.length === 0 ?(
@@ -21,6 +52,9 @@ export function FriendList({userId}: { userId: number }) {
                     </div>
                     <div className="w-1/2 text-left">
                         <p>{friend.name}</p>
+                    </div>
+                    <div className="w-1/8 relative">
+                        <Button onClick={() => handleDeleteFriend(userId, friend.id)} className="w-10 h-10 bg-[url(/deleteUserFriend.svg)]! bg-transparent! bg-cover hover:border-none!"></Button>
                     </div>
                 </div>
             )))}

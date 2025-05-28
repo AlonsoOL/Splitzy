@@ -8,6 +8,7 @@ public class MyDbContext : DbContext
     private const string DATABASE_PATH = "splitzy.db";
 
     public DbSet<User> Users { get; set; }
+    public DbSet<UserFriend> UserFriends { get; set; }
     public DbSet<FriendRequest> FriendRequests { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RetroKits.Controllers;
 using Splitzy.Controllers;
 using Splitzy.Database;
 using Splitzy.Database.Repositories;
@@ -75,8 +76,10 @@ namespace Splitzy
 
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<FriendService>();
+            builder.Services.AddScoped<SmartSearchService>();
             builder.Services.AddScoped<FriendRequestController>();
             builder.Services.AddScoped<FriendsController>();
+            builder.Services.AddScoped<SmartSearchController>();
 
             var app = builder.Build();
 
@@ -111,6 +114,7 @@ namespace Splitzy
                 }
                 else
                 {
+                    context.Response.StatusCode = 400;
                     await next();
                 }
             });
