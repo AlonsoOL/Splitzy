@@ -21,7 +21,15 @@ Trabajos hechos por Alonso:
 15/05/2025 - Comienzo para habilitar las solicitudes de amistad en el front y poder gestionarlas
 17/05/2025 - Implementación de la función para ver la lista de amigos sin estilos
 18/05/2025 - Terminar de poner estilos a la lista de amigos
-
+20/05/2025 - Implementación de una lista de usuarios para enviar solicitudes y activación del websocket
+21/05/2025 - Función para enviar las solicitudes de amistad en el front
+22/05/2025 - Función para recibir las solicitudes de amistad, además de rechazarlas y aceptarlas en el front
+23/05/2025 - Función para eliminar amigos y 1º intento de uso de websocket
+24/05/2025 - Implementación de websocket para recivir, aceptar y rechazar solicitudes en tiempo real, además arreglo de menuAdmin que no cargaban los usuarios
+24/05/2025 - Actualización y eliminación de de amigos en la lista de amigos en tiempo real
+26/05/2025 - 4º intento de despliegue de la web, usé el nuevo back corregido para intetar que funcionase
+27/05/2025 - 5º intento de despliegue de la web, cree una instancia nueva y volví a configurarla desde 0. El back recive solicitudes pero no las devuelve
+28/05/2025 - 6º intento de despliegue de la web, continúo intentando desplegar el back y probar a desplegar el front también
 
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia
