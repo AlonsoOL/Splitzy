@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\services\\friendservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\services\\friendservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\alons\\documents\\2_daw\\proyecto_clase\\splitzy\\backend\\splitzy\\splitzy\\database\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 204,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
@@ -63,16 +63,17 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Program.cs",
               "RelativeDocumentMoniker": "Splitzy\\Program.cs",
               "ToolTip": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Program.cs",
               "RelativeToolTip": "Splitzy\\Program.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAApwHUAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAGQAAAAAAAAAAAApwHgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-29T10:56:07.846Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -84,7 +85,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\UserController.cs",
@@ -96,7 +97,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "WebSocketHandler.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\WebSocketHandler.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\WebSocketHandler.cs",
@@ -108,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "FriendServices.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\FriendServices.cs",
               "RelativeDocumentMoniker": "Splitzy\\Services\\FriendServices.cs",
@@ -121,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "FriendRequestController.cs",
               "DocumentMoniker": "C:\\Users\\alons\\Documents\\2_DAW\\proyecto_clase\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendRequestController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\FriendRequestController.cs",

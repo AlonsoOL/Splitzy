@@ -29,7 +29,7 @@ Trabajos hechos por Alonso:
 24/05/2025 - Actualización y eliminación de de amigos en la lista de amigos en tiempo real
 26/05/2025 - 4º intento de despliegue de la web, usé el nuevo back corregido para intetar que funcionase
 27/05/2025 - 5º intento de despliegue de la web, cree una instancia nueva y volví a configurarla desde 0. El back recive solicitudes pero no las devuelve
-28/05/2025 - 6º intento de despliegue de la web, continúo intentando desplegar el back y probar a desplegar el front también
+28/05/2025 - 6º intento de despliegue de la web, continúo intentando desplegar el back y he conseguido desplegar el front y poner una dirección dns y su certificado para usar HTTPS
 
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia
