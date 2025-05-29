@@ -1,8 +1,10 @@
 import { Button } from "./ui/button"
 import { useAuth } from "@/context/AuthContext"
+import { useNotification } from "@/context/NotificationContext"
 
 function Header(){
     const {user, isAuthenticated, logout} = useAuth()
+    const { hasNotification } = useNotification()
 
 
     return(
@@ -18,7 +20,7 @@ function Header(){
                     {user && isAuthenticated ?(
                         <div className="relative group inline-block">
                             <div id="" className="hidden group-hover:flex bg-[#242424] flex-col block absolute top-full right-[-55px] z-10 rounded-[10px]">
-                                <a href="#" className="h-full p-2 mt-2 hover:underline decoration-1">Perfil</a>
+                                <a href="/user-profile" className="h-full p-2 mt-2 hover:underline decoration-1">Perfil</a>
                                 <Button onClick={logout} className="m-2 hover:bg-red-500! hover:text-red-50! hover:border-transparent! hover:transition!">Cerrar sesión</Button>
                             </div>
                             <img
@@ -29,9 +31,16 @@ function Header(){
                             
                         </div>
                     ) : (
-                        <a href="/login">Perfil</a>
+                        <a href="/user-profile">Perfil</a>
                         )}
-                    <a href="">Actividad</a>
+                    <a href="/menu-user" className="relative">
+                        Actividad
+                        {hasNotification && (
+                            <div className="flex bg-red-500 rounded-full w-4! h-4! absolute top-[-5px] right-[-13px] items-center justify-center">
+                                <div className="bg-white rounded-full w-2! h-2! z-50"></div>
+                            </div>
+                        )}
+                    </a>
                     <a href="">Amigos</a>
                     <a href="/menu-user">Grupos</a>
                     {user?.role === "Admin" && (

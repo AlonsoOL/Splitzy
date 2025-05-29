@@ -6,6 +6,7 @@ import { AddFriendModal } from "@/components/AddFriendModal";
 import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
 import { acceptRequest, fetchPendingRequests, rejectRequest } from "@/services/friendService";
 import { useWebsocket } from "@/context/WebSocketContext";
+import { useNotification } from "@/context/NotificationContext";
 
 interface JwtPayload{
     id: number;
@@ -27,6 +28,7 @@ function MenuUser(){
     const [userId, setUserId] = useState<number>(0)
     const [ notification, setNotification ] = useState<string[]>([])
     const [refreshFriendList, setRefreshFriendList] = useState(false)
+    const { clearNotification } = useNotification()
 
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
 
@@ -128,7 +130,9 @@ function MenuUser(){
     const handleReject = async (recivedId: number, senderId: number, requestid: number) => {
         try{
             await rejectRequest(recivedId, senderId)
+            clearNotification()
             setPending((cur) => cur.filter((r) => r.id !== requestid))
+            
         }
         catch(e){
             console.error("No se ha podido rechazar la solicitud", e)
@@ -153,8 +157,8 @@ function MenuUser(){
                         <div className="flex flex-row mb-4">
                             <p className="w-1/2 text-left">Amigos</p>
                             <div className="w-1/2 text-right ">
-                                <a className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
-                                <div className="absolute top-[50%] right-0 bg-black z-50 bg-[#24242468]">
+                                <a href="#" className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
+                                <div>
                                     <AddFriendModal 
                                         isOpen={modalOpen}
                                         onClose={() => setModalOpen(false)}
