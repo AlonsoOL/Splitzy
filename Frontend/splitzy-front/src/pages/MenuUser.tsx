@@ -7,7 +7,6 @@ import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
 import { acceptRequest, fetchPendingRequests, rejectRequest } from "@/services/friendService";
 import { useWebsocket } from "@/context/WebSocketContext";
 import { useNotification } from "@/context/NotificationContext";
-import { SeparatorVertical } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 interface JwtPayload{
