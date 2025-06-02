@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Splitzy.Database;
 using Splitzy.Models;
 using Splitzy.Services;
@@ -18,13 +19,20 @@ public class UserController : ControllerBase
     {
         _dbContext = dbContext;
         _service = service;
-    }
+    }   
 
     [Authorize(Roles = "Admin")]
     [HttpGet]
-    public IEnumerable<User> GetUsers()
+    public async Task<IActionResult> GetUsers()
     {
-        return _dbContext.Users;
+        var users =  _dbContext.Users
+            .Include(u => u.Friends)
+                .ThenInclude(uf => uf.Friend)
+            .Include(u => u.FriendOf)
+                .ThenInclude(uf => uf.User)
+            .ToList();
+
+        return Ok(users);
     }
 
     [Authorize(Roles = "Admin")]

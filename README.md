@@ -11,3 +11,7 @@ Despliegues:
 Aplicación en producción:
 
 Landing page:
+
+
+Video de avance del proyecto:
+[Enlace a Youtube](https://youtu.be/Sf8EIQ-Qa7Q?si=8mSXn9jmWGfuhWeN)
