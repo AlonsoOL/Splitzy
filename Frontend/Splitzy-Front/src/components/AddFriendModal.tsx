@@ -44,7 +44,7 @@ export function AddFriendModal({
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
-    console.log(users)
+    console.log("cambios hechos restaurados")
     return(
         <div className="absolute left-0 top-0 bg-[#242424a6]! w-full h-full">
             <div className={`absolute w-[50%] h-[50%] bg-black z-50 bg-[#242424]! rounded-[21px] top-[10%] right-[25%] overflow-hidden ${isOpen ? "flex" : "hidden"}`} >
@@ -61,7 +61,7 @@ export function AddFriendModal({
                                 <div className="flex w-1/3 justify-center">
                                     <img src={`https://localhost:7044${user.imageUrl}`}  className="w-15 h-15 mr-4 rounded-full"/>
                                     </div>
-                                <a href="#" className="w-1/3">{user.name}</a>
+                                <span className="w-1/3"><a href={`/user-name`}>{user.name}</a></span>
                                 <span className="w-1/3">{user.email}</span>
                                 <Button onClick={() => onSendRequest(user.id)}>Enviar solicitud</Button>
                             </div>
