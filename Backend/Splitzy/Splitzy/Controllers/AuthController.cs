@@ -9,6 +9,9 @@ using System.Security.Claims;
 
 namespace Splitzy.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
+
 public class AuthController : Controller
 {
     private readonly IConfiguration _configuration;
