@@ -12,7 +12,6 @@ import MenuUser from "@/pages/MenuUser"
 import MenuAdmin from "@/pages/MenuAdmin"
 import ProtectRoute from "@/components/ProtectedRoute"
 import UserProfile from "@/pages/userProfile"
-import { NotificationProvider } from "@/context/NotificationContext"
 
 function Home() {
   return (
@@ -93,7 +92,7 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <NotificationProvider>
+        {/* <WebSocketProvider> */}
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -113,7 +112,7 @@ function App() {
               </ProtectRoute>}/>
           </Routes>
           <Footer />
-        </NotificationProvider>
+        {/* </WebSocketProvider> */}
       </AuthProvider>
     </>
   )

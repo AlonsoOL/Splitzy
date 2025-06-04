@@ -75,7 +75,7 @@ function Register(){
         }
 
         try{
-            const response = await fetch("https://localhost:7044/api/Auth/register", {
+            const response = await fetch("https://localhost:7044/register", {
                 method: 'POST',
                 body: formData,
             });
