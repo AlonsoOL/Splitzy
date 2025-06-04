@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Splitzy")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a4813d00e3b44c8bb4ffdcd8b1797a099c62cb7")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+843f807c6a5ee36d6210ece70914fda706992c24")]
+>>>>>>> parent of a6abf95 (cambios básicos en front y back)
 [assembly: System.Reflection.AssemblyProductAttribute("Splitzy")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Splitzy")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

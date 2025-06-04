@@ -1,6 +1,9 @@
 "use client"
 
+<<<<<<< HEAD
 import {LOGIN} from "../config.ts"
+=======
+>>>>>>> parent of a6abf95 (cambios básicos en front y back)
 import { jwtDecode } from "jwt-decode"
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useNavigate } from "react-router-dom"
@@ -40,7 +43,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string, rememberMe: boolean) => {
     try {
+<<<<<<< HEAD
       const response = await fetch(LOGIN, {
+=======
+      const response = await fetch("https://localhost:7044/login", {
+>>>>>>> parent of a6abf95 (cambios básicos en front y back)
         method: "POST",
         headers: {
           accept: "text/plain", 
