@@ -13,6 +13,7 @@ const NotificationContext = createContext<NotificationContextType>({
     setHasNotification: () => {},
     clearNotification: () => {}
 })
+console.log("tengo que añadir más mensajes para gestionar cosas")
 
 export const useNotification = () => useContext(NotificationContext)
 
