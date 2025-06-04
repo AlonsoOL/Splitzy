@@ -1,17 +1,19 @@
+import { ACCEPTREQUEST, FETCHFRIENDLIST, FETCHREQUESTPENDING, REJECTREQUEST, REMOVEFRIEND } from "@/config"
+
 export const fetchFriendList = async (userId: number) => {
-    const response = await fetch(`https://localhost:7044/api/Friends/friends/${userId}`)
+    const response = await fetch(`${FETCHFRIENDLIST}${userId}`)
     if (!response.ok) throw new Error ("No se pudo obtener la lista de amigos")
     return response.json()
 }
 
 export const fetchPendingRequests = async (userId: number) => {
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/pending/${userId}`)
+    const response = await fetch(`${FETCHREQUESTPENDING}${userId}`)
     if (!response.ok) throw new Error ("No se pudo obtener las solicitudes pendientes")
     return response.json()
 }
 
 export const acceptRequest = async (recivedId: number, senderId: number) => {
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/accept`, {
+    const response = await fetch(ACCEPTREQUEST, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ recivedId, senderId}),
@@ -20,7 +22,7 @@ export const acceptRequest = async (recivedId: number, senderId: number) => {
 }
 
 export const rejectRequest = async (recivedId: number, senderId: number) => {
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/reject`, {
+    const response = await fetch(REJECTREQUEST, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ recivedId, senderId}),
@@ -29,7 +31,7 @@ export const rejectRequest = async (recivedId: number, senderId: number) => {
 }
 
 export const friendDelete = async (userId: number, friendId: number) =>{
-    const response = await fetch(`https://localhost:7044/api/FriendRequest/remove`,{
+    const response = await fetch(REMOVEFRIEND,{
         method: "DELETE",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ userId, friendId}),

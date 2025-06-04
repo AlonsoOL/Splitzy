@@ -9,6 +9,9 @@ using System.Security.Claims;
 
 namespace Splitzy.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
+
 public class AuthController : Controller
 {
     private readonly IConfiguration _configuration;
@@ -27,6 +30,7 @@ public class AuthController : Controller
     [HttpPost("login")]
     public ActionResult<string> Login([FromBody] LoginDto data)
     {
+        Console.WriteLine("esto es para que se guarde bien");
         // 1. Comprobar si el usuario ya existe
         var existingUser = _dbContext.Users.SingleOrDefault(u => u.Email == data.Email);
 

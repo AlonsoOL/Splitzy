@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { jwtDecode, JwtPayload } from "jwt-decode"
 import { useEffect, useState } from "react"
 
 interface User{
@@ -12,7 +11,6 @@ interface User{
 
 function MenuAdmin(){
     const [users, setUsers] = useState<User[]>([])
-    const [loading, setLoading] = useState(true)
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
 
     useEffect(() => {        
@@ -36,15 +34,12 @@ function MenuAdmin(){
                 console.log("estoy dentro del catch")
                 console.error("Error al cargar los usuarios:", error)
             }
-            finally{
-                setLoading(false)
-            }
         }
 
         fetchUsers()
 
     }, [])
-    
+    console.log("Hola")
 
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
