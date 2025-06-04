@@ -35,19 +35,15 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
-    [Authorize(Roles = "Admin")]
-    [HttpGet("GetCurrentUser")]
+
+    [HttpGet("GetCurrentUser/{id}")]
     public async Task<ActionResult<int>>GetCurrentUser(int id) 
     {
-        var user = await _dbContext.Users
-            .FindAsync(id);
+        Claim userClaimId = User.FindFirst("id");
 
-        if (user == null) 
-        {
-            return NotFound("El usuario no se ha podido encontrar");
-        }
+        var userId = userClaimId.Value;
 
-        return Ok(user);
+        return Ok(await _service.GetByIdAsync(id));
     }
 
     [HttpPut("Update_User")]
@@ -71,8 +67,6 @@ public class UserController : ControllerBase
         return Ok(await _service.UpdateRole(userRole));
     }
 
-
-    [Authorize(Roles = "Admin")]
     [HttpDelete("Delete_User/{id}")]
     public async Task<ActionResult> DeleteAsyncUser(int id)
     {

@@ -96,9 +96,8 @@ function MenuAdmin(){
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full flex flex-row items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
-                {/* Sección actividad reciente */}
                 <div className="w-1/2 h-160 p-8 bg-[#1b1b1b48] rounded-[21px] space-y-3">
-                    <div className="text-xl">Lista de usuarios</div>
+                    <div className="text-3xl">Lista de usuarios</div>
                     <div className="flex flex-raw border-b-1 border-stone-500 items-center pb-3">
                         <div className="flex flex-raw items-center w-full">
                             <p className="w-1/5">Foto de perfil</p>

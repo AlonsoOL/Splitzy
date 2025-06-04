@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { REGISTER } from "@/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -75,7 +76,7 @@ function Register(){
         }
 
         try{
-            const response = await fetch("https://localhost:7044/register", {
+            const response = await fetch(REGISTER, {
                 method: 'POST',
                 body: formData,
             });

@@ -11,7 +11,7 @@ import { ArrowRight } from "lucide-react"
 import MenuUser from "@/pages/MenuUser"
 import MenuAdmin from "@/pages/MenuAdmin"
 import ProtectRoute from "@/components/ProtectedRoute"
-import UserProfile from "@/pages/currentUserProfile"
+import UserProfile from "@/pages/userProfile"
 import { NotificationProvider } from "@/context/NotificationContext"
 import CurrentUserProfile from "@/pages/currentUserProfile"
 
