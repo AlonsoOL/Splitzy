@@ -7,6 +7,8 @@ const FETCHREQUESTPENDING = `${API_BASE_URL}/api/FriendRequest/pending/`
 const ACCEPTREQUEST = `${API_BASE_URL}/api/FriendRequest/accept`
 const REJECTREQUEST = `${API_BASE_URL}/api/FriendRequest/reject`
 const REMOVEFRIEND = `${API_BASE_URL}/api/FriendRequest/remove`
+const GETALLUSERS = `${API_BASE_URL}/api/Friends/GetAllUsers`
+const CHANGEROLE = `${API_BASE_URL}/api/User/Update_UserRole`
 const GETUSERSADMIN = `${API_BASE_URL}/api/User` 
 //const WEBSOCKET = `${API_BASE_URL}`
 
@@ -18,5 +20,7 @@ export {
     ACCEPTREQUEST,
     REJECTREQUEST,
     REMOVEFRIEND,
+    GETALLUSERS,
+    CHANGEROLE,
     GETUSERSADMIN
 }

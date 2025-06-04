@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
+import { GETALLUSERS } from "@/config"
 
 interface User {
     id: number,
@@ -27,7 +28,7 @@ export function AddFriendModal({
     useEffect(() => {
         if(isOpen){
             document.body.style.overflow = "hidden"
-            fetch("https://localhost:7044/api/Friends/GetAllUsers")
+            fetch(GETALLUSERS)
             .then((res) => res.json()
             .then((data) =>setUsers(data.filter((u: User) => u.id !== currentUserId ))))
         }
