@@ -37,6 +37,7 @@ public class FriendsController : Controller
         {
             Id = f.FriendId,
             Name = f.Friend.Name,
+            Email = f.Friend.Email,
             ProfilePicture = f.Friend.ImageUrl
         });
 
