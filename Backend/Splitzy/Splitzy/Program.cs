@@ -33,7 +33,8 @@ namespace Splitzy
             builder.Services.AddAuthentication()
                 .AddJwtBearer(options => 
                 {
-                    string key = Environment.GetEnvironmentVariable("JWT_KEY");
+                    //string key = Environment.GetEnvironmentVariable("JWT_KEY");
+                    string key = builder.Configuration["JwtSettings:Key"];
 
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
