@@ -11,7 +11,9 @@ import { ArrowRight } from "lucide-react"
 import MenuUser from "@/pages/MenuUser"
 import MenuAdmin from "@/pages/MenuAdmin"
 import ProtectRoute from "@/components/ProtectedRoute"
-import UserProfile from "@/pages/userProfile"
+import UserProfile from "@/pages/currentUserProfile"
+import { NotificationProvider } from "@/context/NotificationContext"
+import CurrentUserProfile from "@/pages/currentUserProfile"
 
 function Home() {
   return (
@@ -92,7 +94,7 @@ function App() {
   return (
     <>
       <AuthProvider>
-        {/* <WebSocketProvider> */}
+        <NotificationProvider>
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -108,11 +110,15 @@ function App() {
               </ProtectRoute>}/>
             <Route path="/user-profile" element={
               <ProtectRoute>
+                <CurrentUserProfile/>
+              </ProtectRoute>}/>
+            <Route path="/user-name" element={
+              <ProtectRoute>
                 <UserProfile/>
               </ProtectRoute>}/>
           </Routes>
           <Footer />
-        {/* </WebSocketProvider> */}
+        </NotificationProvider>
       </AuthProvider>
     </>
   )

@@ -27,7 +27,7 @@ public class AuthController : Controller
     [HttpPost("login")]
     public ActionResult<string> Login([FromBody] LoginDto data)
     {
-        Console.WriteLine("a ver si consigo arreglarlo");
+        Console.WriteLine("ruta api actualizada");
         // 1. Comprobar si el usuario ya existe
         var existingUser = _dbContext.Users.SingleOrDefault(u => u.Email == data.Email);
 

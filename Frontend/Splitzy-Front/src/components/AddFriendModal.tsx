@@ -5,7 +5,7 @@ import { GETALLUSERS } from "@/config"
 interface User {
     id: number,
     name: string,
-    mail: string,
+    email: string,
     imageUrl: string,
 }
 
@@ -44,21 +44,31 @@ export function AddFriendModal({
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
+    console.log("cambios hechos restaurados")
     return(
-        <div className={`${isOpen ? "flex" : "hidden"}`} >
-            <div>
-                <input placeholder="Buscar usuarios..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
-                <div className="flex flex-col items-center border-1 border-solid bg-blue-500">
-                    {filteredUsers.map((user) => (
-                        <div key={user.id} className="">
-                            <img src={`https://localhost:7044${user.imageUrl}`}  className="w-10 h-10 mr-4 rounded-full"/>
-                            <span>{user.name}</span>
-                            <span>{user.mail}</span>
-                            <Button onClick={() => onSendRequest(user.id)}>Enviar solicitud</Button>
-                        </div>
-                    ))}
+        <div className="absolute left-0 top-0 bg-[#242424a6]! w-full h-full">
+            <div className={`absolute w-[50%] h-[50%] bg-black z-50 bg-[#242424]! rounded-[21px] top-[10%] right-[25%] overflow-hidden ${isOpen ? "flex" : "hidden"}`} >
+                <div className="w-full h-full p-4 space-y-4 overflow-y-auto">
+                    <div className="flex w-full space-y-4 items-center text-left">
+                        <span className="w-1/3 text-center">Foto de perfil</span>
+                        <span className="w-1/3">Nombre</span>
+                        <span className="w-1/3"> Correo electrónico</span>
+                        <input className="p-2" placeholder="Buscar usuarios..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+                    </div>
+                    <div className="flex flex-col items-center w-full">
+                        {filteredUsers.map((user) => (
+                            <div key={user.id} className="flex w-full space-y-4 items-center text-left">
+                                <div className="flex w-1/3 justify-center">
+                                    <img src={`https://localhost:7044${user.imageUrl}`}  className="w-15 h-15 mr-4 rounded-full"/>
+                                    </div>
+                                <span className="w-1/3"><a href={`/user-name`}>{user.name}</a></span>
+                                <span className="w-1/3">{user.email}</span>
+                                <Button onClick={() => onSendRequest(user.id)}>Enviar solicitud</Button>
+                            </div>
+                        ))}
+                    </div>
+                    <Button onClick={onClose}>Cerrar</Button>
                 </div>
-                <Button onClick={onClose}>Cerrar</Button>
             </div>
         </div>
     )
