@@ -1,30 +1,47 @@
 import { Button } from "@/components/ui/button"
-import { jwtDecode, JwtPayload } from "jwt-decode"
+import { CHANGEROLE, GETUSERSADMIN } from "@/config"
+import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react"
 
+interface JwtPayload{
+    id: number
+}
+
 interface User{
-    id: string,
+    id: number,
     name: string,
     email: string,
     role: string,
     imageUrl?: string,
 }
 
+interface HandleRole{
+    userId: number,
+    Role: string,
+}
+
 function MenuAdmin(){
     const [users, setUsers] = useState<User[]>([])
-    const [loading, setLoading] = useState(true)
+    const [currentUserId, setCurrentUserId] = useState<number>(0)
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
+
+    useEffect(() => {
+        if(token){
+        const decoded = jwtDecode<JwtPayload>(token)
+        setCurrentUserId(decoded.id)
+    }
+    }, [])
 
     useEffect(() => {        
         const fetchUsers = async() => {
             try{
-                const response = await fetch("https://localhost:7044/api/User",{
+                const response = await fetch(GETUSERSADMIN,{
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`
                     },
                 })
-                console.log("este es el ussuario", token)
+                
                 if(!response.ok){
                     console.log("estoy dentro del if")
                     throw new Error("error al cargar a los usuarios")
@@ -36,15 +53,45 @@ function MenuAdmin(){
                 console.log("estoy dentro del catch")
                 console.error("Error al cargar los usuarios:", error)
             }
-            finally{
-                setLoading(false)
-            }
         }
 
         fetchUsers()
 
     }, [])
-    
+
+    const HandleChangeRole = async (userId: number, Role:string) => {
+
+        if(currentUserId == userId){
+            console.log("No te puedes cambiar el rol a ti mismo")
+        }
+        else{
+            if(Role == "Admin"){
+            Role = "User"
+            }
+            else{
+                Role = "Admin"
+            }
+
+            const payload: HandleRole = {userId, Role}
+
+            const response = await fetch(CHANGEROLE ,{
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            })
+            const updateUser: User = await response.json()
+            
+            setUsers(prevUsers => prevUsers.map(user => user.id === userId ? {...user, role:updateUser.role} : user))
+            if(!response.ok){
+                const error = await response.json()
+                console.log("error al manejar el rol")
+                throw new Error(error.Message)
+            }
+        }
+    }
 
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
@@ -69,7 +116,7 @@ function MenuAdmin(){
                                 <p className="w-1/5">{user.name}</p>
                                 <p className="w-1/5">{user.email}</p>
                                 <p className="w-1/5">{user.role}</p>
-                                <Button className="hover:bg-green-400! w-1/5">Cambiar rol</Button>
+                                <Button className="hover:bg-green-400! w-1/5" onClick={() => HandleChangeRole(user.id, user.role)}>Cambiar rol</Button>
                             </div>
                         </div>
                     ))}

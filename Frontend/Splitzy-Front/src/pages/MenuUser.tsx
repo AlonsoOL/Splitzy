@@ -6,6 +6,8 @@ import { AddFriendModal } from "@/components/AddFriendModal";
 import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
 import { acceptRequest, fetchPendingRequests, rejectRequest } from "@/services/friendService";
 import { useWebsocket } from "@/context/WebSocketContext";
+import { useNotification } from "@/context/NotificationContext";
+import { Separator } from "@/components/ui/separator";
 
 interface JwtPayload{
     id: number;
@@ -27,9 +29,10 @@ function MenuUser(){
     const [userId, setUserId] = useState<number>(0)
     const [ notification, setNotification ] = useState<string[]>([])
     const [refreshFriendList, setRefreshFriendList] = useState(false)
+    const { clearNotification } = useNotification()
 
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
-
+    console.log("hola, arreglado")
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
@@ -128,7 +131,9 @@ function MenuUser(){
     const handleReject = async (recivedId: number, senderId: number, requestid: number) => {
         try{
             await rejectRequest(recivedId, senderId)
+            clearNotification()
             setPending((cur) => cur.filter((r) => r.id !== requestid))
+            
         }
         catch(e){
             console.error("No se ha podido rechazar la solicitud", e)
@@ -153,8 +158,8 @@ function MenuUser(){
                         <div className="flex flex-row mb-4">
                             <p className="w-1/2 text-left">Amigos</p>
                             <div className="w-1/2 text-right ">
-                                <a className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
-                                <div className="absolute top-[50%] right-0 bg-black z-50 bg-[#24242468]">
+                                <a href="#" className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
+                                <div>
                                     <AddFriendModal 
                                         isOpen={modalOpen}
                                         onClose={() => setModalOpen(false)}
@@ -199,7 +204,7 @@ function MenuUser(){
                             </div>
                         </div>
                         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
-                            <div className="flex flex-row items-center border-b-2 pb-2">
+                            <div className="flex flex-row items-center pb-2">
                                 <div className="w-1/8">
                                     <p>abr</p>
                                     <p>14</p>
@@ -211,7 +216,8 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
                             </div>
-                            <div className="flex flex-row items-center border-b-2 pb-2">
+                            <Separator/>
+                            <div className="flex flex-row items-center pb-2">
                                 <div className="w-1/8">
                                     <p>abr</p>
                                     <p>14</p>
@@ -223,6 +229,7 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">Debes 30€</p>
                             </div>
+                            <Separator/>
                         </div>
                         
                     </div>
@@ -230,7 +237,7 @@ function MenuUser(){
                 {/* Sección actividad reciente */}
                 <div className="w-1/2 h-160 p-8 bg-[#242424e0] rounded-[21px] space-y-3">
                     <div className="text-xl">Actividad reciente</div>
-                    <div className="flex flex-col border-b-1 border-stone-500 space-y-3 pb-3">
+                    <div className="flex flex-col border-b-1 border-white-500 space-y-3 pb-3">
                         <div className="flex flex-raw justify-center">
                             <span className="font-bold">Iván&nbsp;</span> te ha invitado al grupo <p className="font-bold">&nbsp;fiesta fin de curso</p>.
                         </div>
@@ -245,7 +252,7 @@ function MenuUser(){
                     ) : ( 
                         <div>
                         {pending.map((req) =>(
-                            <div key={req.id} className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
+                            <div key={req.id} className="flex flex-raw border-b-1 border-white-500 justify-center items-center pb-3">
                                 <div className="w-3/4 flex flex-row space-y-2 items-center text-left">
                                     <img src={`https://localhost:7044${req.senderImageUrl}`} className="w-10 h-10 mr-4 rounded-full"/>
                                     <p key={req.senderId}><span className="font-bold">{req.senderName}&nbsp;</span>te ha mandado una solicitud de amistad</p>
