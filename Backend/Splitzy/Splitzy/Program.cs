@@ -58,16 +58,13 @@ namespace Splitzy
                 options.OperationFilter<SecurityRequirementsOperationFilter>(true, JwtBearerDefaults.AuthenticationScheme);
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            if (builder.Environment.IsDevelopment())
+            builder.Services.AddCors(options =>
             {
-                builder.Services.AddCors(options =>
+                options.AddDefaultPolicy(builder =>
                 {
-                    options.AddDefaultPolicy(builder =>
-                    {
-                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                    });
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
-            }
+            });
 
             builder.Services.AddEndpointsApiExplorer();
 
