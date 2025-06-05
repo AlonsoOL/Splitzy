@@ -14,6 +14,8 @@ import { Separator } from "@/components/ui/separator";
 import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { FriendList } from "@/components/FriendList";
+import { useWebsocket } from "@/context/WebSocketContext";
 
 interface JwtPayload{
     id: number
@@ -30,10 +32,13 @@ interface userProfile{
 }
 
 function CurrentUserProfile(){
+    const socket = useWebsocket()
     const [currentUserId, setCurrentUserId] = useState<number>(0)
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
     const [user, setUser] = useState<userProfile | null>(null)
+    const [ notification, setNotification ] = useState<string[]>([])
     const navigate = useNavigate();
+    const [refreshFriendList, setRefreshFriendList] = useState(false)
 
     useEffect(() => {
         if(token){
@@ -41,6 +46,55 @@ function CurrentUserProfile(){
         setCurrentUserId(decoded.id)
     }
     }, [])
+
+    useEffect(() =>{
+            if (!socket) return
+            
+            const handler = (event: MessageEvent) => {
+                try {
+                    const msg = JSON.parse(event.data)
+    
+                    if( msg.Type === "friend_request_reject"){
+                        const { RecivedName } = msg.Data
+                        const message = `${RecivedName} ha rechazado la solicitud de amistad`
+    
+                        setNotification(prev => [...prev, message])
+                    }
+    
+                    if(msg.Type === "friend_request_accept"){
+                        const { RecivedName } = msg.Data
+                        const message = `${RecivedName} ha aceptado la solicitud de amistad`
+    
+                        setNotification(prev => [...prev, message])
+                        setRefreshFriendList(prev => !prev)
+                    }
+    
+                    if(msg.Type === "delete_friend"){
+                        const {removeByName} = msg.Data
+                        const message = `${removeByName} y tú ya no sois amigos.`
+    
+                        setNotification(prev => [...prev, message])
+                        setRefreshFriendList(prev => !prev)
+                    }
+    
+                }catch (e){
+                    console.error("ws mensaje inválido", e)
+                }
+            }
+    
+            socket.addEventListener("message", handler)
+            return () => { socket.removeEventListener("message", handler)}
+        }, [socket, currentUserId])
+
+        useEffect(() =>{
+            if (notification.length === 0) return
+
+            const timer = setTimeout(() => {
+                setNotification(prev => prev.slice(1))
+            }, 3600)
+
+            return () =>clearTimeout(timer)
+        }, [notification])
 
     useEffect(() =>{
         const fetchProfile = async () => {
@@ -88,6 +142,13 @@ function CurrentUserProfile(){
     return (
         <div className="min-h-screen w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full p-10 items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
+                {notification.length > 0 && (
+                    <div className="absolute top-5 right-1 bg-black p-4">
+                    {notification.map((note) => (
+                        <div>{note}</div>
+                    ))}
+                    </div>
+                )}
                 <div className="w-full h-160 p-20 bg-[#1b1b1b48] rounded-[21px] space-x-4  flex flex-raw">
                     {user && (
                         <div className="w-[50%] items-center flex flex-col h-full space-y-6">
@@ -168,8 +229,9 @@ function CurrentUserProfile(){
                         </div>
                     )}
                     <Separator orientation="vertical"/>
-                    <div>
+                    <div className="w-[40%] space-y-6">
                         <div className="text-4xl">Amigos:</div>
+                        <FriendList userId={currentUserId} refreshSignal={refreshFriendList}/>
                     </div>
                 </div>
             </div>

@@ -30,9 +30,8 @@ function MenuUser(){
     const [ notification, setNotification ] = useState<string[]>([])
     const [refreshFriendList, setRefreshFriendList] = useState(false)
     const { clearNotification } = useNotification()
-
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
-    console.log("hola, arreglado")
+
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
