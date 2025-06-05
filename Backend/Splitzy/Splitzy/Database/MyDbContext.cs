@@ -11,6 +11,12 @@ public class MyDbContext : DbContext
     public DbSet<UserFriend> UserFriends { get; set; }
     public DbSet<FriendRequest> FriendRequests { get; set; }
 
+    public DbSet<Group> Groups { get; set; }
+    public DbSet<Expense> Expenses { get; set; }
+    public DbSet<Debt> Debts { get; set; }
+    public DbSet<Payment> Payments { get; set; }
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 #if DEBUG
@@ -31,6 +37,11 @@ public class MyDbContext : DbContext
             .WithMany(u => u.Friends)
             .HasForeignKey(uf => uf.UserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Group>()
+            .HasMany(g => g.Users)
+            .WithMany(u => u.Groups)
+            .UsingEntity(j => j.ToTable("GroupUsers"));
 
         modelBuilder.Entity<UserFriend>()
             .HasOne(uf => uf.Friend)

@@ -6,9 +6,11 @@ public class UnitOfWork
 {
     private readonly MyDbContext _dataContext;
     private UserRepository _userRepository = null!;
+    private GroupRepository _groupRepository = null!;
 
 
     public UserRepository UserRepository => _userRepository ??= new UserRepository(_dataContext);
+    public GroupRepository GroupRepository => _groupRepository ??= new GroupRepository(_dataContext);
 
 
 
