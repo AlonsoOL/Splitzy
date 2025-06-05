@@ -4,7 +4,7 @@ public class Group
 {
     public Guid Id { get; set; }
     public required string Name { get; set; }
-    public required ICollection<User> Users { get; set; }
+    public List<User> Users { get; set; } = new List<User>();
 
     public ICollection<Expense>? Expenses { get; set; } 
 

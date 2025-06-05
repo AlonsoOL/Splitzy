@@ -123,6 +123,27 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "AddMemberToGroup",
+    "RelativePath": "api/Group/AddMemberToGroup/{groupId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
     "Method": "CreateGroup",
     "RelativePath": "api/Group/CreateGroup",
     "HttpMethod": "POST",
@@ -148,6 +169,22 @@
         "Name": "imageUrl",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "DeleteGroup",
+    "RelativePath": "api/Group/DeleteGroup/{groupId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

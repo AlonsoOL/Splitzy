@@ -61,6 +61,29 @@ namespace Splitzy.Controllers
             return Ok(createdGroup);
         }
 
+        [HttpDelete("DeleteGroup/{groupId}")]
+        public async Task<IActionResult> DeleteGroup(Guid groupId)
+        {
+            var result = await _service.DeleteAsyncGroupById(groupId);
+            if (!result)
+            {
+                return NotFound("Grupo no encontrado o no se pudo eliminar.");
+            }
+            return NoContent();
+        }
+
+        [HttpPost("AddMemberToGroup/{groupId}")]
+        public async Task<IActionResult> AddMemberToGroup(Guid groupId,int userId)
+        {
+            if (userId <= 0)
+            {
+                return BadRequest("ID de usuario inválido.");
+            }
+
+            var result = await _service.AddMemberToGroupAsync(groupId, userId);
+            return Ok("Miembro añadido al grupo exitosamente.");
+        }
+        
         /*
         [HttpPut("UpdateGroup/{groupId}")]
         public async Task<IActionResult> UpdateGroup(int groupId, [FromBody] Group group)
@@ -77,17 +100,11 @@ namespace Splitzy.Controllers
             }
             return Ok(updatedGroup);
         }
+        */
+        /*
+        
 
-        [HttpDelete("DeleteGroup/{groupId}")]
-        public async Task<IActionResult> DeleteGroup(int groupId)
-        {
-            var result = await _service.DeleteGroupAsync(groupId);
-            if (!result)
-            {
-                return NotFound("Grupo no encontrado o no se pudo eliminar.");
-            }
-            return NoContent();
-        }
+        
 
         [HttpGet("GetGroupMembers/{groupId}")]
         public async Task<IActionResult> GetGroupMembers(int groupId)
@@ -100,21 +117,7 @@ namespace Splitzy.Controllers
             return Ok(members);
         }
 
-        [HttpPost("AddMemberToGroup/{groupId}")]
-        public async Task<IActionResult> AddMemberToGroup(int groupId, [FromBody] int userId)
-        {
-            if (userId <= 0)
-            {
-                return BadRequest("ID de usuario inválido.");
-            }
-
-            var result = await _service.AddMemberToGroupAsync(groupId, userId);
-            if (!result)
-            {
-                return NotFound("Grupo no encontrado o no se pudo añadir el miembro.");
-            }
-            return Ok("Miembro añadido al grupo exitosamente.");
-        }
+        
 
         [HttpDelete("RemoveMemberFromGroup/{groupId}/{userId}")]
         public async Task<IActionResult> RemoveMemberFromGroup(int groupId, int userId)
