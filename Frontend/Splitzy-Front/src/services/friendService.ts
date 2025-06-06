@@ -1,5 +1,5 @@
 import { ACCEPTREQUEST, FETCHFRIENDLIST, FETCHREQUESTPENDING, REJECTREQUEST, REMOVEFRIEND } from "@/config"
-console.log("arreglar los endpoints")
+
 export const fetchFriendList = async (userId: number) => {
     const response = await fetch(`${FETCHFRIENDLIST}${userId}`)
     if (!response.ok) throw new Error ("No se pudo obtener la lista de amigos")

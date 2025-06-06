@@ -31,11 +31,13 @@ function MenuUser(){
     const [refreshFriendList, setRefreshFriendList] = useState(false)
     const { clearNotification } = useNotification()
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
+    const [isAuthenticated, setIsAuthenticated] = useState(false) 
 
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setUserId(decoded.id)
+        setIsAuthenticated(true)
     }
     }, [])
     
@@ -190,7 +192,7 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
                             </div> */}
-                            <FriendList userId={userId} refreshSignal={refreshFriendList}/>
+                            <FriendList userId={userId} refreshSignal={refreshFriendList} isAuthenticated={isAuthenticated}/>
                         </div>
                     </div>
 

@@ -97,6 +97,7 @@ function App() {
         <NotificationProvider>
           <Header />
           <Routes>
+            
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
@@ -116,6 +117,7 @@ function App() {
               <ProtectRoute>
                 <UserProfile/>
               </ProtectRoute>}/>
+               <Route path="*" element={<UserProfile />} />
           </Routes>
           <Footer />
         </NotificationProvider>

@@ -44,7 +44,6 @@ export function AddFriendModal({
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
-    console.log("cambios hechos restaurados")
     return(
         <div className="absolute left-0 top-0 bg-[#242424a6]! w-full h-full">
             <div className={`absolute w-[50%] h-[50%] bg-black z-50 bg-[#242424]! rounded-[21px] top-[10%] right-[25%] overflow-hidden ${isOpen ? "flex" : "hidden"}`} >

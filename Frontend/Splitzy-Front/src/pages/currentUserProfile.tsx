@@ -39,11 +39,13 @@ function CurrentUserProfile(){
     const [ notification, setNotification ] = useState<string[]>([])
     const navigate = useNavigate();
     const [refreshFriendList, setRefreshFriendList] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(false) 
 
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setCurrentUserId(decoded.id)
+        setIsAuthenticated(true)
     }
     }, [])
 
@@ -138,7 +140,7 @@ function CurrentUserProfile(){
             console.error("no se ha podido eliminar el usuario correctamente", error)
         }
     }
-
+    
     return (
         <div className="min-h-screen w-full bg-[url(/fondo-splitzy.png)] bg-cover">
             <div className="min-h-screen w-full p-10 items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
@@ -149,7 +151,7 @@ function CurrentUserProfile(){
                     ))}
                     </div>
                 )}
-                <div className="w-full h-160 p-20 bg-[#1b1b1b48] rounded-[21px] space-x-4  flex flex-raw">
+                <div className="w-full h-160 p-20 bg-[#1b1b1b48] rounded-[21px] space-x-6 flex flex-raw">
                     {user && (
                         <div className="w-[50%] items-center flex flex-col h-full space-y-6">
                             <div className="flex items-center justify-center w-41 h-41 rounded-full border">
@@ -177,61 +179,63 @@ function CurrentUserProfile(){
                                     <span className="text-2xl">{user.phone}</span>
                                 </div>
                             </div>
-                            <Dialog>
-                                <form>
+                            <div className="flex flex-row space-x-4 w-full">
+                                <Dialog>
+                                    <form>
+                                        <DialogTrigger asChild>
+                                            <Button>Editar perfil</Button>
+                                            
+                                        </DialogTrigger>
+                                        <DialogContent className="bg-green-500">
+                                            <DialogHeader>
+                                                <DialogTitle>Editar perfil</DialogTitle>
+                                                <DialogDescription>
+                                                    Edita tus datos de perfil y pulsa en "guardar" para actualizar tu información de perfil
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            {/* Aquí van los campos para cambiar los datos del usuario */}
+                                            <label>Nombre</label>
+                                            <input type="text" placeholder="Tu nombre" value={user.name}/>
+                                            <input/>
+                                            <DialogFooter>
+                                                <DialogClose asChild>
+                                                    <Button>Cancelar</Button>
+                                                </DialogClose>
+                                                <Button type="submit">Guardar Cambios</Button>
+                                            </DialogFooter>
+                                        </DialogContent>
+                                    </form>
+                                </Dialog>
+
+                                <Dialog>
                                     <DialogTrigger asChild>
-                                        <Button>Editar perfil</Button>
-                                        
+                                        <Button className="bg-red-500! transition duration-500 text-white! hover:border-transparent! hover:bg-white! hover:text-red-500!">Eliminar perfil</Button>
                                     </DialogTrigger>
                                     <DialogContent>
                                         <DialogHeader>
-                                            <DialogTitle>Editar perfil</DialogTitle>
+                                            <DialogTitle>¿Estás seguro?</DialogTitle>
                                             <DialogDescription>
-                                                Edita tus datos de perfil y pulsa en "guardar" para actualizar tu información de perfil
+                                                Tu cuenta será eliminada definitivamente
                                             </DialogDescription>
                                         </DialogHeader>
                                         {/* Aquí van los campos para cambiar los datos del usuario */}
-                                        <label>Nombre</label>
-                                        <input type="text" placeholder="Tu nombre" value={user.name}/>
-                                        <input/>
                                         <DialogFooter>
+                                            <Button onClick={handleDeleteAccount} className="bg-red-500! transition duration-500 text-white! hover:border-transparent! hover:bg-white! hover:text-red-500!">
+                                                Eliminar
+                                            </Button>
                                             <DialogClose asChild>
                                                 <Button>Cancelar</Button>
                                             </DialogClose>
-                                            <Button type="submit">Guardar Cambios</Button>
                                         </DialogFooter>
                                     </DialogContent>
-                                </form>
-                            </Dialog>
-
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button className="bg-red-500! transition duration-500 text-white! hover:border-transparent! hover:bg-white! hover:text-red-500!">Eliminar perfil</Button>
-                                </DialogTrigger>
-                                <DialogContent>
-                                    <DialogHeader>
-                                        <DialogTitle>¿Estás seguro?</DialogTitle>
-                                        <DialogDescription>
-                                            Tu cuenta será eliminada definitivamente
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    {/* Aquí van los campos para cambiar los datos del usuario */}
-                                    <DialogFooter>
-                                        <Button onClick={handleDeleteAccount} className="bg-red-500! transition duration-500 text-white! hover:border-transparent! hover:bg-white! hover:text-red-500!">
-                                            Eliminar
-                                        </Button>
-                                        <DialogClose asChild>
-                                            <Button>Cancelar</Button>
-                                        </DialogClose>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
+                                </Dialog>
+                            </div>
                         </div>
                     )}
                     <Separator orientation="vertical"/>
-                    <div className="w-[40%] space-y-6">
+                    <div className="w-[50%] space-y-6">
                         <div className="text-4xl">Amigos:</div>
-                        <FriendList userId={currentUserId} refreshSignal={refreshFriendList}/>
+                        <FriendList userId={currentUserId} refreshSignal={refreshFriendList} isAuthenticated={isAuthenticated}/>
                     </div>
                 </div>
             </div>
