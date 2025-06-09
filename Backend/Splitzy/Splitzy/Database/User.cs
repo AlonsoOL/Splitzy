@@ -17,4 +17,6 @@ public class User
 
     public ICollection<UserFriend> Friends { get; set; }
     public ICollection<UserFriend> FriendOf { get; set; }
+
+    public ICollection<Group> Groups { get; set; }
 }
