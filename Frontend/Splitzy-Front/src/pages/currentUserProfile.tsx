@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { API_BASE_URL, DELETEUSERACCOUNT, GETCURRENTUSER } from "@/config"
+import { API_BASE_URL, DELETEUSERACCOUNT, GETCURRENTUSER, UPDATECURRENTUSER } from "@/config"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { Separator } from "@/components/ui/separator";
 import { jwtDecode } from "jwt-decode"
@@ -16,6 +16,11 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { FriendList } from "@/components/FriendList";
 import { useWebsocket } from "@/context/WebSocketContext";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 interface JwtPayload{
     id: number
@@ -31,6 +36,26 @@ interface userProfile{
     phone: string,
 }
 
+const formSchema = z.object({
+  name: z.string().min(3, {message: "El usuario tiene que tener al menos tres caracteres",}),
+  email: z.string().email({message: "Introduzca un correo electrónico válido"}),
+  password: z.string().min(6, {message: "La contraseña debe tener al menos 6 caracteres"}),
+  confirmPassword: z.string().min(6, {message: "La contraseña debe tener al menos 6 caracteres"}),
+  phone: z.string().max(6, {message:"El número de teléfono no puede tener más de 6 caracteres"}).min(6, {message: "El número de teléfono no puede tener menos de 6 caracteres"}),
+  address: z.string().max(15),
+  avatar: z.any().refine((file) =>{
+    if (!file || !(file instanceof FileList) || file.length === 0)return true;
+    const acceptedTypes = ["image/png", "image/jpg", "image/jpeg"];
+    return acceptedTypes.includes(file[0].type)
+  },
+  {
+    message: "Solo se permiten archivos .png o .jpg",
+  }).optional(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Las contraseñas no coinciden",
+    path: ["confirmPassword"]
+})
+
 function CurrentUserProfile(){
     const socket = useWebsocket()
     const [currentUserId, setCurrentUserId] = useState<number>(0)
@@ -40,7 +65,59 @@ function CurrentUserProfile(){
     const navigate = useNavigate();
     const [refreshFriendList, setRefreshFriendList] = useState(false)
     const [isAuthenticated, setIsAuthenticated] = useState(false) 
+    const form = useForm<z.infer<typeof formSchema>>({
+            resolver: zodResolver(formSchema),
+            defaultValues: {
+                name: "",  
+                email: "",
+                password: "",
+                confirmPassword: "",
+                avatar: "",
+                phone: "",
+                address: "",
+            },
+          })
 
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const formData = new FormData()
+        formData.append('name', values.name)
+        formData.append('email', values.email)
+        formData.append('password', values.password)
+        formData.append('address', values.address)
+        formData.append('phone', values.phone)
+            
+        if(values.avatar && values.avatar.length > 0){
+            const file = values.avatar[0]
+            console.log(file)
+            console.log(file.type)
+            const extension = file.name.substring(file.name.lastIndexOf('.'))
+            console.log("esta es la extensión", extension)
+            const customFileName = `${values.name}_profilepicture${extension}`
+            console.log("este es el nombre del archivo", customFileName)
+    
+            const renamedFile = new File([file], customFileName, { type: file.type })
+            console.log(renamedFile)
+            formData.append('imageUrl', renamedFile)
+
+        }else{
+            console.log("estoy en el else")
+            formData.append('imageUrl', values.avatar)
+        }
+
+        try{
+            const response = await fetch(UPDATECURRENTUSER, {
+                method: "POST",
+                body: formData
+            })
+            console.log("estoy en el try;", response)
+
+            setTimeout(() =>{
+                navigate("/user-profile")
+            }, 3000)
+        }catch (e){
+            console.log("algo ha salido mal:", e)
+        }
+    }
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
@@ -186,7 +263,7 @@ function CurrentUserProfile(){
                                             <Button>Editar perfil</Button>
                                             
                                         </DialogTrigger>
-                                        <DialogContent className="bg-green-500">
+                                        <DialogContent  className="bg-[#262626] border-transparent">
                                             <DialogHeader>
                                                 <DialogTitle>Editar perfil</DialogTitle>
                                                 <DialogDescription>
@@ -194,14 +271,81 @@ function CurrentUserProfile(){
                                                 </DialogDescription>
                                             </DialogHeader>
                                             {/* Aquí van los campos para cambiar los datos del usuario */}
-                                            <label>Nombre</label>
-                                            <input type="text" placeholder="Tu nombre" value={user.name}/>
-                                            <input/>
+                                            <Form {...form}>
+                                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                                    <FormField
+                                                    control={form.control}
+                                                    name="name"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                        <FormLabel>Nombre</FormLabel>
+                                                        <FormControl>
+                                                            <Input placeholder={user.name} {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                    />
+                                                    <FormField
+                                                    control={form.control}
+                                                    name="email"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                        <FormLabel>Correo electrónico</FormLabel>
+                                                        <FormControl>
+                                                            <Input placeholder={user.email} {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                    />
+                                                    <FormField
+                                                    control={form.control}
+                                                    name="password"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                        <FormLabel>Contraseña</FormLabel>
+                                                        <FormControl>
+                                                            <Input type="password" placeholder="******" {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                    />
+                                                    <FormField
+                                                    control={form.control}
+                                                    name="phone"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                        <FormLabel>Teléfono</FormLabel>
+                                                        <FormControl>
+                                                            <Input type="phone" placeholder={user.phone} {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                    />
+                                                    <FormField
+                                                    control={form.control}
+                                                    name="address"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                        <FormLabel>Dirección</FormLabel>
+                                                        <FormControl>
+                                                            <Input type="text" placeholder={user.address} {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                    />
+                                                    <Button type="submit">Guardar Cambios</Button>
+                                                </form>
+                                            </Form>
                                             <DialogFooter>
                                                 <DialogClose asChild>
-                                                    <Button>Cancelar</Button>
+                                                    <Button className="bg-red-500! transition duration-500 text-white! hover:border-transparent! hover:bg-white! hover:text-red-500!">Cancelar</Button>
                                                 </DialogClose>
-                                                <Button type="submit">Guardar Cambios</Button>
+                                                
                                             </DialogFooter>
                                         </DialogContent>
                                     </form>

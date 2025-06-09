@@ -10,6 +10,7 @@ const REMOVEFRIEND = `${API_BASE_URL}/api/FriendRequest/remove`
 const GETALLUSERS = `${API_BASE_URL}/api/Friends/GetAllUsers`
 const CHANGEROLE = `${API_BASE_URL}/api/User/Update_UserRole`
 const GETCURRENTUSER = `${API_BASE_URL}/api/User/GetCurrentUser/`
+const UPDATECURRENTUSER = `${API_BASE_URL}/api/User/Update_User`
 const GETUSERSADMIN = `${API_BASE_URL}/api/User`
 const DELETEUSERACCOUNT = `${API_BASE_URL}/api/User/Delete_User/`
 //const WEBSOCKET = `${API_BASE_URL}`
@@ -26,5 +27,6 @@ export {
     CHANGEROLE,
     GETCURRENTUSER,
     GETUSERSADMIN,
-    DELETEUSERACCOUNT
+    DELETEUSERACCOUNT,
+    UPDATECURRENTUSER
 }
