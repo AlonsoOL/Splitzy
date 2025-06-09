@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\database\\repositories\\grouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -134,7 +134,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 204,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -184,28 +184,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "GroupService.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\GroupService.cs",
               "RelativeDocumentMoniker": "Splitzy\\Services\\GroupService.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\GroupService.cs",
-              "RelativeToolTip": "Splitzy\\Services\\GroupService.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAA1wFYAAAAJAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\GroupService.cs*",
+              "RelativeToolTip": "Splitzy\\Services\\GroupService.cs*",
+              "ViewState": "AgIAAFoAAAAAAAAAAADwv2UAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T08:13:48.978Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "GroupController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\GroupController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\GroupController.cs",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\GroupController.cs",
               "RelativeToolTip": "Splitzy\\Controllers\\GroupController.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAgwDsAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAkwFUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:15:39.215Z"
+              "WhenOpened": "2025-06-05T08:15:39.215Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -225,11 +226,12 @@
               "Title": "GroupRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\GroupRepository.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Repositories\\GroupRepository.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\GroupRepository.cs",
-              "RelativeToolTip": "Splitzy\\Database\\Repositories\\GroupRepository.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAswDgAAAAEAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\GroupRepository.cs*",
+              "RelativeToolTip": "Splitzy\\Database\\Repositories\\GroupRepository.cs*",
+              "ViewState": "AgIAACkAAAAAAAAAAAAkwDcAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:29:16.431Z"
+              "WhenOpened": "2025-06-05T08:29:16.431Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

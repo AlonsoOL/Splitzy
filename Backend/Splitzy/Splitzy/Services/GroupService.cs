@@ -99,6 +99,18 @@ public class GroupService
 
     }
 
+    public async Task<IActionResult> GetGroupsOfId(int userId)
+    {
+        var groups = await _unitOfWork.GroupRepository.GetGroupsByUserIdAsync(userId);
+
+        if (groups == null || !groups.Any())
+        {
+            return new NotFoundObjectResult(new { Message = "No se encontraron grupos para el usuario especificado." });
+        }
+
+        return new OkObjectResult(groups);
+    }
+
 
 
 

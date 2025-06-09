@@ -216,6 +216,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupsOfId",
+    "RelativePath": "api/Group/GetGroupsOfId/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RetroKits.Controllers.SmartSearchController",
     "Method": "Search",
     "RelativePath": "api/SmartSearch",

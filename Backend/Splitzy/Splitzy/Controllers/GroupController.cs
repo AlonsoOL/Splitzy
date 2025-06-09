@@ -83,7 +83,23 @@ namespace Splitzy.Controllers
             var result = await _service.AddMemberToGroupAsync(groupId, userId);
             return Ok("Miembro añadido al grupo exitosamente.");
         }
-        
+
+
+            [HttpGet("GetGroupsOfId/{userId}")]
+            public async Task<IActionResult> GetGroupsOfId(int userId)
+        {
+            if (userId <= 0)
+            {
+                return BadRequest("ID de usuario inválido.");
+            }
+            var groups = await _service.GetGroupsOfId(userId);
+            if (groups == null )
+            {
+                return NotFound("No se encontraron grupos para este usuario.");
+            }
+            return Ok(groups);
+        }
+
         /*
         [HttpPut("UpdateGroup/{groupId}")]
         public async Task<IActionResult> UpdateGroup(int groupId, [FromBody] Group group)
@@ -102,9 +118,9 @@ namespace Splitzy.Controllers
         }
         */
         /*
-        
 
-        
+
+
 
         [HttpGet("GetGroupMembers/{groupId}")]
         public async Task<IActionResult> GetGroupMembers(int groupId)
@@ -117,7 +133,7 @@ namespace Splitzy.Controllers
             return Ok(members);
         }
 
-        
+
 
         [HttpDelete("RemoveMemberFromGroup/{groupId}/{userId}")]
         public async Task<IActionResult> RemoveMemberFromGroup(int groupId, int userId)

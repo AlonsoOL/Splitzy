@@ -53,8 +53,32 @@ namespace Splitzy.Database.Repositories;
             return group;
         }
 
+        public async Task<List<Group>> GetGroupsByUserIdAsync(int userId)
+        {
+            return await _dbContext.Groups
+                .Where(g => g.Users.Any(u => u.Id == userId))
+                .ToListAsync();
+        }
 
-    
+    public async Task<bool> DeleteAsyncGroupById(Guid id)
+    {
+        Group group = await GetGroupByIdAsync(id);
+        if (group == null) return false;
+
+        _dbContext.Groups.Remove(group);
+        return await _dbContext.SaveChangesAsync() > 0;
+    }
+
+    public async Task<Group> UpdateGroupAsync(Group group)
+    {
+        _dbContext.Groups.Update(group);
+        await _dbContext.SaveChangesAsync();
+        return group;
+    }
+
+
+
+
 
 
 
