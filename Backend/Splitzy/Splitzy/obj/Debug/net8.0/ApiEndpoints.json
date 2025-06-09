@@ -123,6 +123,37 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "AddExpenseToGroup",
+    "RelativePath": "api/Group/AddExpenseToGroup/{groupId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "cantidad",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
     "Method": "AddMemberToGroup",
     "RelativePath": "api/Group/AddMemberToGroup/{groupId}",
     "HttpMethod": "POST",
@@ -193,6 +224,22 @@
     "ContainingType": "Splitzy.Controllers.GroupController",
     "Method": "GetGroupById",
     "RelativePath": "api/Group/GetGroup/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupMembers",
+    "RelativePath": "api/Group/GetGroupMembers/{groupId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

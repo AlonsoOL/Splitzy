@@ -56,8 +56,8 @@ namespace Splitzy.Controllers
         [HttpPost("CreateGroup")]
         public async Task<IActionResult> CreateGroup(int userId, string name, string description, string imageUrl)
         {
- 
-            var createdGroup = await _service.CreateGroupAsync( userId, name, description, imageUrl);
+
+            var createdGroup = await _service.CreateGroupAsync(userId, name, description, imageUrl);
             return Ok(createdGroup);
         }
 
@@ -73,7 +73,7 @@ namespace Splitzy.Controllers
         }
 
         [HttpPost("AddMemberToGroup/{groupId}")]
-        public async Task<IActionResult> AddMemberToGroup(Guid groupId,int userId)
+        public async Task<IActionResult> AddMemberToGroup(Guid groupId, int userId)
         {
             if (userId <= 0)
             {
@@ -85,15 +85,15 @@ namespace Splitzy.Controllers
         }
 
 
-            [HttpGet("GetGroupsOfId/{userId}")]
-            public async Task<IActionResult> GetGroupsOfId(int userId)
+        [HttpGet("GetGroupsOfId/{userId}")]
+        public async Task<IActionResult> GetGroupsOfId(int userId)
         {
             if (userId <= 0)
             {
                 return BadRequest("ID de usuario inválido.");
             }
             var groups = await _service.GetGroupsOfId(userId);
-            if (groups == null )
+            if (groups == null)
             {
                 return NotFound("No se encontraron grupos para este usuario.");
             }
@@ -117,13 +117,13 @@ namespace Splitzy.Controllers
             return Ok(updatedGroup);
         }
         */
-        /*
+
 
 
 
 
         [HttpGet("GetGroupMembers/{groupId}")]
-        public async Task<IActionResult> GetGroupMembers(int groupId)
+        public async Task<IActionResult> GetGroupMembers(Guid groupId)
         {
             var members = await _service.GetGroupMembersAsync(groupId);
             if (members == null || !members.Any())
@@ -133,6 +133,7 @@ namespace Splitzy.Controllers
             return Ok(members);
         }
 
+        /*
 
 
         [HttpDelete("RemoveMemberFromGroup/{groupId}/{userId}")]
@@ -155,6 +156,26 @@ namespace Splitzy.Controllers
 
         */
 
-    }
 
+        [HttpPost("AddExpenseToGroup/{groupId}")]
+        public async Task<IActionResult> AddExpenseToGroup(Guid groupId, int userId, int cantidad, string name)
+        {
+            if (cantidad <= 0)
+            {
+                return BadRequest("Datos de gasto inválidos.");
+            }
+
+            var result = await _service.AddExpenseToGroupAsync(groupId,userId, cantidad, name);
+            if (result == null)
+            {
+                return NotFound("Grupo no encontrado o no se pudo añadir el gasto.");
+            }
+            return Ok(result);
+
+
+
+        }
+
+
+    }
 }

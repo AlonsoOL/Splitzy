@@ -111,6 +111,50 @@ public class GroupService
         return new OkObjectResult(groups);
     }
 
+    public async Task<List<User>> GetGroupMembersAsync(Guid groupId)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            throw new Exception("Grupo no encontrado");
+        }
+
+        return group.Users.ToList();
+    }
+
+
+        public async Task<IActionResult> AddExpenseToGroupAsync(Guid groupId, int userId, int cantidad, string name)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+
+        var expense = new Expense
+        {
+            Name = name,
+            UserId = userId,
+            Amount = cantidad,
+            Description = "Gasto añadido al grupo",
+            CreatedAt = DateTime.UtcNow,
+            GroupId = groupId
+        };
+
+        await _unitOfWork.ExpenseRepository.InsertAsync(expense);
+        await _unitOfWork.SaveAsync();
+
+        return new OkObjectResult(new
+        {
+            Message = "Gasto añadido al grupo exitosamente.",
+            ExpenseId = expense.Id
+        });
+    }
+
+
+
+
+
 
 
 
