@@ -180,8 +180,7 @@
               "RelativeToolTip": "Splitzy\\Database\\UnitOfWork.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAWwAwAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:42:41.91Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:42:41.91Z"
             },
             {
               "$type": "Document",
@@ -191,7 +190,7 @@
               "RelativeDocumentMoniker": "Splitzy\\Services\\GroupService.cs",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\GroupService.cs",
               "RelativeToolTip": "Splitzy\\Services\\GroupService.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAvwFYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA1wFYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T08:13:48.978Z",
               "EditorCaption": ""
@@ -206,8 +205,7 @@
               "RelativeToolTip": "Splitzy\\Controllers\\GroupController.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAgwDsAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:15:39.215Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:15:39.215Z"
             },
             {
               "$type": "Document",
@@ -219,8 +217,7 @@
               "RelativeToolTip": "Splitzy\\Database\\Group.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAA3wAIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:05:32.333Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:05:32.333Z"
             },
             {
               "$type": "Document",
@@ -232,8 +229,7 @@
               "RelativeToolTip": "Splitzy\\Database\\Repositories\\GroupRepository.cs",
               "ViewState": "AgIAACsAAAAAAAAAAAAswDgAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:29:16.431Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:29:16.431Z"
             },
             {
               "$type": "Document",
@@ -245,8 +241,7 @@
               "RelativeToolTip": "Splitzy\\Database\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T12:29:03.523Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T12:29:03.523Z"
             },
             {
               "$type": "Document",
@@ -258,8 +253,7 @@
               "RelativeToolTip": "Splitzy\\Database\\MyDbContext.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAIAwwA0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:23:43.91Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:23:43.91Z"
             },
             {
               "$type": "Document",
@@ -271,8 +265,7 @@
               "RelativeToolTip": "Splitzy\\Database\\Repositories\\Repository.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAjwDQAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:14:57.626Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:14:57.626Z"
             },
             {
               "$type": "Document",
@@ -284,8 +277,7 @@
               "RelativeToolTip": "Splitzy\\Database\\FriendRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:10:18.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:10:18.519Z"
             },
             {
               "$type": "Document",
@@ -297,8 +289,7 @@
               "RelativeToolTip": "Splitzy\\Services\\FriendServices.cs",
               "ViewState": "AgIAAHwAAAAAAAAAAAAkwA8AAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T09:56:50.057Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-20T09:56:50.057Z"
             },
             {
               "$type": "Document",
@@ -310,8 +301,7 @@
               "RelativeToolTip": "Splitzy\\Services\\UserService.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAowEAAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:14:36.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T08:14:36.177Z"
             },
             {
               "$type": "Document",
@@ -323,8 +313,7 @@
               "RelativeToolTip": "Splitzy\\Controllers\\SmartSearchController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T11:16:19.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T11:16:19.976Z"
             },
             {
               "$type": "Document",
@@ -336,8 +325,7 @@
               "RelativeToolTip": "Splitzy\\Controllers\\FriendsController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAuwB4AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T10:34:38.746Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T10:34:38.746Z"
             },
             {
               "$type": "Document",
