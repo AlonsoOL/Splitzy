@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
-import { GETALLUSERS } from "@/config"
+import { API_BASE_URL, GETALLUSERS } from "@/config"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 interface User {
     id: number,
@@ -58,8 +59,11 @@ export function AddFriendModal({
                         {filteredUsers.map((user) => (
                             <div key={user.id} className="flex w-full space-y-4 items-center text-left">
                                 <div className="flex w-1/3 justify-center">
-                                    <img src={`https://localhost:7044${user.imageUrl}`}  className="w-15 h-15 mr-4 rounded-full"/>
-                                    </div>
+                                    <Avatar>
+                                        <AvatarImage src={`${API_BASE_URL}${user.imageUrl}`} className="rounded-full"></AvatarImage>
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                </div>
                                 <span className="w-1/3"><a href={`/user-name`}>{user.name}</a></span>
                                 <span className="w-1/3">{user.email}</span>
                                 <Button onClick={() => onSendRequest(user.id)}>Enviar solicitud</Button>

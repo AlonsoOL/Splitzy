@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface JwtPayload{
     id: number
@@ -41,7 +42,7 @@ const formSchema = z.object({
   email: z.string().email({message: "Introduzca un correo electrónico válido"}),
   password: z.string().min(6, {message: "La contraseña debe tener al menos 6 caracteres"}),
   confirmPassword: z.string().min(6, {message: "La contraseña debe tener al menos 6 caracteres"}),
-  phone: z.string().max(6, {message:"El número de teléfono no puede tener más de 6 caracteres"}).min(6, {message: "El número de teléfono no puede tener menos de 6 caracteres"}),
+  phone: z.string().max(9, {message:"El número de teléfono no puede tener más de 9 caracteres"}).min(6, {message: "El número de teléfono no puede tener menos de 6 caracteres"}),
   address: z.string().max(15),
   avatar: z.any().refine((file) =>{
     if (!file || !(file instanceof FileList) || file.length === 0)return true;
@@ -79,6 +80,7 @@ function CurrentUserProfile(){
           })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log("estoy en el submit para cambiar los datos")
         const formData = new FormData()
         formData.append('name', values.name)
         formData.append('email', values.email)
@@ -228,12 +230,13 @@ function CurrentUserProfile(){
                     ))}
                     </div>
                 )}
-                <div className="w-full h-160 p-20 bg-[#1b1b1b48] rounded-[21px] space-x-6 flex flex-raw">
+                <div className="w-full p-20 bg-[#1b1b1b48] rounded-[21px] space-x-6 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row gap-5">
                     {user && (
-                        <div className="w-[50%] items-center flex flex-col h-full space-y-6">
-                            <div className="flex items-center justify-center w-41 h-41 rounded-full border">
-                                <img src={`${API_BASE_URL}${user.imageUrl}`} className="w-40 h-40 rounded-full"/>
-                            </div>
+                        <div className="w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] items-center flex flex-col h-full space-y-6">
+                            <Avatar className="2xl:size-30 xl:size-30 lg:size-15 md:size-15">
+                                <AvatarImage src={`${API_BASE_URL}${user.imageUrl}`} className="rounded-full"></AvatarImage>
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
                             {/* <Button>Cambiar foto de perfil</Button> */}
                             <Separator/>
                             <div className="flex w-full space-x-6 text-left">
@@ -377,7 +380,8 @@ function CurrentUserProfile(){
                         </div>
                     )}
                     <Separator orientation="vertical"/>
-                    <div className="w-[50%] space-y-6">
+                    <Separator className="2xl:hidden xl:hidden lg:hidden"/>
+                    <div className="w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] space-y-6">
                         <div className="text-4xl">Amigos:</div>
                         <FriendList userId={currentUserId} refreshSignal={refreshFriendList} isAuthenticated={isAuthenticated}/>
                     </div>

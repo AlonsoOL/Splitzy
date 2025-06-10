@@ -2,6 +2,7 @@ import { useNotification } from "@/context/NotificationContext"
 import { Button } from "./ui/button"
 import { useAuth } from "@/context/AuthContext"
 import { API_BASE_URL } from "@/config"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 function Header(){
     const {user, isAuthenticated, logout} = useAuth()
@@ -24,11 +25,10 @@ function Header(){
                                 <a href="/user-profile" className="h-full p-2 mt-2 hover:underline decoration-1">Perfil</a>
                                 <Button onClick={logout} className="m-2 hover:bg-red-500! hover:text-red-50! hover:border-transparent! hover:transition!">Cerrar sesión</Button>
                             </div>
-                            <img
-                            src={`${API_BASE_URL}${user.imageUrl}`}
-                            alt="Perfil"
-                            className="w-12 h-12 rounded-full"
-                            />
+                            <Avatar>
+                                <AvatarImage src={`${API_BASE_URL}${user.imageUrl}`} className="rounded-full"></AvatarImage>
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
                             
                         </div>
                     ) : (
