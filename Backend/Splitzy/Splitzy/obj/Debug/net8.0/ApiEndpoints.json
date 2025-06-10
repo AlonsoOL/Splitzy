@@ -222,6 +222,38 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetDebtByGroupId",
+    "RelativePath": "api/Group/GetDebtsByGroupId/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetExpensesByGroupId",
+    "RelativePath": "api/Group/GetExpensesByGroupId/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
     "Method": "GetGroupById",
     "RelativePath": "api/Group/GetGroup/{groupId}",
     "HttpMethod": "GET",

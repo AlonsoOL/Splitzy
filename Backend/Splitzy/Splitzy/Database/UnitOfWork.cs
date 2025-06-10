@@ -8,11 +8,16 @@ public class UnitOfWork
     private UserRepository _userRepository = null!;
     private GroupRepository _groupRepository = null!;
     private ExpenseRepository _expenseRepository = null!;
+    private DebtRepository _debtRepository = null!;
+    private PaymentRepository _paymentRepository = null!;
+
 
 
     public UserRepository UserRepository => _userRepository ??= new UserRepository(_dataContext);
     public GroupRepository GroupRepository => _groupRepository ??= new GroupRepository(_dataContext);
     public ExpenseRepository ExpenseRepository => _expenseRepository ??= new ExpenseRepository(_dataContext);
+    public DebtRepository DebtRepository => _debtRepository ??= new DebtRepository(_dataContext);
+    public PaymentRepository PaymentRepository => _paymentRepository ??= new PaymentRepository(_dataContext);
 
 
 

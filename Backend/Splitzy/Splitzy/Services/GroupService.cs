@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Splitzy.Database;
+using SQLitePCL;
 
 namespace Splitzy.Services;
 
@@ -143,11 +144,82 @@ public class GroupService
 
         await _unitOfWork.ExpenseRepository.InsertAsync(expense);
         await _unitOfWork.SaveAsync();
+        UpdateDebtAsync(groupId).Wait(); 
 
         return new OkObjectResult(new
         {
             Message = "Gasto añadido al grupo exitosamente.",
             ExpenseId = expense.Id
+        });
+
+
+    }
+    public async Task<IActionResult> GetGroupExpensesAsync(Guid groupId)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+
+        var expenses = await _unitOfWork.GroupRepository.GetExpensesByGroupIdAsync(groupId);
+        return new OkObjectResult(expenses);
+    }
+
+    public async Task<IActionResult> GetGroupPaymentsAsync(Guid groupId)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+        var payments = await _unitOfWork.GroupRepository.GetPaymentsByGroupIdAsync(groupId);
+        return new OkObjectResult(payments);
+    }
+
+    public async Task<IActionResult> UpdateDebtAsync(Guid groupId)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+
+        var expenses = await _unitOfWork.GroupRepository.GetExpensesNumByGroupIdAsync(groupId);
+        var payments = await _unitOfWork.GroupRepository.GetPaymentsNumByGroupIdAsync(groupId);
+
+        if (expenses <= 0 || payments < 0)
+        {
+            return new BadRequestObjectResult(new { Message = "Los valores de gasto y pago deben ser positivos." });
+        }
+        if (expenses < payments)
+        {
+            return new BadRequestObjectResult(new { Message = "El pago no puede ser mayor que el gasto." });
+        }
+        var debt = await _unitOfWork.GroupRepository.GetDebtByGroupIdAsync(groupId);
+        if (debt == null)
+        {
+            debt = new Debt
+            {
+                GroupId = groupId,
+                Amount = expenses - payments,
+                CreatedAt = DateTime.UtcNow
+            };
+            await _unitOfWork.DebtRepository.InsertAsync(debt);
+        }
+        else
+        {
+            debt.Amount += expenses - payments;
+            _unitOfWork.DebtRepository.Update(debt);
+        }
+
+        await _unitOfWork.SaveAsync();
+
+        return new OkObjectResult(new
+        {
+            Message = "Deuda actualizada exitosamente.",
+            DebtId = debt.Id,
+            Amount = debt.Amount
         });
     }
 

@@ -77,6 +77,49 @@ namespace Splitzy.Database.Repositories;
     }
 
 
+        public async Task<List<Expense>> GetExpensesByGroupIdAsync(Guid groupId)
+    {
+        return await _dbContext.Expenses
+            .Where(e => e.GroupId == groupId)
+            .ToListAsync();
+    }
+
+    public async Task<int> GetExpensesNumByGroupIdAsync(Guid groupId)
+    {
+
+        return await _dbContext.Expenses
+            .CountAsync(e => e.GroupId == groupId);
+    }
+
+
+
+
+
+    public async Task<List<Payment>> GetPaymentsByGroupIdAsync(Guid groupId)
+    {
+        return await _dbContext.Payments
+            .Where(p => p.GroupId == groupId)
+            .ToListAsync();
+    }
+
+    public async Task<int> GetPaymentsNumByGroupIdAsync(Guid groupId)
+    {
+
+        return await _dbContext.Payments
+            .CountAsync(p => p.GroupId == groupId);
+
+    }
+
+
+
+    public async Task<Debt> GetDebtByGroupIdAsync(Guid groupId)
+    {
+        return await _dbContext.Debts
+            .Where(d => d.GroupId == groupId)
+            .FirstOrDefaultAsync();
+    }
+
+
 
 
 

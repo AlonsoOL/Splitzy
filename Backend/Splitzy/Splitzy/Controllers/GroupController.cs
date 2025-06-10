@@ -165,7 +165,7 @@ namespace Splitzy.Controllers
                 return BadRequest("Datos de gasto inválidos.");
             }
 
-            var result = await _service.AddExpenseToGroupAsync(groupId,userId, cantidad, name);
+            var result = await _service.AddExpenseToGroupAsync(groupId, userId, cantidad, name);
             if (result == null)
             {
                 return NotFound("Grupo no encontrado o no se pudo añadir el gasto.");
@@ -177,5 +177,29 @@ namespace Splitzy.Controllers
         }
 
 
+        [HttpGet("GetExpensesByGroupId/{groupId}")]
+        public async Task<IActionResult> GetExpensesByGroupId(Guid groupId)
+        {
+            var expenses = await _service.GetGroupExpensesAsync(groupId);
+            if (expenses == null)
+            {
+                return NotFound("No se encontraron gastos para este grupo.");
+            }
+            return Ok(expenses);
+
+
+        }
+
+        [HttpGet("GetDebtsByGroupId/{groupId}")]
+        public async Task<IActionResult> GetDebtByGroupId(Guid groupId)
+        {
+            var debts = await _service.UpdateDebtAsync(groupId);
+            if (debts == null)
+            {
+                return NotFound("No se encontraron deudas para este grupo.");
+            }
+            return Ok(debts);
+
+        }
     }
 }
