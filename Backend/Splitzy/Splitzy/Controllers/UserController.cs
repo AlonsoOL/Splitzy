@@ -46,14 +46,16 @@ public class UserController : ControllerBase
         return Ok(await _service.GetByIdAsync(id));
     }
 
+    [Authorize]
     [HttpPut("Update_User")]
-    public async Task<ActionResult<User>> UpdateAsync([FromBody] User user)
+
+    public async Task<ActionResult> UpdateAsync([FromForm] UpdateUserDto userData)
     {
         Claim userClaimId = User.FindFirst("id");
         if (userClaimId == null) return Unauthorized(new { Message = "Debes iniciar sesión para llevar a cabo esta acción" });
 
-        if (user == null) return BadRequest(new { Message = "El usuario a actualizar es inválido." });
-        return Ok(await _service.UpdateAsync(user));
+        if (userData == null) return BadRequest(new { Message = "El usuario a actualizar es inválido." });
+        return Ok(await _service.UpdateAsync(userData));
     }
 
     [Authorize(Roles = "Admin")]
