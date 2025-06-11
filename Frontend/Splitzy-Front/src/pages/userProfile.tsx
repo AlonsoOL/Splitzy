@@ -4,6 +4,8 @@ import { useWebsocket } from "@/context/WebSocketContext"
 import { Separator } from "@/components/ui/separator"
 import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface JwtPayload{
     id: number
@@ -21,18 +23,18 @@ interface userProfile{
 
 function UserProfile(){
     const socket = useWebsocket()
+    const { id } = useParams<{ id: string }>()
+    const userId = id ? parseInt(id, 10) : null
     const [currentUserId, setCurrentUserId] = useState<number>(0)
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
     const [user, setUser] = useState<userProfile | null>(null)
     const [ notification, setNotification ] = useState<string[]>([])
     const [refreshFriendList, setRefreshFriendList] = useState(false)
-    const [isAuthenticated, setIsAuthenticated] = useState(false) 
 
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setCurrentUserId(decoded.id)
-        setIsAuthenticated(true)
     }
     }, [])
 
@@ -85,9 +87,10 @@ function UserProfile(){
             return () =>clearTimeout(timer)
         }, [notification])
 
+        console.log("este es el id", id)
     useEffect(() =>{
         const fetchProfile = async () => {
-            const response = await fetch(`${GETCURRENTUSER}${currentUserId}`, {
+            const response = await fetch(`${GETCURRENTUSER}${id}`, {
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
@@ -115,13 +118,13 @@ function UserProfile(){
                     ))}
                     </div>
                 )}
-                <div className="w-full h-160 p-20 bg-[#1b1b1b48] rounded-[21px] space-x-6 flex flex-raw">
+                <div className="w-full p-20 bg-[#1b1b1b48] rounded-[21px] space-x-6 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row gap-5">
                     {user && (
-                        <div className="w-[50%] items-center flex flex-col h-full space-y-6">
-                            <div className="flex items-center justify-center w-41 h-41 rounded-full border">
-                                <img src={`${API_BASE_URL}${user.imageUrl}`} className="w-40 h-40 rounded-full"/>
-                            </div>
-                            {/* <Button>Cambiar foto de perfil</Button> */}
+                        <div className="w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] items-center flex flex-col h-full space-y-6">
+                            <Avatar className="2xl:size-30 xl:size-30 lg:size-15 md:size-15">
+                                <AvatarImage src={`${API_BASE_URL}${user.imageUrl}`} className="rounded-full"></AvatarImage>
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
                             <Separator/>
                             <div className="flex w-full space-x-6 text-left">
                                 <div className="w-1/2 flex flex-col" >
@@ -145,10 +148,10 @@ function UserProfile(){
                             </div>
                         </div>
                     )}
-                    <Separator orientation="vertical"/>
-                    <div className="w-[50%] space-y-6">
+                    <Separator className="2xl:hidden xl:hidden lg:hidden"/>
+                    <div className="w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] space-y-6">
                         <div className="text-4xl">Amigos:</div>
-                        <FriendList userId={currentUserId} refreshSignal={refreshFriendList} isAuthenticated={isAuthenticated}/>
+                        { userId && <FriendList userId={userId} refreshSignal={refreshFriendList}/>}
                     </div>
                 </div>
             </div>

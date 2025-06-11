@@ -8,6 +8,10 @@ import { acceptRequest, fetchPendingRequests, rejectRequest } from "@/services/f
 import { useWebsocket } from "@/context/WebSocketContext";
 import { useNotification } from "@/context/NotificationContext";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { API_BASE_URL } from "@/config";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Link } from "react-router-dom";
 
 interface JwtPayload{
     id: number;
@@ -31,13 +35,11 @@ function MenuUser(){
     const [refreshFriendList, setRefreshFriendList] = useState(false)
     const { clearNotification } = useNotification()
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
-    const [isAuthenticated, setIsAuthenticated] = useState(false) 
 
     useEffect(() => {
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setUserId(decoded.id)
-        setIsAuthenticated(true)
     }
     }, [])
     
@@ -192,7 +194,7 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
                             </div> */}
-                            <FriendList userId={userId} refreshSignal={refreshFriendList} isAuthenticated={isAuthenticated}/>
+                            <FriendList userId={userId} refreshSignal={refreshFriendList}/>
                         </div>
                     </div>
 
@@ -235,6 +237,7 @@ function MenuUser(){
                         
                     </div>
                 </div>
+
                 {/* Sección actividad reciente */}
                 <div className="2xl:w-1/2 xl:w-1/2 lg:w-1/2 w-[85%] h-160 p-8 bg-[#242424e0] rounded-[21px] space-y-3">
                     <div className="text-xl">Actividad reciente</div>
@@ -256,9 +259,26 @@ function MenuUser(){
                         <div>
                         {pending.map((req) =>(
                             <div key={req.id} className="flex flex-raw border-b-1 border-white-500 justify-center items-center pb-3">
-                                <div className="w-3/4 flex flex-row space-y-2 items-center text-left">
-                                    <img src={`https://localhost:7044${req.senderImageUrl}`} className="w-10 h-10 mr-4 rounded-full"/>
-                                    <p key={req.senderId}><span className="font-bold">{req.senderName}&nbsp;</span>te ha mandado una solicitud de amistad</p>
+                                <div className="w-3/4 flex flex-row space-y-2 space-x-2 items-center text-left">
+                                    <Avatar className="size-10">
+                                        <AvatarImage src={`${API_BASE_URL}${req.senderImageUrl}`} className="rounded-full"></AvatarImage>
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                    <HoverCard>
+                                        <HoverCardTrigger>
+                                            <span className="hover:border-b"><strong>{req.senderName}</strong> te ha mandado una solicitud de amistad</span>
+                                        </HoverCardTrigger>
+                                        <HoverCardContent className="bg-[#262626] space-y-3">
+                                            <div className="flex flex-row text-white items-center">
+                                                <img src={`${API_BASE_URL}${req.senderImageUrl}`} className="w-10 h-10 mr-4 rounded-full space-y2"/>
+                                                <div className="flex flex-col">
+                                                    <Link to={`/user-profile/${req.senderId}`}><strong>@{req.senderName}</strong></Link>
+                                                </div>
+                                            </div>
+                                            <div className="text-white">Aquí puede ir una futura descripción corta</div>
+                                        </HoverCardContent>
+                                    </HoverCard>
+                                    
                                 </div>
                                 <div className="flex flex-raw w-1/4 justify-center gap-x-2">
                                     <Button onClick={() => handleAccept(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>

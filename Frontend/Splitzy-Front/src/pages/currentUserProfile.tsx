@@ -65,7 +65,6 @@ function CurrentUserProfile(){
     const [ notification, setNotification ] = useState<string[]>([])
     const navigate = useNavigate();
     const [refreshFriendList, setRefreshFriendList] = useState(false)
-    const [isAuthenticated, setIsAuthenticated] = useState(false) 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const form = useForm<z.infer<typeof formSchema>>({
             resolver: zodResolver(formSchema),
@@ -143,7 +142,6 @@ function CurrentUserProfile(){
         if(token){
         const decoded = jwtDecode<JwtPayload>(token)
         setCurrentUserId(decoded.id)
-        setIsAuthenticated(true)
     }
     }, [])
 
@@ -401,7 +399,7 @@ function CurrentUserProfile(){
                     <Separator className="2xl:hidden xl:hidden lg:hidden"/>
                     <div className="w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] space-y-6">
                         <div className="text-4xl">Amigos:</div>
-                        <FriendList userId={currentUserId} refreshSignal={refreshFriendList} isAuthenticated={isAuthenticated}/>
+                        <FriendList userId={currentUserId} refreshSignal={refreshFriendList}/>
                     </div>
                 </div>
             </div>

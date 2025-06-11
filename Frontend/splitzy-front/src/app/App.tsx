@@ -109,11 +109,11 @@ function App() {
               <ProtectRoute>
                 <MenuAdmin/>
               </ProtectRoute>}/>
-            <Route path="/user-profile" element={
+            <Route path="/my-profile" element={
               <ProtectRoute>
                 <CurrentUserProfile/>
               </ProtectRoute>}/>
-            <Route path="/user-name" element={
+            <Route path="/user-profile/:id" element={
               <ProtectRoute>
                 <UserProfile/>
               </ProtectRoute>}/>

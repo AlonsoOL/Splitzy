@@ -9,9 +9,25 @@ import {
 } from "@/components/ui/hover-card"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import { Separator } from "./ui/separator"
+import { Link } from "react-router-dom"
+import { jwtDecode } from "jwt-decode"
 
-export function FriendList({userId, refreshSignal, isAuthenticated}: { userId: number, refreshSignal: boolean, isAuthenticated: boolean}) {
+interface JwtPayload{
+    id: number
+}
+
+export function FriendList({userId, refreshSignal}: { userId: number, refreshSignal: boolean}) {
     const [friends, setFriends] = useState<any[]>([])
+    const token = localStorage.getItem("user") || sessionStorage.getItem("user")
+    const [currentUserId, setCurrentUserId] = useState<number>(0)
+    const isMyProfile = currentUserId === userId
+
+    useEffect(() => {
+            if(token){
+            const decoded = jwtDecode<JwtPayload>(token)
+            setCurrentUserId(decoded.id)
+        }
+        }, [])
 
     const fetchFriends = () =>{
         fetchFriendList(userId).then(setFriends)
@@ -72,7 +88,7 @@ export function FriendList({userId, refreshSignal, isAuthenticated}: { userId: n
                                     <div className="flex flex-row text-white items-center">
                                         <img src={`${API_BASE_URL}${friend.profilePicture}`} className="w-10 h-10 mr-4 rounded-full space-y2"/>
                                         <div className="flex flex-col">
-                                            <a href="/user-name"><strong>@{friend.name}</strong></a>
+                                            <Link to={`/user-profile/${friend.id}`}><strong>@{friend.name}</strong></Link>
                                             <span className="text-sm text-gray-400">{friend.email}</span>
                                         </div>
                                     </div>
@@ -80,12 +96,11 @@ export function FriendList({userId, refreshSignal, isAuthenticated}: { userId: n
                                 </HoverCardContent>
                             </HoverCard>
                         </div>
-                        {isAuthenticated &&(
+                        {isMyProfile && (
                             <div className="w-1/8 relative">
                             <Button onClick={() => handleDeleteFriend(userId, friend.id)} className="w-10 h-10 bg-[url(/deleteUserFriend.svg)]! bg-transparent! bg-cover hover:border-none!"></Button>
-                            </div>
-                        )}
-                        
+                            </div> 
+                        )}             
                     </div>
                     <Separator/>
                 </>

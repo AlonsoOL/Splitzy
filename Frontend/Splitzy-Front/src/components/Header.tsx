@@ -22,7 +22,7 @@ function Header(){
                     {user && isAuthenticated ?(
                         <div className="relative group inline-block">
                             <div id="" className="hidden group-hover:flex bg-[#242424] flex-col block absolute top-full right-[-55px] z-10 rounded-[10px]">
-                                <a href="/user-profile" className="h-full p-2 mt-2 hover:underline decoration-1">Perfil</a>
+                                <a href="/my-profile" className="h-full p-2 mt-2 hover:underline decoration-1">Perfil</a>
                                 <Button onClick={logout} className="m-2 hover:bg-red-500! hover:text-red-50! hover:border-transparent! hover:transition!">Cerrar sesión</Button>
                             </div>
                             <Avatar>
@@ -32,7 +32,7 @@ function Header(){
                             
                         </div>
                     ) : (
-                        <a href="/user-profile">Perfil</a>
+                        <a href="/my-profile">Perfil</a>
                         )}
                     <a href="/menu-user" className="relative">
                         Actividad

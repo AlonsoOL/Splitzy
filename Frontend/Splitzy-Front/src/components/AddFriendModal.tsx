@@ -47,25 +47,25 @@ export function AddFriendModal({
 
     return(
         <div className="absolute left-0 top-0 bg-[#242424a6]! w-full h-full">
-            <div className={`absolute w-[50%] h-[50%] bg-black z-50 bg-[#242424]! rounded-[21px] top-[10%] right-[25%] overflow-hidden ${isOpen ? "flex" : "hidden"}`} >
+            <div className={`absolute w-[75%] h-[50%] bg-black z-50 bg-[#242424]! rounded-[21px] top-[10%] right-[12.5%] overflow-hidden ${isOpen ? "flex" : "hidden"}`} >
                 <div className="w-full h-full p-4 space-y-4 overflow-y-auto">
                     <div className="flex w-full space-y-4 items-center text-left">
-                        <span className="w-1/3 text-center">Foto de perfil</span>
-                        <span className="w-1/3">Nombre</span>
-                        <span className="w-1/3"> Correo electrónico</span>
-                        <input className="p-2" placeholder="Buscar usuarios..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+                        <span className="w-1/3! text-center sr-only xl:not-sr-only lg:not-sr-only">Foto de perfil</span>
+                        <span className="w-1/3! sr-only xl:not-sr-only lg:not-sr-only md:not-sr-only">Nombre</span>
+                        <span className="w-1/3! not-sr-only"> Correo electrónico</span>
+                        <input className="p-2 border rounded-[11px]" placeholder="Buscar usuarios..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
                     </div>
                     <div className="flex flex-col items-center w-full">
                         {filteredUsers.map((user) => (
-                            <div key={user.id} className="flex w-full space-y-4 items-center text-left">
-                                <div className="flex w-1/3 justify-center">
+                            <div key={user.id} className="flex w-full space-y-4! items-center text-left">
+                                <div className="flex w-1/3! justify-center sr-only xl:not-sr-only lg:not-sr-only">
                                     <Avatar>
                                         <AvatarImage src={`${API_BASE_URL}${user.imageUrl}`} className="rounded-full"></AvatarImage>
                                         <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
                                 </div>
-                                <span className="w-1/3"><a href={`/user-name`}>{user.name}</a></span>
-                                <span className="w-1/3">{user.email}</span>
+                                <span className="w-1/3! sr-only xl:not-sr-only lg:not-sr-only md:not-sr-only"><a href={`/user-name`}>{user.name}</a></span>
+                                <span className="w-1/3! not-sr-only">{user.email}</span>
                                 <Button onClick={() => onSendRequest(user.id)}>Enviar solicitud</Button>
                             </div>
                         ))}
