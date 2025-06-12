@@ -15,9 +15,11 @@ import {
   type GroupBalance,
   groupService,
   type AddExpenseRequest,
+  type AddPaymentRequest,
   type GroupInvitationRequestDto,
 } from "@/services/groupService"
 import { AddExpenseModal } from "@/components/AddExpenseModal"
+import { AddPaymentModal } from "@/components/AddPaymentModal"
 import { API_BASE_URL } from "@/config"
 import { jwtDecode } from "jwt-decode"
 import { InviteUserModal } from "@/components/InviteUserModal"
@@ -35,6 +37,7 @@ export function GroupDetailPage() {
   const [balances, setBalances] = useState<GroupBalance[]>([])
   const [loading, setLoading] = useState(true)
   const [expenseModalOpen, setExpenseModalOpen] = useState(false)
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [userId, setUserId] = useState<number>(0)
   const [inviteModalOpen, setInviteModalOpen] = useState(false)
 
@@ -81,10 +84,30 @@ export function GroupDetailPage() {
     if (!groupId) return
 
     try {
-      await groupService.addExpenseToGroup(groupId, request)
+      const formattedRequest = {
+        ...request,
+        amount: parseFloat(request.amount.toFixed(2)),
+      }
+      await groupService.addExpenseToGroup(groupId, formattedRequest)
       await fetchGroupData()
     } catch (error) {
       console.error("Error adding expense:", error)
+      throw error
+    }
+  }
+
+  const handleAddPayment = async (request: AddPaymentRequest) => {
+    if (!groupId) return
+
+    try {
+      const formattedRequest = {
+        ...request,
+        amount: parseFloat(request.amount.toFixed(2)),
+      }
+      await groupService.addPaymentToGroup(groupId, formattedRequest)
+      await fetchGroupData()
+    } catch (error) {
+      console.error("Error adding payment:", error)
       throw error
     }
   }
@@ -110,22 +133,22 @@ export function GroupDetailPage() {
   }
 
   const handleSendInvitation = async (invitedUserId: number) => {
-  if (!groupId) return
+    if (!groupId) return
 
-  try {
-    const invitationRequest: GroupInvitationRequestDto = {
-      groupId: groupId, 
-      senderId: userId,
-      invitedUserId: invitedUserId,
+    try {
+      const invitationRequest: GroupInvitationRequestDto = {
+        groupId: groupId,
+        senderId: userId,
+        invitedUserId: invitedUserId,
+      }
+
+      await groupService.sendGroupInvitation(invitationRequest)
+      alert("Invitación enviada con éxito")
+    } catch (error) {
+      console.error("Error sending invitation:", error)
+      alert(error instanceof Error ? error.message : "Error al enviar la invitación")
     }
-
-    await groupService.sendGroupInvitation(invitationRequest)
-    alert("Invitación enviada con éxito")
-  } catch (error) {
-    console.error("Error sending invitation:", error)
-    alert(error instanceof Error ? error.message : "Error al enviar la invitación")
   }
-}
 
   if (loading) {
     return (
@@ -211,6 +234,7 @@ export function GroupDetailPage() {
                   </Button>
                   <Button
                     variant="outline"
+                    onClick={() => setPaymentModalOpen(true)}
                     className="w-full justify-start border-gray-600 text-white hover:bg-gray-700"
                   >
                     <CreditCard className="h-4 w-4 mr-2" />
@@ -355,6 +379,14 @@ export function GroupDetailPage() {
           onAddExpense={handleAddExpense}
           groupId={groupId!}
           userId={userId}
+        />
+        <AddPaymentModal
+          isOpen={paymentModalOpen}
+          onClose={() => setPaymentModalOpen(false)}
+          onAddPayment={handleAddPayment}
+          groupId={groupId!}
+          userId={userId}
+          members={members}
         />
         <InviteUserModal
           isOpen={inviteModalOpen}

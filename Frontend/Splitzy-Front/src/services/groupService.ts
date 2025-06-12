@@ -75,7 +75,7 @@ export interface AddPaymentRequest {
 }
 
 export interface GroupInvitationRequestDto {
-  groupId: string 
+  groupId: string
   senderId: number
   invitedUserId: number
 }
@@ -316,7 +316,10 @@ export const groupService = {
       const response = await fetch(`${API_BASE_URL}/api/Group/AddExpenseToGroup/${groupId}`, {
         method: "POST",
         headers: getAuthHeaders(),
-        body: JSON.stringify(request),
+        body: JSON.stringify({
+          ...request,
+          amount: parseFloat(request.amount.toFixed(2)),
+        }),
       })
       return await handleResponse(response)
     } catch (error) {
@@ -355,7 +358,10 @@ export const groupService = {
       const response = await fetch(`${API_BASE_URL}/api/Group/AddPaymentToGroup/${groupId}`, {
         method: "POST",
         headers: getAuthHeaders(),
-        body: JSON.stringify(request),
+        body: JSON.stringify({
+          ...request,
+          amount: parseFloat(request.amount.toFixed(2)), 
+        }),
       })
       return await handleResponse(response)
     } catch (error) {
