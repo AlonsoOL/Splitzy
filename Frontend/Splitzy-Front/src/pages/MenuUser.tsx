@@ -230,7 +230,11 @@ function MenuUser() {
               </div>
             </div>
             <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
-              <GroupList userId={userId} refreshSignal={refreshGroupList} />
+              {userId > 0 ? (
+                <GroupList userId={userId} refreshSignal={refreshGroupList} />
+              ) : (
+                <div className="text-center text-gray-400">Cargando...</div>
+              )}
             </div>
           </div>
         </div>

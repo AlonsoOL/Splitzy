@@ -83,6 +83,7 @@ const getAuthHeaders = () => {
 }
 
 export const groupService = {
+ 
   async getAllGroups(): Promise<Group[]> {
     const response = await fetch(`${API_BASE_URL}/api/Group/GetGroups`, {
       headers: getAuthHeaders(),
@@ -92,11 +93,25 @@ export const groupService = {
   },
 
   async getUserGroups(userId: number): Promise<Group[]> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupsOfUser/${userId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch user groups")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupsOfUser/${userId}`, {
+        headers: getAuthHeaders(),
+      })
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          
+          return []
+        }
+        throw new Error(`Failed to fetch user groups: ${response.status}`)
+      }
+
+      const data = await response.json()
+      return Array.isArray(data) ? data : []
+    } catch (error) {
+      console.error("Error in getUserGroups:", error)
+      return []
+    }
   },
 
   async getGroupById(groupId: string): Promise<Group> {
@@ -212,11 +227,24 @@ export const groupService = {
   },
 
   async getGroupBalances(groupId: string): Promise<GroupBalance[]> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupBalances/${groupId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch group balances")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupBalances/${groupId}`, {
+        headers: getAuthHeaders(),
+      })
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          return []
+        }
+        throw new Error(`Failed to fetch group balances: ${response.status}`)
+      }
+
+      const data = await response.json()
+      return Array.isArray(data) ? data : []
+    } catch (error) {
+      console.error("Error in getGroupBalances:", error)
+      return []
+    }
   },
 
   async getGroupDebts(groupId: string): Promise<GroupDebt[]> {
@@ -227,7 +255,7 @@ export const groupService = {
     return response.json()
   },
 
-  async getGroupSummary(groupId: string): Promise<unknown> {
+  async getGroupSummary(groupId: string): Promise<any> {
     const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupSummary/${groupId}`, {
       headers: getAuthHeaders(),
     })

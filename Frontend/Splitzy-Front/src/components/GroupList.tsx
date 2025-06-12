@@ -30,7 +30,8 @@ export function GroupList({ userId, refreshSignal }: GroupListProps) {
       for (const group of userGroups) {
         try {
           const groupBalances = await groupService.getGroupBalances(group.id)
-          balances[group.id] = groupBalances
+          // Ensure we always set an array, even if the response is unexpected
+          balances[group.id] = Array.isArray(groupBalances) ? groupBalances : []
         } catch (error) {
           console.error(`Error fetching balances for group ${group.id}:`, error)
           balances[group.id] = []
@@ -39,13 +40,21 @@ export function GroupList({ userId, refreshSignal }: GroupListProps) {
       setGroupBalances(balances)
     } catch (error) {
       console.error("Error fetching groups:", error)
+      setGroups([])
+      setGroupBalances({})
     } finally {
       setLoading(false)
     }
   }
 
   const getUserBalance = (groupId: string): { balance: number; status: string } => {
-    const balances = groupBalances[groupId] || []
+    const balances = groupBalances[groupId]
+
+    // Check if balances exists and is an array
+    if (!balances || !Array.isArray(balances)) {
+      return { balance: 0, status: "¡Estás al día!" }
+    }
+
     const userBalance = balances.find((b) => b.userId === userId)
 
     if (!userBalance) {
