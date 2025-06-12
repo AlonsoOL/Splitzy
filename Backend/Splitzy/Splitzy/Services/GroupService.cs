@@ -158,7 +158,7 @@ public class GroupService
 
     public async Task<IActionResult> AddExpenseToGroupAsync(Guid groupId, int userId, decimal amount, string name, string description = null)
     {
-        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
         if (group == null)
         {
             return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
@@ -174,7 +174,7 @@ public class GroupService
             Name = name,
             UserId = userId,
             Amount = amount,
-            Description = description ?? "Gasto añadido al grupo",
+            Description = description ?? "Gasto dividido igualmente",
             CreatedAt = DateTime.UtcNow,
             GroupId = groupId
         };
@@ -182,6 +182,7 @@ public class GroupService
         await _unitOfWork.ExpenseRepository.InsertAsync(expense);
         await _unitOfWork.SaveAsync();
 
+        
         await UpdateGroupDebtsAsync(groupId);
 
         return new OkObjectResult(new
@@ -194,7 +195,7 @@ public class GroupService
 
     public async Task<IActionResult> AddPaymentToGroupAsync(Guid groupId, int payerId, int receiverId, decimal amount, string description = null)
     {
-        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
         if (group == null)
         {
             return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
@@ -210,7 +211,7 @@ public class GroupService
             PayerId = payerId,
             ReceiverId = receiverId,
             Amount = amount,
-            Description = description ?? "Pago realizado",
+            Description = description ?? "Pago entre miembros",
             CreatedAt = DateTime.UtcNow,
             GroupId = groupId
         };
@@ -218,7 +219,7 @@ public class GroupService
         await _unitOfWork.PaymentRepository.InsertAsync(payment);
         await _unitOfWork.SaveAsync();
 
-
+       
         await UpdateGroupDebtsAsync(groupId);
 
         return new OkObjectResult(new
@@ -313,12 +314,32 @@ public class GroupService
 
     private async Task UpdateGroupDebtsAsync(Guid groupId)
     {
-        var balances = await CalculateGroupBalancesAsync(groupId);
+        var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        var expenses = await _unitOfWork.GroupRepository.GetExpensesByGroupIdAsync(groupId);
+        var payments = await _unitOfWork.GroupRepository.GetPaymentsByGroupIdAsync(groupId);
+
+        var balances = group.Users.ToDictionary(u => u.Id, _ => 0m);
+
+        foreach (var expense in expenses)
+        {
+            var share = expense.Amount / group.Users.Count;
+            foreach (var user in group.Users)
+            {
+                balances[user.Id] -= share;
+            }
+            balances[expense.UserId] += expense.Amount;
+        }
+
+        foreach (var payment in payments)
+        {
+            balances[payment.PayerId] -= payment.Amount;
+            balances[payment.ReceiverId] += payment.Amount;
+        }
 
         await _unitOfWork.DebtRepository.DeleteByGroupIdAsync(groupId);
 
-        var debtors = balances.Where(b => b.Value < 0).ToList();
-        var creditors = balances.Where(b => b.Value > 0).ToList();
+        var debtors = balances.Where(x => x.Value < 0).ToList();
+        var creditors = balances.Where(x => x.Value > 0).ToList();
 
         foreach (var debtor in debtors)
         {
@@ -328,21 +349,21 @@ public class GroupService
             {
                 if (debtAmount <= 0 || creditor.Value <= 0) continue;
 
-                decimal paymentAmount = Math.Min(debtAmount, creditor.Value);
+                decimal transfer = Math.Min(debtAmount, creditor.Value);
 
                 var debt = new Debt
                 {
                     GroupId = groupId,
                     DebtorId = debtor.Key,
                     CreditorId = creditor.Key,
-                    Amount = paymentAmount,
+                    Amount = transfer,
                     CreatedAt = DateTime.UtcNow
                 };
 
                 await _unitOfWork.DebtRepository.InsertAsync(debt);
 
-                debtAmount -= paymentAmount;
-                balances[creditor.Key] -= paymentAmount;
+                debtAmount -= transfer;
+                balances[creditor.Key] -= transfer;
             }
         }
 

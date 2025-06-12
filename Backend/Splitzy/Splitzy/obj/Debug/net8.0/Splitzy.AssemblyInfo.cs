@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Splitzy")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b48db1367276aaebece4f9fdfbad4c25476b12f5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbc7a3147ca3637f0f66e1dc73092b3e2bd85d6e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Splitzy")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Splitzy")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
