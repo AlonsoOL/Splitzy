@@ -202,19 +202,9 @@
         "IsRequired": true
       },
       {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "cantidad",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "name",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "Splitzy.Controllers.AddExpenseRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -222,7 +212,7 @@
   {
     "ContainingType": "Splitzy.Controllers.GroupController",
     "Method": "AddMemberToGroup",
-    "RelativePath": "api/Group/AddMemberToGroup/{groupId}",
+    "RelativePath": "api/Group/AddMemberToGroup/{groupId}/{userId}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -235,7 +225,28 @@
       {
         "Name": "userId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "AddPaymentToGroup",
+    "RelativePath": "api/Group/AddPaymentToGroup/{groupId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Splitzy.Controllers.AddPaymentRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -249,24 +260,25 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
+        "Name": "request",
+        "Type": "Splitzy.Controllers.CreateGroupRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "DeleteExpense",
+    "RelativePath": "api/Group/DeleteExpense/{expenseId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "description",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "imageUrl",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "expenseId",
+        "Type": "System.Guid",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -289,8 +301,72 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "DeletePayment",
+    "RelativePath": "api/Group/DeletePayment/{paymentId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetExpensesByGroupId",
+    "RelativePath": "api/Group/GetExpensesByGroupId/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
     "Method": "GetGroupById",
     "RelativePath": "api/Group/GetGroup/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupBalances",
+    "RelativePath": "api/Group/GetGroupBalances/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupDebts",
+    "RelativePath": "api/Group/GetGroupDebts/{groupId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -331,8 +407,8 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.GroupController",
-    "Method": "GetGroupsOfId",
-    "RelativePath": "api/Group/GetGroupsOfId/{userId}",
+    "Method": "GetGroupsOfUser",
+    "RelativePath": "api/Group/GetGroupsOfUser/{userId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -340,6 +416,80 @@
       {
         "Name": "userId",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupSummary",
+    "RelativePath": "api/Group/GetGroupSummary/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetPaymentsByGroupId",
+    "RelativePath": "api/Group/GetPaymentsByGroupId/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "RemoveMemberFromGroup",
+    "RelativePath": "api/Group/RemoveMemberFromGroup/{groupId}/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "UpdateGroup",
+    "RelativePath": "api/Group/UpdateGroup/{groupId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Splitzy.Controllers.UpdateGroupRequest",
         "IsRequired": true
       }
     ],

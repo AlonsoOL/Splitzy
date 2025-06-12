@@ -29,19 +29,6 @@ namespace Splitzy.Controllers
             return Ok(groups);
         }
 
-        /*
-        [HttpGet("GetGroupsByUserId")]
-        public async Task<IActionResult> GetGroupsByUserId(int userId)
-        {
-            var groups = await _service.GetGroupsByUserIdAsync(userId);
-            if (groups == null)
-            {
-                return NotFound("Grupo no encontrado.");
-            }
-            return Ok(groups);
-        }
-        */
-
         [HttpGet("GetGroup/{groupId}")]
         public async Task<IActionResult> GetGroupById(Guid groupId)
         {
@@ -54,11 +41,49 @@ namespace Splitzy.Controllers
         }
 
         [HttpPost("CreateGroup")]
-        public async Task<IActionResult> CreateGroup(int userId, string name, string description, string imageUrl)
+        public async Task<IActionResult> CreateGroup([FromBody] CreateGroupRequest request)
         {
+            if (request == null || string.IsNullOrEmpty(request.Name))
+            {
+                return BadRequest("Datos del grupo inválidos.");
+            }
 
-            var createdGroup = await _service.CreateGroupAsync(userId, name, description, imageUrl);
-            return Ok(createdGroup);
+            try
+            {
+                var createdGroup = await _service.CreateGroupAsync(request.UserId, request.Name, request.Description, request.ImageUrl);
+                return Ok(createdGroup);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("UpdateGroup/{groupId}")]
+        public async Task<IActionResult> UpdateGroup(Guid groupId, [FromBody] UpdateGroupRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Datos del grupo inválidos.");
+            }
+
+            try
+            {
+                var group = new Group
+                {
+                    Id = groupId,
+                    Name = request.Name,
+                    Description = request.Description,
+                    ImageUrl = request.ImageUrl
+                };
+
+                var updatedGroup = await _service.UpdateGroupAsync(group);
+                return Ok(updatedGroup);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("DeleteGroup/{groupId}")]
@@ -72,7 +97,8 @@ namespace Splitzy.Controllers
             return NoContent();
         }
 
-        [HttpPost("AddMemberToGroup/{groupId}")]
+
+        [HttpPost("AddMemberToGroup/{groupId}/{userId}")]
         public async Task<IActionResult> AddMemberToGroup(Guid groupId, int userId)
         {
             if (userId <= 0)
@@ -81,63 +107,11 @@ namespace Splitzy.Controllers
             }
 
             var result = await _service.AddMemberToGroupAsync(groupId, userId);
-            return Ok("Miembro añadido al grupo exitosamente.");
+            return result;
         }
-
-
-        [HttpGet("GetGroupsOfId/{userId}")]
-        public async Task<IActionResult> GetGroupsOfId(int userId)
-        {
-            if (userId <= 0)
-            {
-                return BadRequest("ID de usuario inválido.");
-            }
-            var groups = await _service.GetGroupsOfId(userId);
-            if (groups == null)
-            {
-                return NotFound("No se encontraron grupos para este usuario.");
-            }
-            return Ok(groups);
-        }
-
-        /*
-        [HttpPut("UpdateGroup/{groupId}")]
-        public async Task<IActionResult> UpdateGroup(int groupId, [FromBody] Group group)
-        {
-            if (group == null || group.Id != groupId)
-            {
-                return BadRequest("Datos del grupo inválidos.");
-            }
-
-            var updatedGroup = await _service.UpdateGroupAsync(group);
-            if (updatedGroup == null)
-            {
-                return NotFound("Grupo no encontrado.");
-            }
-            return Ok(updatedGroup);
-        }
-        */
-
-
-
-
-
-        [HttpGet("GetGroupMembers/{groupId}")]
-        public async Task<IActionResult> GetGroupMembers(Guid groupId)
-        {
-            var members = await _service.GetGroupMembersAsync(groupId);
-            if (members == null || !members.Any())
-            {
-                return NotFound("No se encontraron miembros en este grupo.");
-            }
-            return Ok(members);
-        }
-
-        /*
-
 
         [HttpDelete("RemoveMemberFromGroup/{groupId}/{userId}")]
-        public async Task<IActionResult> RemoveMemberFromGroup(int groupId, int userId)
+        public async Task<IActionResult> RemoveMemberFromGroup(Guid groupId, int userId)
         {
             if (userId <= 0)
             {
@@ -145,37 +119,147 @@ namespace Splitzy.Controllers
             }
 
             var result = await _service.RemoveMemberFromGroupAsync(groupId, userId);
-            if (!result)
-            {
-                return NotFound("Grupo no encontrado o no se pudo eliminar el miembro.");
-            }
-            return Ok("Miembro eliminado del grupo exitosamente.");
-
-
+            return result;
         }
 
-        */
-
-
-        [HttpPost("AddExpenseToGroup/{groupId}")]
-        public async Task<IActionResult> AddExpenseToGroup(Guid groupId, int userId, int cantidad, string name)
+        [HttpGet("GetGroupMembers/{groupId}")]
+        public async Task<IActionResult> GetGroupMembers(Guid groupId)
         {
-            if (cantidad <= 0)
+            try
+            {
+                var members = await _service.GetGroupMembersAsync(groupId);
+                if (members == null || !members.Any())
+                {
+                    return NotFound("No se encontraron miembros en este grupo.");
+                }
+                return Ok(members);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetGroupsOfUser/{userId}")]
+        public async Task<IActionResult> GetGroupsOfUser(int userId)
+        {
+            if (userId <= 0)
+            {
+                return BadRequest("ID de usuario inválido.");
+            }
+
+            var result = await _service.GetGroupsOfId(userId);
+            return result;
+        }
+
+      
+        [HttpPost("AddExpenseToGroup/{groupId}")]
+        public async Task<IActionResult> AddExpenseToGroup(Guid groupId, [FromBody] AddExpenseRequest request)
+        {
+            if (request == null || request.Amount <= 0 || string.IsNullOrEmpty(request.Name))
             {
                 return BadRequest("Datos de gasto inválidos.");
             }
 
-            var result = await _service.AddExpenseToGroupAsync(groupId,userId, cantidad, name);
-            if (result == null)
-            {
-                return NotFound("Grupo no encontrado o no se pudo añadir el gasto.");
-            }
-            return Ok(result);
-
-
-
+            var result = await _service.AddExpenseToGroupAsync(groupId, request.UserId, request.Amount, request.Name, request.Description);
+            return result;
         }
 
+        [HttpGet("GetExpensesByGroupId/{groupId}")]
+        public async Task<IActionResult> GetExpensesByGroupId(Guid groupId)
+        {
+            var result = await _service.GetGroupExpensesAsync(groupId);
+            return result;
+        }
 
+        [HttpDelete("DeleteExpense/{expenseId}")]
+        public async Task<IActionResult> DeleteExpense(Guid expenseId)
+        {
+            var result = await _service.DeleteExpenseAsync(expenseId);
+            return result;
+        }
+
+        [HttpPost("AddPaymentToGroup/{groupId}")]
+        public async Task<IActionResult> AddPaymentToGroup(Guid groupId, [FromBody] AddPaymentRequest request)
+        {
+            if (request == null || request.Amount <= 0 || request.PayerId <= 0 || request.ReceiverId <= 0)
+            {
+                return BadRequest("Datos de pago inválidos.");
+            }
+
+            if (request.PayerId == request.ReceiverId)
+            {
+                return BadRequest("El pagador y el receptor no pueden ser la misma persona.");
+            }
+
+            var result = await _service.AddPaymentToGroupAsync(groupId, request.PayerId, request.ReceiverId, request.Amount, request.Description);
+            return result;
+        }
+
+        [HttpGet("GetPaymentsByGroupId/{groupId}")]
+        public async Task<IActionResult> GetPaymentsByGroupId(Guid groupId)
+        {
+            var result = await _service.GetGroupPaymentsAsync(groupId);
+            return result;
+        }
+
+        [HttpDelete("DeletePayment/{paymentId}")]
+        public async Task<IActionResult> DeletePayment(Guid paymentId)
+        {
+            var result = await _service.DeletePaymentAsync(paymentId);
+            return result;
+        }
+
+        [HttpGet("GetGroupBalances/{groupId}")]
+        public async Task<IActionResult> GetGroupBalances(Guid groupId)
+        {
+            var result = await _service.GetGroupBalancesAsync(groupId);
+            return result;
+        }
+
+        [HttpGet("GetGroupDebts/{groupId}")]
+        public async Task<IActionResult> GetGroupDebts(Guid groupId)
+        {
+            var result = await _service.GetGroupDebtsAsync(groupId);
+            return result;
+        }
+
+        [HttpGet("GetGroupSummary/{groupId}")]
+        public async Task<IActionResult> GetGroupSummary(Guid groupId)
+        {
+            var result = await _service.GetGroupSummaryAsync(groupId);
+            return result;
+        }
+    }
+
+    public class CreateGroupRequest
+    {
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+    }
+
+    public class UpdateGroupRequest
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+    }
+
+    public class AddExpenseRequest
+    {
+        public int UserId { get; set; }
+        public decimal Amount { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class AddPaymentRequest
+    {
+        public int PayerId { get; set; }
+        public int ReceiverId { get; set; }
+        public decimal Amount { get; set; }
+        public string Description { get; set; }
     }
 }

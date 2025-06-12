@@ -61,6 +61,62 @@ public class MyDbContext : DbContext
             .HasForeignKey(fr => fr.RecivedId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Groups)
+            .WithMany(g => g.Users)
+            .UsingEntity(j => j.ToTable("UserGroups"));
+
+        
+        modelBuilder.Entity<Payment>()
+            .HasOne(p => p.Payer)
+            .WithMany(u => u.PaymentsMade)
+            .HasForeignKey(p => p.PayerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Payment>()
+            .HasOne(p => p.Receiver)
+            .WithMany(u => u.PaymentsReceived)
+            .HasForeignKey(p => p.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        
+        modelBuilder.Entity<Debt>()
+            .HasOne(d => d.Debtor)
+            .WithMany(u => u.DebtsOwed)
+            .HasForeignKey(d => d.DebtorId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Debt>()
+            .HasOne(d => d.Creditor)
+            .WithMany(u => u.CreditsOwed)
+            .HasForeignKey(d => d.CreditorId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        
+        modelBuilder.Entity<Expense>()
+            .HasIndex(e => new { e.GroupId, e.CreatedAt });
+
+        modelBuilder.Entity<Payment>()
+            .HasIndex(p => new { p.GroupId, p.CreatedAt });
+
+        modelBuilder.Entity<Debt>()
+            .HasIndex(d => new { d.GroupId, d.IsSettled });
+
+        modelBuilder.Entity<Debt>()
+            .HasIndex(d => new { d.DebtorId, d.IsSettled });
+
+        modelBuilder.Entity<Debt>()
+            .HasIndex(d => new { d.CreditorId, d.IsSettled });
+
+        
+        modelBuilder.Entity<Group>()
+            .HasIndex(g => g.Name);
+
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
         base.OnModelCreating(modelBuilder);
     }
 }
