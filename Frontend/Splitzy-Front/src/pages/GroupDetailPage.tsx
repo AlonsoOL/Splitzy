@@ -79,7 +79,7 @@ export function GroupDetailPage() {
 
     try {
       await groupService.addExpenseToGroup(groupId, request)
-      await fetchGroupData() // Refresh data
+      await fetchGroupData() 
     } catch (error) {
       console.error("Error adding expense:", error)
       throw error
