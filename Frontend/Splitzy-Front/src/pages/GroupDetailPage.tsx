@@ -15,10 +15,12 @@ import {
   type GroupBalance,
   groupService,
   type AddExpenseRequest,
+  type GroupInvitationRequestDto,
 } from "@/services/groupService"
 import { AddExpenseModal } from "@/components/AddExpenseModal"
 import { API_BASE_URL } from "@/config"
 import { jwtDecode } from "jwt-decode"
+import { InviteUserModal } from "@/components/InviteUserModal"
 
 interface JwtPayload {
   id: number
@@ -34,6 +36,7 @@ export function GroupDetailPage() {
   const [loading, setLoading] = useState(true)
   const [expenseModalOpen, setExpenseModalOpen] = useState(false)
   const [userId, setUserId] = useState<number>(0)
+  const [inviteModalOpen, setInviteModalOpen] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem("user") || sessionStorage.getItem("user")
@@ -79,7 +82,7 @@ export function GroupDetailPage() {
 
     try {
       await groupService.addExpenseToGroup(groupId, request)
-      await fetchGroupData() 
+      await fetchGroupData()
     } catch (error) {
       console.error("Error adding expense:", error)
       throw error
@@ -105,6 +108,24 @@ export function GroupDetailPage() {
       year: "numeric",
     })
   }
+
+  const handleSendInvitation = async (invitedUserId: number) => {
+  if (!groupId) return
+
+  try {
+    const invitationRequest: GroupInvitationRequestDto = {
+      groupId: groupId, 
+      senderId: userId,
+      invitedUserId: invitedUserId,
+    }
+
+    await groupService.sendGroupInvitation(invitationRequest)
+    alert("Invitación enviada con éxito")
+  } catch (error) {
+    console.error("Error sending invitation:", error)
+    alert(error instanceof Error ? error.message : "Error al enviar la invitación")
+  }
+}
 
   if (loading) {
     return (
@@ -151,9 +172,7 @@ export function GroupDetailPage() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
-
             <div className="space-y-6">
-      
               <Card className="bg-[#242424e0] border-gray-600">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
@@ -196,6 +215,14 @@ export function GroupDetailPage() {
                   >
                     <CreditCard className="h-4 w-4 mr-2" />
                     Registrar pago
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start border-gray-600 text-white hover:bg-gray-700"
+                    onClick={() => setInviteModalOpen(true)}
+                  >
+                    <Users className="h-4 w-4 mr-2" />
+                    Invitar usuarios
                   </Button>
                 </CardContent>
               </Card>
@@ -249,7 +276,6 @@ export function GroupDetailPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4 max-h-[600px] overflow-y-auto">
-
                     {[
                       ...expenses.map((e) => ({ ...e, type: "expense" })),
                       ...payments.map((p) => ({ ...p, type: "payment" })),
@@ -329,6 +355,12 @@ export function GroupDetailPage() {
           onAddExpense={handleAddExpense}
           groupId={groupId!}
           userId={userId}
+        />
+        <InviteUserModal
+          isOpen={inviteModalOpen}
+          onClose={() => setInviteModalOpen(false)}
+          onSendInvitation={handleSendInvitation}
+          groupId={groupId!}
         />
       </div>
     </div>

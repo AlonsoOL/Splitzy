@@ -14,8 +14,8 @@ import { API_BASE_URL } from "@/config"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { Link } from "react-router-dom"
 import { CreateGroupModal } from "@/components/CreateGroupModal"
-import { GroupList } from "@/components/GroupList"
 import { groupService, type CreateGroupRequest } from "@/services/groupService"
+import { GroupList } from "@/components/GroupList"
 
 interface JwtPayload {
   id: number
@@ -41,6 +41,7 @@ function MenuUser() {
   const [refreshGroupList, setRefreshGroupList] = useState(false)
   const { clearNotification } = useNotification()
   const [pending, setPending] = useState<FriendRequestDto[]>([])
+  const [pendingGroupInvitations, setPendingGroupInvitations] = useState<any[]>([])
 
   useEffect(() => {
     if (token) {
@@ -129,6 +130,20 @@ function MenuUser() {
   }, [socket, userId])
 
   useEffect(() => {
+    if (userId > 0) {
+      // Fetch pending group invitations
+      groupService
+        .getPendingInvitations(userId)
+        .then((data) => {
+          setPendingGroupInvitations(data)
+        })
+        .catch((error) => {
+          console.error("Error fetching group invitations:", error)
+        })
+    }
+  }, [userId, refreshGroupList])
+
+  useEffect(() => {
     if (notification.length === 0) return
 
     const timer = setTimeout(() => {
@@ -173,6 +188,25 @@ function MenuUser() {
     } catch (error) {
       console.error("Error creating group:", error)
       throw error
+    }
+  }
+
+  const handleAcceptGroupInvitation = async (invitationId: number) => {
+    try {
+      await groupService.acceptGroupInvitation(invitationId, userId)
+      setPendingGroupInvitations((current) => current.filter((inv) => inv.id !== invitationId))
+      setRefreshGroupList((prev) => !prev)
+    } catch (error) {
+      console.error("Error accepting group invitation:", error)
+    }
+  }
+
+  const handleRejectGroupInvitation = async (invitationId: number) => {
+    try {
+      await groupService.rejectGroupInvitation(invitationId, userId)
+      setPendingGroupInvitations((current) => current.filter((inv) => inv.id !== invitationId))
+    } catch (error) {
+      console.error("Error rejecting group invitation:", error)
     }
   }
 
@@ -299,6 +333,33 @@ function MenuUser() {
                       onClick={() => handleReject(req.recivedId, req.senderId, req.id)}
                       className="bg-transparent! bg-[url(/decline.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-red-400! hover:border-red-600!"
                     ></Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {/* Group Invitations */}
+          {pendingGroupInvitations.length > 0 && (
+            <div>
+              {pendingGroupInvitations.map((invitation) => (
+                <div key={invitation.id} className="flex flex-col border-b-1 border-white-500 space-y-3 pb-3 mb-3">
+                  <div className="flex flex-raw justify-center">
+                    <p>
+                      <strong>{invitation.senderName}&nbsp;</strong> te ha invitado al grupo{" "}
+                      <strong>&nbsp;{invitation.groupName}</strong>.
+                    </p>
+                  </div>
+                  <div className="flex flex-raw w-full gap-x-4 justify-center">
+                    <Button className="w-1/3" onClick={() => handleAcceptGroupInvitation(invitation.id)}>
+                      Aceptar
+                    </Button>
+                    <Button
+                      className="w-1/3"
+                      variant="outline"
+                      onClick={() => handleRejectGroupInvitation(invitation.id)}
+                    >
+                      Rechazar
+                    </Button>
                   </div>
                 </div>
               ))}

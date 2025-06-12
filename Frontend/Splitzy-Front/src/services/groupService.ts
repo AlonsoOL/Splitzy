@@ -74,6 +74,17 @@ export interface AddPaymentRequest {
   description: string
 }
 
+export interface GroupInvitationRequestDto {
+  groupId: string 
+  senderId: number
+  invitedUserId: number
+}
+
+export interface GroupInvitationManageDto {
+  invitationId: number
+  userId: number
+}
+
 const getAuthHeaders = () => {
   const token = localStorage.getItem("user") || sessionStorage.getItem("user")
   return {
@@ -82,14 +93,113 @@ const getAuthHeaders = () => {
   }
 }
 
+const handleResponse = async (response: Response) => {
+  if (!response.ok) {
+    let errorMessage = `HTTP error! status: ${response.status}`
+    try {
+      const contentType = response.headers.get("content-type")
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json()
+        errorMessage = errorData.message || errorData.error || errorMessage
+      } else {
+        const errorText = await response.text()
+        if (errorText) {
+          errorMessage = errorText
+        }
+      }
+    } catch (e) {
+      console.error("Error parsing error response:", e)
+      errorMessage = `Failed to parse error response: ${errorMessage}`
+    }
+    throw new Error(errorMessage)
+  }
+
+  const contentType = response.headers.get("content-type")
+  if (contentType && contentType.includes("application/json")) {
+    return await response.json()
+  } else {
+    const text = await response.text()
+    return text || true
+  }
+}
+
 export const groupService = {
- 
+  sendGroupInvitation: async (request: GroupInvitationRequestDto) => {
+    try {
+      console.log("Sending group invitation:", request)
+      const response = await fetch(`${API_BASE_URL}/api/GroupInvitation/invite`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(request),
+      })
+
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in sendGroupInvitation:", error)
+      throw error
+    }
+  },
+
+  acceptGroupInvitation: async (invitationId: number, userId: number) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/GroupInvitation/accept`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ invitationId, userId }),
+      })
+
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in acceptGroupInvitation:", error)
+      throw error
+    }
+  },
+
+  rejectGroupInvitation: async (invitationId: number, userId: number) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/GroupInvitation/reject`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ invitationId, userId }),
+      })
+
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in rejectGroupInvitation:", error)
+      throw error
+    }
+  },
+
+  getPendingInvitations: async (userId: number) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/GroupInvitation/pending/${userId}`, {
+        headers: getAuthHeaders(),
+      })
+
+      if (response.status === 404) {
+        return []
+      }
+
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getPendingInvitations:", error)
+      if (error instanceof Error && error.message.includes("404")) {
+        return []
+      }
+      throw error
+    }
+  },
+
   async getAllGroups(): Promise<Group[]> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetGroups`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch groups")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetGroups`, {
+        headers: getAuthHeaders(),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getAllGroups:", error)
+      throw new Error("Failed to fetch groups")
+    }
   },
 
   async getUserGroups(userId: number): Promise<Group[]> {
@@ -98,15 +208,11 @@ export const groupService = {
         headers: getAuthHeaders(),
       })
 
-      if (!response.ok) {
-        if (response.status === 404) {
-          
-          return []
-        }
-        throw new Error(`Failed to fetch user groups: ${response.status}`)
+      if (response.status === 404) {
+        return []
       }
 
-      const data = await response.json()
+      const data = await handleResponse(response)
       return Array.isArray(data) ? data : []
     } catch (error) {
       console.error("Error in getUserGroups:", error)
@@ -115,115 +221,172 @@ export const groupService = {
   },
 
   async getGroupById(groupId: string): Promise<Group> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetGroup/${groupId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch group")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetGroup/${groupId}`, {
+        headers: getAuthHeaders(),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getGroupById:", error)
+      throw new Error("Failed to fetch group")
+    }
   },
 
   async createGroup(request: CreateGroupRequest): Promise<Group> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/CreateGroup`, {
-      method: "POST",
-      headers: getAuthHeaders(),
-      body: JSON.stringify(request),
-    })
-    if (!response.ok) throw new Error("Failed to create group")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/CreateGroup`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(request),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in createGroup:", error)
+      throw new Error("Failed to create group")
+    }
   },
 
   async updateGroup(groupId: string, request: Omit<CreateGroupRequest, "userId">): Promise<Group> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/UpdateGroup/${groupId}`, {
-      method: "PUT",
-      headers: getAuthHeaders(),
-      body: JSON.stringify(request),
-    })
-    if (!response.ok) throw new Error("Failed to update group")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/UpdateGroup/${groupId}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(request),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in updateGroup:", error)
+      throw new Error("Failed to update group")
+    }
   },
 
   async deleteGroup(groupId: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/DeleteGroup/${groupId}`, {
-      method: "DELETE",
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to delete group")
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/DeleteGroup/${groupId}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      })
+      await handleResponse(response)
+    } catch (error) {
+      console.error("Error in deleteGroup:", error)
+      throw new Error("Failed to delete group")
+    }
   },
 
   async addMemberToGroup(groupId: string, userId: number): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/AddMemberToGroup/${groupId}/${userId}`, {
-      method: "POST",
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to add member to group")
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/AddMemberToGroup/${groupId}/${userId}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+      })
+      await handleResponse(response)
+    } catch (error) {
+      console.error("Error in addMemberToGroup:", error)
+      throw new Error("Failed to add member to group")
+    }
   },
 
   async removeMemberFromGroup(groupId: string, userId: number): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/RemoveMemberFromGroup/${groupId}/${userId}`, {
-      method: "DELETE",
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to remove member from group")
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/RemoveMemberFromGroup/${groupId}/${userId}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      })
+      await handleResponse(response)
+    } catch (error) {
+      console.error("Error in removeMemberFromGroup:", error)
+      throw new Error("Failed to remove member from group")
+    }
   },
 
   async getGroupMembers(groupId: string): Promise<GroupMember[]> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupMembers/${groupId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch group members")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupMembers/${groupId}`, {
+        headers: getAuthHeaders(),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getGroupMembers:", error)
+      throw new Error("Failed to fetch group members")
+    }
   },
 
   async addExpenseToGroup(groupId: string, request: AddExpenseRequest): Promise<GroupExpense> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/AddExpenseToGroup/${groupId}`, {
-      method: "POST",
-      headers: getAuthHeaders(),
-      body: JSON.stringify(request),
-    })
-    if (!response.ok) throw new Error("Failed to add expense")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/AddExpenseToGroup/${groupId}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(request),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in addExpenseToGroup:", error)
+      throw new Error("Failed to add expense")
+    }
   },
 
   async getGroupExpenses(groupId: string): Promise<GroupExpense[]> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetExpensesByGroupId/${groupId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch group expenses")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetExpensesByGroupId/${groupId}`, {
+        headers: getAuthHeaders(),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getGroupExpenses:", error)
+      throw new Error("Failed to fetch group expenses")
+    }
   },
 
   async deleteExpense(expenseId: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/DeleteExpense/${expenseId}`, {
-      method: "DELETE",
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to delete expense")
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/DeleteExpense/${expenseId}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      })
+      await handleResponse(response)
+    } catch (error) {
+      console.error("Error in deleteExpense:", error)
+      throw new Error("Failed to delete expense")
+    }
   },
 
   async addPaymentToGroup(groupId: string, request: AddPaymentRequest): Promise<GroupPayment> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/AddPaymentToGroup/${groupId}`, {
-      method: "POST",
-      headers: getAuthHeaders(),
-      body: JSON.stringify(request),
-    })
-    if (!response.ok) throw new Error("Failed to add payment")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/AddPaymentToGroup/${groupId}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(request),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in addPaymentToGroup:", error)
+      throw new Error("Failed to add payment")
+    }
   },
 
   async getGroupPayments(groupId: string): Promise<GroupPayment[]> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetPaymentsByGroupId/${groupId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch group payments")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetPaymentsByGroupId/${groupId}`, {
+        headers: getAuthHeaders(),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getGroupPayments:", error)
+      throw new Error("Failed to fetch group payments")
+    }
   },
 
   async deletePayment(paymentId: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/DeletePayment/${paymentId}`, {
-      method: "DELETE",
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to delete payment")
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/DeletePayment/${paymentId}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      })
+      await handleResponse(response)
+    } catch (error) {
+      console.error("Error in deletePayment:", error)
+      throw new Error("Failed to delete payment")
+    }
   },
 
   async getGroupBalances(groupId: string): Promise<GroupBalance[]> {
@@ -232,14 +395,11 @@ export const groupService = {
         headers: getAuthHeaders(),
       })
 
-      if (!response.ok) {
-        if (response.status === 404) {
-          return []
-        }
-        throw new Error(`Failed to fetch group balances: ${response.status}`)
+      if (response.status === 404) {
+        return []
       }
 
-      const data = await response.json()
+      const data = await handleResponse(response)
       return Array.isArray(data) ? data : []
     } catch (error) {
       console.error("Error in getGroupBalances:", error)
@@ -248,18 +408,26 @@ export const groupService = {
   },
 
   async getGroupDebts(groupId: string): Promise<GroupDebt[]> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupDebts/${groupId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch group debts")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupDebts/${groupId}`, {
+        headers: getAuthHeaders(),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getGroupDebts:", error)
+      throw new Error("Failed to fetch group debts")
+    }
   },
 
   async getGroupSummary(groupId: string): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupSummary/${groupId}`, {
-      headers: getAuthHeaders(),
-    })
-    if (!response.ok) throw new Error("Failed to fetch group summary")
-    return response.json()
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/Group/GetGroupSummary/${groupId}`, {
+        headers: getAuthHeaders(),
+      })
+      return await handleResponse(response)
+    } catch (error) {
+      console.error("Error in getGroupSummary:", error)
+      throw new Error("Failed to fetch group summary")
+    }
   },
 }
