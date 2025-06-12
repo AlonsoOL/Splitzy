@@ -4,9 +4,22 @@ namespace Splitzy.Database.Repositories;
 
 public class UserRepository : Repository<User>
 {
+
+    private readonly MyDbContext _dbContext;
     public UserRepository(MyDbContext dbContext) : base(dbContext)
     {
+        _dbContext = dbContext;
+    }
 
+    public void Attach(Group group)
+    {
+        _dbContext.Groups.Attach(group);
+    }
+
+
+    public void Attach(User user)
+    {
+        _dbContext.Users.Attach(user);
     }
 
     public async Task<User> GetByMailAsync(string mail)
