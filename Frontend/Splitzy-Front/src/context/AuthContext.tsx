@@ -1,5 +1,6 @@
 "use client"
 
+import {LOGIN} from "../config.ts"
 import { jwtDecode } from "jwt-decode"
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useNavigate } from "react-router-dom"
@@ -39,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string, rememberMe: boolean) => {
     try {
-      const response = await fetch("https://localhost:7044/login", {
+      const response = await fetch(LOGIN, {
         method: "POST",
         headers: {
           accept: "text/plain", 

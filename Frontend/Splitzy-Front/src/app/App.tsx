@@ -12,6 +12,8 @@ import MenuUser from "@/pages/MenuUser"
 import MenuAdmin from "@/pages/MenuAdmin"
 import ProtectRoute from "@/components/ProtectedRoute"
 import UserProfile from "@/pages/userProfile"
+import { NotificationProvider } from "@/context/NotificationContext"
+import CurrentUserProfile from "@/pages/currentUserProfile"
 
 function Home() {
   return (
@@ -92,9 +94,10 @@ function App() {
   return (
     <>
       <AuthProvider>
-        {/* <WebSocketProvider> */}
+        <NotificationProvider>
           <Header />
           <Routes>
+            
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
@@ -106,13 +109,18 @@ function App() {
               <ProtectRoute>
                 <MenuAdmin/>
               </ProtectRoute>}/>
-            <Route path="/user-profile" element={
+            <Route path="/my-profile" element={
+              <ProtectRoute>
+                <CurrentUserProfile/>
+              </ProtectRoute>}/>
+            <Route path="/user-profile/:id" element={
               <ProtectRoute>
                 <UserProfile/>
               </ProtectRoute>}/>
+               <Route path="*" element={<UserProfile />} />
           </Routes>
           <Footer />
-        {/* </WebSocketProvider> */}
+        </NotificationProvider>
       </AuthProvider>
     </>
   )

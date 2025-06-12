@@ -6,6 +6,12 @@ import { AddFriendModal } from "@/components/AddFriendModal";
 import { useSendFriendRequest } from "@/hook/useSendFriendRequest";
 import { acceptRequest, fetchPendingRequests, rejectRequest } from "@/services/friendService";
 import { useWebsocket } from "@/context/WebSocketContext";
+import { useNotification } from "@/context/NotificationContext";
+import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { API_BASE_URL } from "@/config";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Link } from "react-router-dom";
 
 interface JwtPayload{
     id: number;
@@ -27,7 +33,7 @@ function MenuUser(){
     const [userId, setUserId] = useState<number>(0)
     const [ notification, setNotification ] = useState<string[]>([])
     const [refreshFriendList, setRefreshFriendList] = useState(false)
-
+    const { clearNotification } = useNotification()
     const [ pending, setPending ] = useState<FriendRequestDto[]>([])
 
     useEffect(() => {
@@ -128,7 +134,9 @@ function MenuUser(){
     const handleReject = async (recivedId: number, senderId: number, requestid: number) => {
         try{
             await rejectRequest(recivedId, senderId)
+            clearNotification()
             setPending((cur) => cur.filter((r) => r.id !== requestid))
+            
         }
         catch(e){
             console.error("No se ha podido rechazar la solicitud", e)
@@ -138,7 +146,7 @@ function MenuUser(){
     
     return(
         <div className="w-full bg-[url(/fondo-splitzy.png)] bg-cover">
-            <div className="min-h-screen w-full flex flex-row items-center justify-center backdrop-blur-2xl xl:gap-10 md:gap-5">
+            <div className="min-h-screen w-full flex flex-col 2xl:flex-row xl:flex-row lg:flex-row items-center justify-center backdrop-blur-2xl 2xl:gap-10 xl:gap-10 gap-5">
                 {notification.length > 0 && (
                     <div className="absolute top-5 right-1 bg-black p-4">
                     {notification.map((note) => (
@@ -147,14 +155,14 @@ function MenuUser(){
                     </div>
                 )}
                 <div className="w-1/6"></div>
-                <div className="w-1/2 flex flex-col xl:gap-10 md:gap-5">
+                <div className="2xl:w-1/2 xl:w-1/2 lg:w-1/2 w-[85%] flex flex-col 2xl:gap-10 xl:gap-10 gap-5">
                     {/* Sección de los amigos */}
                     <div className="bg-[#242424e0] rounded-[21px] overflow-hidden h-75 p-8">
                         <div className="flex flex-row mb-4">
                             <p className="w-1/2 text-left">Amigos</p>
                             <div className="w-1/2 text-right ">
-                                <a className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
-                                <div className="absolute top-[50%] right-0 bg-black z-50 bg-[#24242468]">
+                                <a href="#" className="cursor-pointer" onClick={() => setModalOpen(true)}>Añadir amigo</a>
+                                <div>
                                     <AddFriendModal 
                                         isOpen={modalOpen}
                                         onClose={() => setModalOpen(false)}
@@ -199,7 +207,7 @@ function MenuUser(){
                             </div>
                         </div>
                         <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
-                            <div className="flex flex-row items-center border-b-2 pb-2">
+                            <div className="flex flex-row items-center pb-2">
                                 <div className="w-1/8">
                                     <p>abr</p>
                                     <p>14</p>
@@ -211,7 +219,8 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">¡Estás al día!</p>
                             </div>
-                            <div className="flex flex-row items-center border-b-2 pb-2">
+                            <Separator/>
+                            <div className="flex flex-row items-center pb-2">
                                 <div className="w-1/8">
                                     <p>abr</p>
                                     <p>14</p>
@@ -223,16 +232,20 @@ function MenuUser(){
                                 </div>
                                 <p className="w-1/2 text-gray-400 text-right">Debes 30€</p>
                             </div>
+                            <Separator/>
                         </div>
                         
                     </div>
                 </div>
+
                 {/* Sección actividad reciente */}
-                <div className="w-1/2 h-160 p-8 bg-[#242424e0] rounded-[21px] space-y-3">
+                <div className="2xl:w-1/2 xl:w-1/2 lg:w-1/2 w-[85%] h-160 p-8 bg-[#242424e0] rounded-[21px] space-y-3">
                     <div className="text-xl">Actividad reciente</div>
-                    <div className="flex flex-col border-b-1 border-stone-500 space-y-3 pb-3">
+                    <div className="flex flex-col border-b-1 border-white-500 space-y-3 pb-3">
                         <div className="flex flex-raw justify-center">
-                            <span className="font-bold">Iván&nbsp;</span> te ha invitado al grupo <p className="font-bold">&nbsp;fiesta fin de curso</p>.
+                            <p>
+                                <strong>Iván&nbsp;</strong> te ha invitado al grupo <strong>&nbsp;fiesta fin de curso</strong>. 
+                            </p>
                         </div>
                         <div className="flex flex-raw w-full gap-x-4 justify-center">
                             <Button className="w-1/3">Aceptar</Button>
@@ -245,10 +258,27 @@ function MenuUser(){
                     ) : ( 
                         <div>
                         {pending.map((req) =>(
-                            <div key={req.id} className="flex flex-raw border-b-1 border-stone-500 justify-center items-center pb-3">
-                                <div className="w-3/4 flex flex-row space-y-2 items-center text-left">
-                                    <img src={`https://localhost:7044${req.senderImageUrl}`} className="w-10 h-10 mr-4 rounded-full"/>
-                                    <p key={req.senderId}><span className="font-bold">{req.senderName}&nbsp;</span>te ha mandado una solicitud de amistad</p>
+                            <div key={req.id} className="flex flex-raw border-b-1 border-white-500 justify-center items-center pb-3">
+                                <div className="w-3/4 flex flex-row space-y-2 space-x-2 items-center text-left">
+                                    <Avatar className="size-10">
+                                        <AvatarImage src={`${API_BASE_URL}${req.senderImageUrl}`} className="rounded-full"></AvatarImage>
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                    <HoverCard>
+                                        <HoverCardTrigger>
+                                            <span className="hover:border-b"><strong>{req.senderName}</strong> te ha mandado una solicitud de amistad</span>
+                                        </HoverCardTrigger>
+                                        <HoverCardContent className="bg-[#262626] space-y-3">
+                                            <div className="flex flex-row text-white items-center">
+                                                <img src={`${API_BASE_URL}${req.senderImageUrl}`} className="w-10 h-10 mr-4 rounded-full space-y2"/>
+                                                <div className="flex flex-col">
+                                                    <Link to={`/user-profile/${req.senderId}`}><strong>@{req.senderName}</strong></Link>
+                                                </div>
+                                            </div>
+                                            <div className="text-white">Aquí puede ir una futura descripción corta</div>
+                                        </HoverCardContent>
+                                    </HoverCard>
+                                    
                                 </div>
                                 <div className="flex flex-raw w-1/4 justify-center gap-x-2">
                                     <Button onClick={() => handleAccept(req.recivedId, req.senderId, req.id)} className="bg-transparent! bg-[url(/check.svg)]! bg-cover! w-[40px]! h-[40px]! rounded-full! text-white! hover:bg-green-400!"></Button>

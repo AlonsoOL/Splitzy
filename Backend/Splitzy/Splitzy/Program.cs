@@ -33,7 +33,8 @@ namespace Splitzy
             builder.Services.AddAuthentication()
                 .AddJwtBearer(options => 
                 {
-                    string key = Environment.GetEnvironmentVariable("JWT_KEY");
+                    //string key = Environment.GetEnvironmentVariable("JWT_KEY");
+                    string key = builder.Configuration["JwtSettings:Key"];
 
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
@@ -57,16 +58,13 @@ namespace Splitzy
                 options.OperationFilter<SecurityRequirementsOperationFilter>(true, JwtBearerDefaults.AuthenticationScheme);
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            if (builder.Environment.IsDevelopment())
+            builder.Services.AddCors(options =>
             {
-                builder.Services.AddCors(options =>
+                options.AddDefaultPolicy(builder =>
                 {
-                    options.AddDefaultPolicy(builder =>
-                    {
-                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                    });
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
-            }
+            });
 
             builder.Services.AddEndpointsApiExplorer();
 

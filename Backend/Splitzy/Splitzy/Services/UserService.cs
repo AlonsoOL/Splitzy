@@ -15,7 +15,7 @@ public class UserService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<User> GetByIdAsync(long id)
+    public async Task<User> GetByIdAsync(int id)
     {
         User user = await _unitOfWork.UserRepository.GetByIdAsync(id);
         return user;
@@ -34,13 +34,34 @@ public class UserService
         return user;
     }
 
-    public async Task<User> UpdateAsync(User user)
+    public async Task<User> UpdateAsync(UpdateUserDto userData)
     {
-        User userEntity = await _unitOfWork.UserRepository.GetByIdAsync(user.Id) ?? throw new Exception("El usuario especificado no existe");
+        User userEntity = await _unitOfWork.UserRepository.GetByIdAsync(userData.Id) ?? throw new Exception("El usuario especificado no existe");
 
-        userEntity.Email = user.Email;
-        userEntity.Name = user.Name;
-        
+        if(userData.Email != null)
+        {
+            userEntity.Email = userData.Email;
+        }
+        if (userData.Name != null)
+        {
+            userEntity.Name = userData.Name;
+        }
+        if (userData.Address != null){
+            userEntity.Address = userData.Address;
+        }
+        if (userData.Phone != null)
+        {
+            userEntity.Phone = userData.Phone;
+        }
+        if (userData.ImageUrl != null)
+        {
+            userEntity.ImageUrl = userData.ImageUrl;
+        }
+        if (userData.Password != null)
+        {
+            userEntity.Password = userData.Password;
+        }
+
 
         _unitOfWork.UserRepository.Update(userEntity);
 
