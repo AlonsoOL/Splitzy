@@ -38,3 +38,7 @@ Trabajos hechos por Iván:
 08/04/2025 - Kit UI
 09/04/2025 - Vista Landing Page, Login y Register alta fidelidad
 29/04/2025 - Creación de la página login y lógica de conexión de front con backend
+12/06/2025 - Gestíon de creacion de grupos en Frontend y Backend
+12/06/2025 - Gestíon de invitaciones a grupos en tiempo real en Frontend y Backend
+12/06/2025 - Gestíon de creación de gastos, pagos y actualizaciones de deudad en Frontend y Backend
+
