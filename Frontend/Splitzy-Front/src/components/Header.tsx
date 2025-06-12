@@ -34,7 +34,7 @@ function Header(){
                     ) : (
                         <a href="/my-profile">Perfil</a>
                         )}
-                    <a href="/menu-user" className="relative">
+                    <a href="/actividad-reciente" className="relative">
                         Actividad
                         {hasNotification && (
                             <div className="flex bg-red-500 rounded-full w-4! h-4! absolute top-[-5px] right-[-13px] items-center justify-center">

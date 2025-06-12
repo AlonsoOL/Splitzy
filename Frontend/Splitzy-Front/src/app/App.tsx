@@ -15,6 +15,7 @@ import UserProfile from "@/pages/userProfile"
 import { NotificationProvider } from "@/context/NotificationContext"
 import CurrentUserProfile from "@/pages/currentUserProfile"
 import { GroupDetailPage } from "@/pages/GroupDetailPage"
+import { RecentActivityPage } from "@/pages/RecentActivityPage"
 
 function Home() {
   return (
@@ -102,10 +103,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/actividad-reciente" element={<RecentActivityPage />} />
             <Route path="/group/:groupId" element={
               <ProtectRoute>
                 <GroupDetailPage />
               </ProtectRoute>}/>
+              
             <Route path="/menu-user" element={
               <ProtectRoute>
                 <MenuUser/>
