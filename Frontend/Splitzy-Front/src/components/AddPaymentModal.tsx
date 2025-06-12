@@ -39,8 +39,8 @@ export function AddPaymentModal({ isOpen, onClose, onAddPayment, userId, members
 
     try {
       const paymentRequest: AddPaymentRequest = {
-        payerId: userId,
-        receiverId: parseInt(receiverId),
+        payerId: userId, 
+        receiverId: parseInt(receiverId), 
         amount: parsedAmount,
         description,
       }
@@ -63,7 +63,7 @@ export function AddPaymentModal({ isOpen, onClose, onAddPayment, userId, members
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="receiver">Receptor</Label>
+              <Label htmlFor="receiver">A quién estás pagando</Label>
               <Select value={receiverId} onValueChange={setReceiverId}>
                 <SelectTrigger id="receiver" className="border-gray-600 text-white">
                   <SelectValue placeholder="Selecciona un receptor" />
@@ -80,7 +80,7 @@ export function AddPaymentModal({ isOpen, onClose, onAddPayment, userId, members
               </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="amount">Monto (€)</Label>
+              <Label htmlFor="amount">Monto que estás pagando (€)</Label>
               <Input
                 id="amount"
                 type="number"

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Splitzy.Database;
 using Splitzy.Models;
 using SQLitePCL;
+using System.Diagnostics;
 
 namespace Splitzy.Services;
 
@@ -82,7 +83,6 @@ public class GroupService
 
     public async Task<IActionResult> AddMemberToGroupAsync(Guid groupId, int userId)
     {
-       
         bool alreadyMember = await _unitOfWork.GroupRepository.IsUserMemberOfGroupAsync(groupId, userId);
         if (alreadyMember)
         {
@@ -111,8 +111,6 @@ public class GroupService
             UserId = user.Id
         });
     }
-
-
 
     public async Task<IActionResult> RemoveMemberFromGroupAsync(Guid groupId, int userId)
     {
@@ -159,7 +157,6 @@ public class GroupService
         return group.Users.ToList();
     }
 
-
     public async Task<IActionResult> AddExpenseToGroupAsync(Guid groupId, int userId, decimal amount, string name, string description = null)
     {
         var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
@@ -186,7 +183,6 @@ public class GroupService
         await _unitOfWork.ExpenseRepository.InsertAsync(expense);
         await _unitOfWork.SaveAsync();
 
-        
         await UpdateGroupDebtsAsync(groupId);
 
         return new OkObjectResult(new
@@ -223,7 +219,6 @@ public class GroupService
         await _unitOfWork.PaymentRepository.InsertAsync(payment);
         await _unitOfWork.SaveAsync();
 
-       
         await UpdateGroupDebtsAsync(groupId);
 
         return new OkObjectResult(new
@@ -270,28 +265,33 @@ public class GroupService
         return new OkObjectResult(balances);
     }
 
-    private async Task<Dictionary<int, decimal>> CalculateGroupBalancesAsync(Guid groupId)
+    private async Task<List<object>> CalculateGroupBalancesAsync(Guid groupId)
     {
         var expenses = await _unitOfWork.GroupRepository.GetExpensesByGroupIdAsync(groupId);
         var payments = await _unitOfWork.GroupRepository.GetPaymentsByGroupIdAsync(groupId);
         var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
 
+        if (group == null || group.Users == null || !group.Users.Any())
+        {
+            return new List<object>();
+        }
+
         var balances = new Dictionary<int, decimal>();
+        var userNames = new Dictionary<int, string>();
 
         foreach (var user in group.Users)
         {
             balances[user.Id] = 0;
+            userNames[user.Id] = user.Name ?? $"User {user.Id}";
         }
-
         decimal totalExpenses = expenses.Sum(e => e.Amount);
-        decimal sharePerPerson = totalExpenses / group.Users.Count;
+        decimal sharePerPerson = group.Users.Count > 0 ? totalExpenses / group.Users.Count : 0;
 
         foreach (var user in group.Users)
         {
             balances[user.Id] -= sharePerPerson;
         }
 
-  
         foreach (var expense in expenses)
         {
             if (balances.ContainsKey(expense.UserId))
@@ -300,21 +300,28 @@ public class GroupService
             }
         }
 
- 
         foreach (var payment in payments)
         {
             if (balances.ContainsKey(payment.PayerId))
             {
-                balances[payment.PayerId] -= payment.Amount;
+                balances[payment.PayerId] += payment.Amount; 
             }
             if (balances.ContainsKey(payment.ReceiverId))
             {
-                balances[payment.ReceiverId] += payment.Amount;
+                balances[payment.ReceiverId] -= payment.Amount; 
             }
         }
 
-        return balances;
+        var groupBalances = balances.Select(kvp => new
+        {
+            UserId = kvp.Key,
+            UserName = userNames.ContainsKey(kvp.Key) ? userNames[kvp.Key] : $"User {kvp.Key}",
+            Balance = kvp.Value
+        }).ToList<object>();
+
+        return groupBalances;
     }
+
 
     private async Task UpdateGroupDebtsAsync(Guid groupId)
     {
@@ -338,6 +345,7 @@ public class GroupService
         {
             balances[payment.PayerId] -= payment.Amount;
             balances[payment.ReceiverId] += payment.Amount;
+
         }
 
         await _unitOfWork.DebtRepository.DeleteByGroupIdAsync(groupId);
@@ -345,15 +353,17 @@ public class GroupService
         var debtors = balances.Where(x => x.Value < 0).ToList();
         var creditors = balances.Where(x => x.Value > 0).ToList();
 
+        var tempBalances = new Dictionary<int, decimal>(balances);
+
         foreach (var debtor in debtors)
         {
             decimal debtAmount = Math.Abs(debtor.Value);
 
             foreach (var creditor in creditors)
             {
-                if (debtAmount <= 0 || creditor.Value <= 0) continue;
+                if (debtAmount <= 0 || tempBalances[creditor.Key] <= 0) continue;
 
-                decimal transfer = Math.Min(debtAmount, creditor.Value);
+                decimal transfer = Math.Min(debtAmount, tempBalances[creditor.Key]);
 
                 var debt = new Debt
                 {
@@ -367,12 +377,13 @@ public class GroupService
                 await _unitOfWork.DebtRepository.InsertAsync(debt);
 
                 debtAmount -= transfer;
-                balances[creditor.Key] -= transfer;
+                tempBalances[creditor.Key] -= transfer;
             }
         }
 
         await _unitOfWork.SaveAsync();
     }
+
 
     public async Task<IActionResult> GetGroupDebtsAsync(Guid groupId)
     {
@@ -413,9 +424,9 @@ public class GroupService
 
         return new OkObjectResult(summary);
     }
+
     public async Task SendGroupInvitationAsync(Guid groupId, int senderId, int invitedUserId)
     {
-        // Validaciones
         if (senderId == invitedUserId)
         {
             throw new Exception("No puedes invitarte a ti mismo");
@@ -524,7 +535,7 @@ public class GroupService
 
         await _dbContext.SaveChangesAsync();
 
-        var acceptedUser = user; 
+        var acceptedUser = user;
         await WebSocketHandler.SendToUserAsync(invitation.SenderId, new
         {
             Type = "group_invitation_accepted",
@@ -555,7 +566,6 @@ public class GroupService
             throw new Exception("Invitación no encontrada o ya gestionada");
         }
 
-       
         invitation.IsAccepted = false;
         invitation.IsHandled = true;
         invitation.HandledAt = DateTime.UtcNow;
@@ -615,7 +625,6 @@ public class GroupService
         _unitOfWork.ExpenseRepository.Delete(expense);
         await _unitOfWork.SaveAsync();
 
-
         await UpdateGroupDebtsAsync(expense.GroupId);
 
         return new OkObjectResult(new { Message = "Gasto eliminado exitosamente." });
@@ -632,11 +641,8 @@ public class GroupService
         _unitOfWork.PaymentRepository.Delete(payment);
         await _unitOfWork.SaveAsync();
 
- 
         await UpdateGroupDebtsAsync(payment.GroupId);
 
         return new OkObjectResult(new { Message = "Pago eliminado exitosamente." });
     }
-
-
 }

@@ -277,15 +277,8 @@ function MenuUser() {
         <div className="2xl:w-1/2 xl:w-1/2 lg:w-1/2 w-[85%] h-160 p-8 bg-[#242424e0] rounded-[21px] space-y-3">
           <div className="text-xl">Actividad reciente</div>
           <div className="flex flex-col border-b-1 border-white-500 space-y-3 pb-3">
-            <div className="flex flex-raw justify-center">
-              <p>
-                <strong>Iván&nbsp;</strong> te ha invitado al grupo <strong>&nbsp;fiesta fin de curso</strong>.
-              </p>
-            </div>
-            <div className="flex flex-raw w-full gap-x-4 justify-center">
-              <Button className="w-1/3">Aceptar</Button>
-              <Button className="w-1/3">Rechazar</Button>
-            </div>
+            
+            
           </div>
           {/* Solicitudes de amistad */}
           {pending.length === 0 ? (

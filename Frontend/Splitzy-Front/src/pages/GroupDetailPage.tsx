@@ -143,10 +143,10 @@ export function GroupDetailPage() {
       }
 
       await groupService.sendGroupInvitation(invitationRequest)
-      alert("Invitación enviada con éxito")
+      
     } catch (error) {
       console.error("Error sending invitation:", error)
-      alert(error instanceof Error ? error.message : "Error al enviar la invitación")
+      
     }
   }
 
