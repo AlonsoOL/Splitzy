@@ -69,6 +69,21 @@ public class UserController : ControllerBase
         return Ok(await _service.UpdateRole(userRole));
     }
 
+    [HttpGet("RecentActivity/{userId}")]
+    public async Task<IActionResult> GetUserRecentActivity(int userId)
+    {
+        try
+        {
+            var result = await _service.GetUserRecentActivityAsync(userId);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { Message = "No se pudo obtener la actividad reciente", Error = ex.Message });
+        }
+    }
+
+
     [HttpDelete("Delete_User/{id}")]
     public async Task<ActionResult> DeleteAsyncUser(int id)
     {

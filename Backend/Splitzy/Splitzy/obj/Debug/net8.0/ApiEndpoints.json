@@ -654,6 +654,22 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.UserController",
+    "Method": "GetUserRecentActivity",
+    "RelativePath": "api/User/RecentActivity/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.UserController",
     "Method": "UpdateAsync",
     "RelativePath": "api/User/Update_User",
     "HttpMethod": "PUT",

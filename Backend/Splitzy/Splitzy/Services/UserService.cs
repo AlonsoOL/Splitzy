@@ -95,4 +95,46 @@ public class UserService
     {
         return _unitOfWork.UserRepository.GetByMailAsync(mail);
     }
+
+    public async Task<List<object>> GetUserRecentActivityAsync(int userId)
+    {
+        var userGroups = await _unitOfWork.GroupRepository.GetGroupsByUserIdAsync(userId);
+        var groupIds = userGroups.Select(g => g.Id).ToList();
+
+        var allExpenses = new List<Expense>();
+        var allPayments = new List<Payment>();
+
+        foreach (var groupId in groupIds)
+        {
+            var expenses = await _unitOfWork.GroupRepository.GetExpensesByGroupIdAsync(groupId);
+            var payments = await _unitOfWork.GroupRepository.GetPaymentsByGroupIdAsync(groupId);
+            allExpenses.AddRange(expenses.Where(e => e.UserId == userId));
+            allPayments.AddRange(payments.Where(p => p.PayerId == userId || p.ReceiverId == userId));
+        }
+
+        var activities = new List<object>();
+
+        activities.AddRange(allExpenses.Select(e => new
+        {
+            Type = "expense",
+            GroupId = e.GroupId,
+            Amount = e.Amount,
+            Description = e.Description,
+            CreatedAt = e.CreatedAt
+        }));
+
+        activities.AddRange(allPayments.Select(p => new
+        {
+            Type = "payment",
+            GroupId = p.GroupId,
+            Amount = p.Amount,
+            Description = p.Description,
+            CreatedAt = p.CreatedAt,
+            PayerId = p.PayerId,
+            ReceiverId = p.ReceiverId
+        }));
+
+        return activities.OrderByDescending(a => ((DateTime)a.GetType().GetProperty("CreatedAt")!.GetValue(a))).ToList();
+    }
+
 }
