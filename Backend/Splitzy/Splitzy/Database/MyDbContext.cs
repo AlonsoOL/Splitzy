@@ -11,6 +11,8 @@ public class MyDbContext : DbContext
     public DbSet<UserFriend> UserFriends { get; set; }
     public DbSet<FriendRequest> FriendRequests { get; set; }
 
+    public DbSet<GroupInvitation> GroupInvitations { get; set; }
+
     public DbSet<Group> Groups { get; set; }
     public DbSet<Expense> Expenses { get; set; }
     public DbSet<Debt> Debts { get; set; }
@@ -80,7 +82,36 @@ public class MyDbContext : DbContext
             .HasForeignKey(p => p.ReceiverId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        
+        modelBuilder.Entity<GroupInvitation>(entity =>
+        {
+            entity.HasKey(gi => gi.Id);
+
+            entity.HasOne(gi => gi.Group)
+                  .WithMany()
+                  .HasForeignKey(gi => gi.GroupId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(gi => gi.Sender)
+                  .WithMany()
+                  .HasForeignKey(gi => gi.SenderId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(gi => gi.InvitedUser)
+                  .WithMany()
+                  .HasForeignKey(gi => gi.InvitedUserId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.Property(gi => gi.SentAt)
+                  .IsRequired();
+
+            entity.Property(gi => gi.IsAccepted)
+                  .IsRequired();
+
+            entity.Property(gi => gi.IsHandled)
+                  .IsRequired();
+        });
+
+
         modelBuilder.Entity<Debt>()
             .HasOne(d => d.Debtor)
             .WithMany(u => u.DebtsOwed)

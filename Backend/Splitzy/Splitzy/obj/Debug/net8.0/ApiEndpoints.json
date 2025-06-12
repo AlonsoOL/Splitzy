@@ -496,6 +496,70 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "AcceptInvitation",
+    "RelativePath": "api/GroupInvitation/accept",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.GroupInvitationManageDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "SendGroupInvitation",
+    "RelativePath": "api/GroupInvitation/invite",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.GroupInvitationRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "GetPendingInvitations",
+    "RelativePath": "api/GroupInvitation/pending/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "RejectInvitation",
+    "RelativePath": "api/GroupInvitation/reject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.GroupInvitationManageDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RetroKits.Controllers.SmartSearchController",
     "Method": "Search",
     "RelativePath": "api/SmartSearch",

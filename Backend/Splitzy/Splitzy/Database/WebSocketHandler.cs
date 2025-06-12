@@ -33,12 +33,11 @@ namespace Splitzy.Database
                             {
                                 Console.WriteLine("Formato de mensaje no válido");
                                 continue;
-                                
                             }
 
-                            if(payload.Type == "init")
+                            if (payload.Type == "init")
                             {
-                                int userId = payload.Data.SenderId;
+                                int userId = payload.Data.SenderId ?? payload.Data.UserId ?? 0;
 
                                 if (_userSockets.ContainsKey(userId))
                                 {
@@ -56,11 +55,18 @@ namespace Splitzy.Database
                                 Console.WriteLine($"Esta es la solicitud de amistad recibida: {payload.Data}");
                                 using var scope = scopeFactory.CreateScope();
                                 var service = scope.ServiceProvider.GetRequiredService<FriendService>();
-                                await service.SendFriendServicesAsync(payload.Data.SenderId, payload.Data.RecivedId);
+                                await service.SendFriendServicesAsync(payload.Data.SenderId.Value, payload.Data.RecivedId.Value);
+                            }
+                            else if (payload.Type == "group_invitation")
+                            {
+                                Console.WriteLine($"Esta es la invitación al grupo recibida: {payload.Data}");
+                                using var scope = scopeFactory.CreateScope();
+                                var service = scope.ServiceProvider.GetRequiredService<GroupService>();
+                                await service.SendGroupInvitationAsync(payload.Data.GroupId.Value, payload.Data.SenderId.Value, payload.Data.InvitedUserId.Value);
                             }
                             else
                             {
-                                Console.WriteLine("Tipo de mensaje no soportado" + payload.Type);
+                                Console.WriteLine("Tipo de mensaje no soportado: " + payload.Type);
                             }
                         }
                         catch (Exception ex)
@@ -93,7 +99,6 @@ namespace Splitzy.Database
                     await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "conexión cerrada", CancellationToken.None);
                 }
             }
-            
         }
 
         public static async Task SendToUserAsync(int userId, object message)
@@ -102,14 +107,25 @@ namespace Splitzy.Database
             {
                 var json = JsonSerializer.Serialize(message);
                 var buffer = Encoding.UTF8.GetBytes(json);
-                await socket.SendAsync(new ArraySegment<byte>(buffer),WebSocketMessageType.Text, true, CancellationToken.None);
+                await socket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
             }
         }
 
         public class SocketPayload
         {
             public string Type { get; set; }
-            public FriendRequestData Data { get; set; }
+            public SocketData Data { get; set; }
+        }
+
+        public class SocketData
+        {
+            public int? SenderId { get; set; }
+            public int? RecivedId { get; set; }
+
+            public Guid? GroupId { get; set; }
+            public int? InvitedUserId { get; set; }
+
+            public int? UserId { get; set; }
         }
 
         public class FriendRequestData

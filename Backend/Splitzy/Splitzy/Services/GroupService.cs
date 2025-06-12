@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Splitzy.Database;
+using Splitzy.Models;
 using SQLitePCL;
 
 namespace Splitzy.Services;
@@ -8,10 +10,12 @@ namespace Splitzy.Services;
 public class GroupService
 {
     private UnitOfWork _unitOfWork;
+    private MyDbContext _dbContext;
 
-    public GroupService(UnitOfWork unitOfWork)
+    public GroupService(UnitOfWork unitOfWork, MyDbContext dbContext)
     {
         _unitOfWork = unitOfWork;
+        _dbContext = dbContext;
     }
 
     public async Task<Group> GetGroupByIdAsync(Guid groupId)
@@ -409,6 +413,196 @@ public class GroupService
 
         return new OkObjectResult(summary);
     }
+    public async Task SendGroupInvitationAsync(Guid groupId, int senderId, int invitedUserId)
+    {
+        // Validaciones
+        if (senderId == invitedUserId)
+        {
+            throw new Exception("No puedes invitarte a ti mismo");
+        }
+
+        var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            throw new Exception("Grupo no encontrado");
+        }
+
+        var sender = await _unitOfWork.UserRepository.GetByIdAsync(senderId);
+        var invitedUser = await _unitOfWork.UserRepository.GetByIdAsync(invitedUserId);
+
+        if (sender == null || invitedUser == null)
+        {
+            throw new Exception("Uno o ambos usuarios no existen");
+        }
+
+        bool isSenderMember = await _unitOfWork.GroupRepository.IsUserMemberOfGroupAsync(groupId, senderId);
+        if (!isSenderMember)
+        {
+            throw new Exception("Solo los miembros del grupo pueden enviar invitaciones");
+        }
+
+        bool isAlreadyMember = await _unitOfWork.GroupRepository.IsUserMemberOfGroupAsync(groupId, invitedUserId);
+        if (isAlreadyMember)
+        {
+            throw new Exception("El usuario ya es miembro del grupo");
+        }
+
+        var existingInvitation = await _dbContext.GroupInvitations
+            .AnyAsync(gi => gi.GroupId == groupId && gi.InvitedUserId == invitedUserId && !gi.IsHandled);
+
+        if (existingInvitation)
+        {
+            throw new Exception("Ya existe una invitación pendiente para este usuario");
+        }
+
+        var invitation = new GroupInvitation
+        {
+            GroupId = groupId,
+            SenderId = senderId,
+            InvitedUserId = invitedUserId,
+            SentAt = DateTime.UtcNow,
+            IsAccepted = false,
+            IsHandled = false
+        };
+
+        _dbContext.GroupInvitations.Add(invitation);
+        await _dbContext.SaveChangesAsync();
+
+        await WebSocketHandler.SendToUserAsync(invitedUserId, new
+        {
+            Type = "group_invitation",
+            Data = new
+            {
+                Id = invitation.Id,
+                Group = new
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    Description = group.Description,
+                    ImageUrl = group.ImageUrl
+                },
+                Sender = new
+                {
+                    Id = sender.Id,
+                    Name = sender.Name,
+                    Email = sender.Email,
+                    ImageUrl = sender.ImageUrl
+                },
+                SentAt = invitation.SentAt
+            }
+        });
+    }
+
+    public async Task AcceptGroupInvitationAsync(int invitationId, int userId)
+    {
+        var invitation = await _dbContext.GroupInvitations
+            .Include(gi => gi.Group)
+            .Include(gi => gi.Sender)
+            .FirstOrDefaultAsync(gi => gi.Id == invitationId && gi.InvitedUserId == userId && !gi.IsHandled);
+
+        if (invitation == null)
+        {
+            throw new Exception("Invitación no encontrada o ya gestionada");
+        }
+
+        bool isAlreadyMember = await _unitOfWork.GroupRepository.IsUserMemberOfGroupAsync(invitation.GroupId, userId);
+        if (isAlreadyMember)
+        {
+            throw new Exception("Ya eres miembro de este grupo");
+        }
+
+        invitation.IsAccepted = true;
+        invitation.IsHandled = true;
+        invitation.HandledAt = DateTime.UtcNow;
+
+        var group = invitation.Group;
+        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+
+        _unitOfWork.UserRepository.Attach(user);
+
+        group.Users.Add(user);
+
+        await _dbContext.SaveChangesAsync();
+
+        var acceptedUser = user; 
+        await WebSocketHandler.SendToUserAsync(invitation.SenderId, new
+        {
+            Type = "group_invitation_accepted",
+            Data = new
+            {
+                GroupId = invitation.GroupId,
+                GroupName = group.Name,
+                AcceptedUser = new
+                {
+                    Id = acceptedUser.Id,
+                    Name = acceptedUser.Name,
+                    Email = acceptedUser.Email,
+                    ImageUrl = acceptedUser.ImageUrl
+                }
+            }
+        });
+    }
+
+    public async Task RejectGroupInvitationAsync(int invitationId, int userId)
+    {
+        var invitation = await _dbContext.GroupInvitations
+            .Include(gi => gi.Group)
+            .Include(gi => gi.Sender)
+            .FirstOrDefaultAsync(gi => gi.Id == invitationId && gi.InvitedUserId == userId && !gi.IsHandled);
+
+        if (invitation == null)
+        {
+            throw new Exception("Invitación no encontrada o ya gestionada");
+        }
+
+       
+        invitation.IsAccepted = false;
+        invitation.IsHandled = true;
+        invitation.HandledAt = DateTime.UtcNow;
+
+        await _dbContext.SaveChangesAsync();
+
+        var rejectedUser = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+        await WebSocketHandler.SendToUserAsync(invitation.SenderId, new
+        {
+            Type = "group_invitation_rejected",
+            Data = new
+            {
+                GroupId = invitation.GroupId,
+                GroupName = invitation.Group.Name,
+                RejectedUser = new
+                {
+                    Id = rejectedUser.Id,
+                    Name = rejectedUser.Name,
+                    Email = rejectedUser.Email
+                }
+            }
+        });
+    }
+
+    public async Task<List<GroupInvitationDto>> GetPendingInvitationsAsync(int userId)
+    {
+        var invitations = await _dbContext.GroupInvitations
+            .Include(gi => gi.Group)
+            .Include(gi => gi.Sender)
+            .Where(gi => gi.InvitedUserId == userId && !gi.IsHandled)
+            .Select(gi => new GroupInvitationDto
+            {
+                Id = gi.Id,
+                GroupId = gi.GroupId,
+                GroupName = gi.Group.Name,
+                GroupDescription = gi.Group.Description,
+                GroupImageUrl = gi.Group.ImageUrl,
+                SenderId = gi.SenderId,
+                SenderName = gi.Sender.Name,
+                SenderImageUrl = gi.Sender.ImageUrl,
+                InvitedUserId = gi.InvitedUserId,
+                SentAt = gi.SentAt
+            })
+            .ToListAsync();
+
+        return invitations;
+    }
 
     public async Task<IActionResult> DeleteExpenseAsync(Guid expenseId)
     {
@@ -443,4 +637,6 @@ public class GroupService
 
         return new OkObjectResult(new { Message = "Pago eliminado exitosamente." });
     }
+
+
 }
