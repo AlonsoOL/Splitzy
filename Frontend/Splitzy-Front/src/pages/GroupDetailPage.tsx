@@ -132,7 +132,7 @@ export function GroupDetailPage() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex items-center gap-4 mb-6">
-            <Link to="/menu">
+            <Link to="/menu-user">
               <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
                 <ArrowLeft className="h-5 w-5" />
               </Button>
