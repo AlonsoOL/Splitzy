@@ -29,6 +29,10 @@ public class GroupService
     public async Task<Group> CreateGroupAsync(int userId, string name, string description, string imageUrl)
     {
         User user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+        if (user == null)
+        {
+            throw new Exception("Usuario no encontrado");
+        }
 
         var group = new Group
         {
@@ -39,7 +43,6 @@ public class GroupService
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
             Users = new List<User> { user },
-
         };
 
         await _unitOfWork.GroupRepository.InsertAsync(group);
@@ -51,14 +54,16 @@ public class GroupService
     public async Task<bool> DeleteAsyncGroupById(Guid id)
     {
         Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(id);
-        _unitOfWork.GroupRepository.Delete(group);
+        if (group == null) return false;
 
+        _unitOfWork.GroupRepository.Delete(group);
         return await _unitOfWork.SaveAsync();
     }
 
     public async Task<Group> UpdateGroupAsync(Group group)
     {
-        Group groupEntity = await _unitOfWork.GroupRepository.GetGroupByIdAsync(group.Id) ?? throw new Exception("El grupo especificado no existe");
+        Group groupEntity = await _unitOfWork.GroupRepository.GetGroupByIdAsync(group.Id)
+            ?? throw new Exception("El grupo especificado no existe");
 
         groupEntity.Name = group.Name;
         groupEntity.Description = group.Description;
@@ -66,7 +71,6 @@ public class GroupService
         groupEntity.UpdatedAt = DateTime.UtcNow;
 
         _unitOfWork.GroupRepository.Update(groupEntity);
-
         await _unitOfWork.SaveAsync();
 
         return groupEntity;
@@ -74,21 +78,26 @@ public class GroupService
 
     public async Task<IActionResult> AddMemberToGroupAsync(Guid groupId, int userId)
     {
-        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
-        User user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+       
+        bool alreadyMember = await _unitOfWork.GroupRepository.IsUserMemberOfGroupAsync(groupId, userId);
+        if (alreadyMember)
+        {
+            return new BadRequestObjectResult(new { Message = "El usuario ya es miembro del grupo." });
+        }
+
+        var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
 
         if (group == null || user == null)
         {
-            throw new Exception("Grupo o usuario no encontrado");
+            return new NotFoundObjectResult(new { Message = "Grupo o usuario no encontrado." });
         }
 
-        if (group.Users.Any(u => u.Id == userId))
-        {
-            throw new Exception("El usuario ya es miembro del grupo");
-        }
+        _unitOfWork.GroupRepository.Attach(group);
+        _unitOfWork.UserRepository.Attach(user);
 
         group.Users.Add(user);
-        _unitOfWork.GroupRepository.Update(group);
+
         await _unitOfWork.SaveAsync();
 
         return new OkObjectResult(new
@@ -97,7 +106,30 @@ public class GroupService
             GroupId = group.Id,
             UserId = user.Id
         });
+    }
 
+
+
+    public async Task<IActionResult> RemoveMemberFromGroupAsync(Guid groupId, int userId)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+
+        var user = group.Users.FirstOrDefault(u => u.Id == userId);
+        if (user == null)
+        {
+            return new NotFoundObjectResult(new { Message = "El usuario no es miembro del grupo" });
+        }
+
+        group.Users.Remove(user);
+        _unitOfWork.GroupRepository.Update(group);
+        await _unitOfWork.SaveAsync();
+
+        return new OkObjectResult(new { Message = "Miembro eliminado del grupo exitosamente." });
     }
 
     public async Task<IActionResult> GetGroupsOfId(int userId)
@@ -124,7 +156,7 @@ public class GroupService
     }
 
 
-        public async Task<IActionResult> AddExpenseToGroupAsync(Guid groupId, int userId, int cantidad, string name)
+    public async Task<IActionResult> AddExpenseToGroupAsync(Guid groupId, int userId, decimal amount, string name, string description = null)
     {
         Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
         if (group == null)
@@ -132,28 +164,71 @@ public class GroupService
             return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
         }
 
+        if (!group.Users.Any(u => u.Id == userId))
+        {
+            return new BadRequestObjectResult(new { Message = "El usuario no pertenece al grupo" });
+        }
+
         var expense = new Expense
         {
             Name = name,
             UserId = userId,
-            Amount = cantidad,
-            Description = "Gasto añadido al grupo",
+            Amount = amount,
+            Description = description ?? "Gasto añadido al grupo",
             CreatedAt = DateTime.UtcNow,
             GroupId = groupId
         };
 
         await _unitOfWork.ExpenseRepository.InsertAsync(expense);
         await _unitOfWork.SaveAsync();
-        UpdateDebtAsync(groupId).Wait(); 
+
+        await UpdateGroupDebtsAsync(groupId);
 
         return new OkObjectResult(new
         {
             Message = "Gasto añadido al grupo exitosamente.",
-            ExpenseId = expense.Id
+            ExpenseId = expense.Id,
+            Amount = expense.Amount
         });
-
-
     }
+
+    public async Task<IActionResult> AddPaymentToGroupAsync(Guid groupId, int payerId, int receiverId, decimal amount, string description = null)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+
+        if (!group.Users.Any(u => u.Id == payerId) || !group.Users.Any(u => u.Id == receiverId))
+        {
+            return new BadRequestObjectResult(new { Message = "Uno o ambos usuarios no pertenecen al grupo" });
+        }
+
+        var payment = new Payment
+        {
+            PayerId = payerId,
+            ReceiverId = receiverId,
+            Amount = amount,
+            Description = description ?? "Pago realizado",
+            CreatedAt = DateTime.UtcNow,
+            GroupId = groupId
+        };
+
+        await _unitOfWork.PaymentRepository.InsertAsync(payment);
+        await _unitOfWork.SaveAsync();
+
+
+        await UpdateGroupDebtsAsync(groupId);
+
+        return new OkObjectResult(new
+        {
+            Message = "Pago registrado exitosamente.",
+            PaymentId = payment.Id,
+            Amount = payment.Amount
+        });
+    }
+
     public async Task<IActionResult> GetGroupExpensesAsync(Guid groupId)
     {
         Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
@@ -173,11 +248,12 @@ public class GroupService
         {
             return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
         }
+
         var payments = await _unitOfWork.GroupRepository.GetPaymentsByGroupIdAsync(groupId);
         return new OkObjectResult(payments);
     }
 
-    public async Task<IActionResult> UpdateDebtAsync(Guid groupId)
+    public async Task<IActionResult> GetGroupBalancesAsync(Guid groupId)
     {
         Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
         if (group == null)
@@ -185,53 +261,165 @@ public class GroupService
             return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
         }
 
-        var expenses = await _unitOfWork.GroupRepository.GetExpensesNumByGroupIdAsync(groupId);
-        var payments = await _unitOfWork.GroupRepository.GetPaymentsNumByGroupIdAsync(groupId);
+        var balances = await CalculateGroupBalancesAsync(groupId);
+        return new OkObjectResult(balances);
+    }
 
-        if (expenses <= 0 || payments < 0)
+    private async Task<Dictionary<int, decimal>> CalculateGroupBalancesAsync(Guid groupId)
+    {
+        var expenses = await _unitOfWork.GroupRepository.GetExpensesByGroupIdAsync(groupId);
+        var payments = await _unitOfWork.GroupRepository.GetPaymentsByGroupIdAsync(groupId);
+        var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+
+        var balances = new Dictionary<int, decimal>();
+
+        foreach (var user in group.Users)
         {
-            return new BadRequestObjectResult(new { Message = "Los valores de gasto y pago deben ser positivos." });
+            balances[user.Id] = 0;
         }
-        if (expenses < payments)
+
+        decimal totalExpenses = expenses.Sum(e => e.Amount);
+        decimal sharePerPerson = totalExpenses / group.Users.Count;
+
+        foreach (var user in group.Users)
         {
-            return new BadRequestObjectResult(new { Message = "El pago no puede ser mayor que el gasto." });
+            balances[user.Id] -= sharePerPerson;
         }
-        var debt = await _unitOfWork.GroupRepository.GetDebtByGroupIdAsync(groupId);
-        if (debt == null)
+
+  
+        foreach (var expense in expenses)
         {
-            debt = new Debt
+            if (balances.ContainsKey(expense.UserId))
             {
-                GroupId = groupId,
-                Amount = expenses - payments,
-                CreatedAt = DateTime.UtcNow
-            };
-            await _unitOfWork.DebtRepository.InsertAsync(debt);
+                balances[expense.UserId] += expense.Amount;
+            }
         }
-        else
+
+ 
+        foreach (var payment in payments)
         {
-            debt.Amount += expenses - payments;
-            _unitOfWork.DebtRepository.Update(debt);
+            if (balances.ContainsKey(payment.PayerId))
+            {
+                balances[payment.PayerId] -= payment.Amount;
+            }
+            if (balances.ContainsKey(payment.ReceiverId))
+            {
+                balances[payment.ReceiverId] += payment.Amount;
+            }
+        }
+
+        return balances;
+    }
+
+    private async Task UpdateGroupDebtsAsync(Guid groupId)
+    {
+        var balances = await CalculateGroupBalancesAsync(groupId);
+
+        await _unitOfWork.DebtRepository.DeleteByGroupIdAsync(groupId);
+
+        var debtors = balances.Where(b => b.Value < 0).ToList();
+        var creditors = balances.Where(b => b.Value > 0).ToList();
+
+        foreach (var debtor in debtors)
+        {
+            decimal debtAmount = Math.Abs(debtor.Value);
+
+            foreach (var creditor in creditors)
+            {
+                if (debtAmount <= 0 || creditor.Value <= 0) continue;
+
+                decimal paymentAmount = Math.Min(debtAmount, creditor.Value);
+
+                var debt = new Debt
+                {
+                    GroupId = groupId,
+                    DebtorId = debtor.Key,
+                    CreditorId = creditor.Key,
+                    Amount = paymentAmount,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                await _unitOfWork.DebtRepository.InsertAsync(debt);
+
+                debtAmount -= paymentAmount;
+                balances[creditor.Key] -= paymentAmount;
+            }
         }
 
         await _unitOfWork.SaveAsync();
-
-        return new OkObjectResult(new
-        {
-            Message = "Deuda actualizada exitosamente.",
-            DebtId = debt.Id,
-            Amount = debt.Amount
-        });
     }
 
+    public async Task<IActionResult> GetGroupDebtsAsync(Guid groupId)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+
+        var debts = await _unitOfWork.DebtRepository.GetDebtsByGroupIdAsync(groupId);
+        return new OkObjectResult(debts);
+    }
+
+    public async Task<IActionResult> GetGroupSummaryAsync(Guid groupId)
+    {
+        Group group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(groupId);
+        if (group == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Grupo no encontrado" });
+        }
+
+        var expenses = await _unitOfWork.GroupRepository.GetExpensesByGroupIdAsync(groupId);
+        var payments = await _unitOfWork.GroupRepository.GetPaymentsByGroupIdAsync(groupId);
+        var balances = await CalculateGroupBalancesAsync(groupId);
+        var debts = await _unitOfWork.DebtRepository.GetDebtsByGroupIdAsync(groupId);
+
+        var summary = new
+        {
+            Group = group,
+            TotalExpenses = expenses.Sum(e => e.Amount),
+            TotalPayments = payments.Sum(p => p.Amount),
+            MemberCount = group.Users.Count,
+            Balances = balances,
+            ActiveDebts = debts.Count,
+            LastActivity = expenses.Concat(payments.Cast<object>())
+                .Max(activity => activity is Expense e ? e.CreatedAt : ((Payment)activity).CreatedAt)
+        };
+
+        return new OkObjectResult(summary);
+    }
+
+    public async Task<IActionResult> DeleteExpenseAsync(Guid expenseId)
+    {
+        var expense = await _unitOfWork.ExpenseRepository.GetByIdAsync(expenseId);
+        if (expense == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Gasto no encontrado" });
+        }
+
+        _unitOfWork.ExpenseRepository.Delete(expense);
+        await _unitOfWork.SaveAsync();
 
 
+        await UpdateGroupDebtsAsync(expense.GroupId);
 
+        return new OkObjectResult(new { Message = "Gasto eliminado exitosamente." });
+    }
 
+    public async Task<IActionResult> DeletePaymentAsync(Guid paymentId)
+    {
+        var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
+        if (payment == null)
+        {
+            return new NotFoundObjectResult(new { Message = "Pago no encontrado" });
+        }
 
+        _unitOfWork.PaymentRepository.Delete(payment);
+        await _unitOfWork.SaveAsync();
 
+ 
+        await UpdateGroupDebtsAsync(payment.GroupId);
 
-
-
-
-
+        return new OkObjectResult(new { Message = "Pago eliminado exitosamente." });
+    }
 }
