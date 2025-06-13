@@ -17,7 +17,6 @@ public class FriendRequestController : Controller
         _friendService = friendService;
     }
 
-    [Authorize]
     [HttpPost("request")]
     public async Task<IActionResult> RequestFriendship([FromBody] FriendRequestDto dto)
     {
@@ -25,7 +24,6 @@ public class FriendRequestController : Controller
         return Ok("Solicitud de amistad enviada con éxito");
     }
 
-    [Authorize]
     [HttpPost("accept")]
     public async Task<IActionResult> AcceptRequest([FromBody] FriendRequestManageDto dto)
     {
@@ -33,7 +31,6 @@ public class FriendRequestController : Controller
         return Ok();
     }
 
-    [Authorize]
     [HttpPost("reject")]
     public async Task <IActionResult> RejectRequest([FromBody] FriendRequestManageDto dto)
     {
@@ -41,7 +38,7 @@ public class FriendRequestController : Controller
         return Ok();
     }
 
-    [Authorize]
+    
     [HttpGet("pending/{userId}")]
     public async Task<IActionResult> GetPendingRequest(int userId)
     {
@@ -49,7 +46,7 @@ public class FriendRequestController : Controller
         return Ok(requests);
     }
 
-    [Authorize]
+    
     [HttpDelete("remove")]
     public async Task<IActionResult> RemoveFriend([FromBody] FriendDeleteDto dto)
     {

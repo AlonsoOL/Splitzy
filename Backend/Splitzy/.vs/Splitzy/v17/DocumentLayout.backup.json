@@ -11,6 +11,10 @@
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\friendscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\database\\friendrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\friendrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\controllers\\groupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -119,10 +123,6 @@
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\repositories\\paymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\database\\friendrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\friendrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|c:\\users\\usuario\\documents\\github\\splitzy\\backend\\splitzy\\splitzy\\database\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEB7E40C-5BC4-4473-B9C1-FD56D6DCD32B}|Splitzy\\Splitzy.csproj|solutionrelative:splitzy\\database\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -166,7 +166,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 204,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -183,7 +183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Program.cs",
               "RelativeDocumentMoniker": "Splitzy\\Program.cs",
@@ -195,8 +195,16 @@
               "IsPinned": true
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "GroupController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\GroupController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\GroupController.cs",
@@ -215,7 +223,7 @@
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\FriendsController.cs",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendsController.cs",
               "RelativeToolTip": "Splitzy\\Controllers\\FriendsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-17T10:34:38.746Z",
               "EditorCaption": ""
@@ -226,16 +234,29 @@
               "Title": "FriendRequestController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendRequestController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\FriendRequestController.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendRequestController.cs",
-              "RelativeToolTip": "Splitzy\\Controllers\\FriendRequestController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAgwDAAAAAcAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\FriendRequestController.cs*",
+              "RelativeToolTip": "Splitzy\\Controllers\\FriendRequestController.cs*",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-19T19:01:29.077Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
+              "Title": "FriendRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\FriendRequest.cs",
+              "RelativeDocumentMoniker": "Splitzy\\Database\\FriendRequest.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\FriendRequest.cs",
+              "RelativeToolTip": "Splitzy\\Database\\FriendRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T08:10:18.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "GroupInvitationController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\GroupInvitationController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\GroupInvitationController.cs",
@@ -248,7 +269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\UserController.cs",
@@ -261,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "Splitzy\\Services\\UserService.cs",
@@ -273,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\User.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\User.cs",
@@ -285,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "GroupService.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\GroupService.cs",
               "RelativeDocumentMoniker": "Splitzy\\Services\\GroupService.cs",
@@ -297,7 +318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "MyDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\MyDbContext.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\MyDbContext.cs",
@@ -309,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "GroupInvitationManageDto.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Models\\GroupInvitationManageDto.cs",
               "RelativeDocumentMoniker": "Splitzy\\Models\\GroupInvitationManageDto.cs",
@@ -321,7 +342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "GroupInvitationRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Models\\GroupInvitationRequestDto.cs",
               "RelativeDocumentMoniker": "Splitzy\\Models\\GroupInvitationRequestDto.cs",
@@ -333,7 +354,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "GroupInvitationDto.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Models\\GroupInvitationDto.cs",
               "RelativeDocumentMoniker": "Splitzy\\Models\\GroupInvitationDto.cs",
@@ -345,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "GroupInvitation.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\GroupInvitation.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\GroupInvitation.cs",
@@ -357,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "FriendServices.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\FriendServices.cs",
               "RelativeDocumentMoniker": "Splitzy\\Services\\FriendServices.cs",
@@ -369,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "SmartSearchService.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Services\\SmartSearchService.cs",
               "RelativeDocumentMoniker": "Splitzy\\Services\\SmartSearchService.cs",
@@ -381,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "WebSocketHandler.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\WebSocketHandler.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\WebSocketHandler.cs",
@@ -393,7 +414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "SmartSearchController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Controllers\\SmartSearchController.cs",
               "RelativeDocumentMoniker": "Splitzy\\Controllers\\SmartSearchController.cs",
@@ -405,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\UnitOfWork.cs",
@@ -417,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Repositories\\UserRepository.cs",
@@ -429,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Group.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Group.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Group.cs",
@@ -441,7 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "GroupRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\GroupRepository.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Repositories\\GroupRepository.cs",
@@ -453,7 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "Repository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\Repository.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Repositories\\Repository.cs",
@@ -465,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "ExpenseRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\ExpenseRepository.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Repositories\\ExpenseRepository.cs",
@@ -477,7 +498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "DebtRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\DebtRepository.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Repositories\\DebtRepository.cs",
@@ -489,7 +510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "Payment.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Payment.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Payment.cs",
@@ -501,7 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "Debt.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Debt.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Debt.cs",
@@ -513,7 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "Expense.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Expense.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Expense.cs",
@@ -525,7 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "PaymentRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\Repositories\\PaymentRepository.cs",
               "RelativeDocumentMoniker": "Splitzy\\Database\\Repositories\\PaymentRepository.cs",
@@ -534,18 +555,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-09T10:30:05.647Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "FriendRequest.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\FriendRequest.cs",
-              "RelativeDocumentMoniker": "Splitzy\\Database\\FriendRequest.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\Splitzy\\Backend\\Splitzy\\Splitzy\\Database\\FriendRequest.cs",
-              "RelativeToolTip": "Splitzy\\Database\\FriendRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T08:10:18.519Z"
             },
             {
               "$type": "Document",
