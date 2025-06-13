@@ -418,3 +418,4 @@ C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8
 C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Usuario\Documents\GitHub\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+C:\Users\alons\Documents\2_DAW\proyecto_clase\Splitzy\Backend\Splitzy\Splitzy\bin\Debug\net8.0\wwwroot\Images\defaultgroup.jpg

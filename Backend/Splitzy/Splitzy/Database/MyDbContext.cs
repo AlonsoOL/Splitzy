@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace Splitzy.Database;
 
