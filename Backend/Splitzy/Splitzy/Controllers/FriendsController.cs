@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Splitzy.Database;
 using Splitzy.Services;
@@ -20,6 +21,7 @@ public class FriendsController : Controller
         _smartSearchService = smartSearchService;
     }
 
+    
     [HttpGet("friends/{userId}")]
     public async Task<IActionResult> GetFriends(int userId)
     {
@@ -37,6 +39,7 @@ public class FriendsController : Controller
         {
             Id = f.FriendId,
             Name = f.Friend.Name,
+            Email = f.Friend.Email,
             ProfilePicture = f.Friend.ImageUrl
         });
 
@@ -44,7 +47,7 @@ public class FriendsController : Controller
     }
 
     [HttpGet("GetAllUsers")]
-    public ActionResult<IEnumerable<User>> Search([FromQuery] string? query)
+    public ActionResult<IEnumerable<User>> Search([FromQuery] string? query, [FromQuery] int userId)
     {
         var (users, totalPages) = _smartSearchService.Search(query);
 
@@ -53,6 +56,13 @@ public class FriendsController : Controller
             return NotFound("El usuario no se ha podido encontrar");
         }
 
-        return Ok(users);
+        var friends = _dbContext.UserFriends
+        .Where(f => (f.UserId == userId || f.FriendId == userId))
+        .Select(f => f.UserId == userId ? f.FriendId : f.UserId)
+        .ToList();
+
+        var filteredUsers = users.Where(u => u.Id != userId && !friends.Contains(u.Id)).ToList();
+
+        return Ok(filteredUsers);
     }
 }

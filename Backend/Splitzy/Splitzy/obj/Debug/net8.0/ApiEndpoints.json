@@ -174,6 +174,11 @@
         "Name": "query",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -187,6 +192,392 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "AddExpenseToGroup",
+    "RelativePath": "api/Group/AddExpenseToGroup/{groupId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Splitzy.Controllers.AddExpenseRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "AddMemberToGroup",
+    "RelativePath": "api/Group/AddMemberToGroup/{groupId}/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "AddPaymentToGroup",
+    "RelativePath": "api/Group/AddPaymentToGroup/{groupId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Splitzy.Controllers.AddPaymentRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "CreateGroup",
+    "RelativePath": "api/Group/CreateGroup",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ImageUrl",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "DeleteExpense",
+    "RelativePath": "api/Group/DeleteExpense/{expenseId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "expenseId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "DeleteGroup",
+    "RelativePath": "api/Group/DeleteGroup/{groupId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "DeletePayment",
+    "RelativePath": "api/Group/DeletePayment/{paymentId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetExpensesByGroupId",
+    "RelativePath": "api/Group/GetExpensesByGroupId/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupById",
+    "RelativePath": "api/Group/GetGroup/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupBalances",
+    "RelativePath": "api/Group/GetGroupBalances/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupDebts",
+    "RelativePath": "api/Group/GetGroupDebts/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupMembers",
+    "RelativePath": "api/Group/GetGroupMembers/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroups",
+    "RelativePath": "api/Group/GetGroups",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupsOfUser",
+    "RelativePath": "api/Group/GetGroupsOfUser/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetGroupSummary",
+    "RelativePath": "api/Group/GetGroupSummary/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "GetPaymentsByGroupId",
+    "RelativePath": "api/Group/GetPaymentsByGroupId/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "RemoveMemberFromGroup",
+    "RelativePath": "api/Group/RemoveMemberFromGroup/{groupId}/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupController",
+    "Method": "UpdateGroup",
+    "RelativePath": "api/Group/UpdateGroup/{groupId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Splitzy.Controllers.UpdateGroupRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "AcceptInvitation",
+    "RelativePath": "api/GroupInvitation/accept",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.GroupInvitationManageDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "SendGroupInvitation",
+    "RelativePath": "api/GroupInvitation/invite",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.GroupInvitationRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "GetPendingInvitations",
+    "RelativePath": "api/GroupInvitation/pending/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.GroupInvitationController",
+    "Method": "RejectInvitation",
+    "RelativePath": "api/GroupInvitation/reject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Splitzy.Models.GroupInvitationManageDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "RetroKits.Controllers.SmartSearchController",
@@ -258,7 +649,7 @@
   {
     "ContainingType": "Splitzy.Controllers.UserController",
     "Method": "GetCurrentUser",
-    "RelativePath": "api/User/GetCurrentUser",
+    "RelativePath": "api/User/GetCurrentUser/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -266,7 +657,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -283,6 +674,22 @@
   },
   {
     "ContainingType": "Splitzy.Controllers.UserController",
+    "Method": "GetUserRecentActivity",
+    "RelativePath": "api/User/RecentActivity/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Splitzy.Controllers.UserController",
     "Method": "UpdateAsync",
     "RelativePath": "api/User/Update_User",
     "HttpMethod": "PUT",
@@ -290,22 +697,42 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "user",
-        "Type": "Splitzy.Database.User",
-        "IsRequired": true
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Password",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Address",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Phone",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "ImageUrl",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Splitzy.Database.User",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Splitzy.Controllers.UserController",

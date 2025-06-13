@@ -38,6 +38,7 @@ public class FriendRequestController : Controller
         return Ok();
     }
 
+    
     [HttpGet("pending/{userId}")]
     public async Task<IActionResult> GetPendingRequest(int userId)
     {
@@ -45,6 +46,7 @@ public class FriendRequestController : Controller
         return Ok(requests);
     }
 
+    
     [HttpDelete("remove")]
     public async Task<IActionResult> RemoveFriend([FromBody] FriendDeleteDto dto)
     {

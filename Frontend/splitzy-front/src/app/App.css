@@ -2,6 +2,10 @@
   outline: 1px solid red;
 } */
 
+.DialogOverlay {
+	background-color: black;
+}
+
 #root {
   width: 100%;
   /* margin: 0 auto;

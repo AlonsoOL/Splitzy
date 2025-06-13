@@ -30,6 +30,11 @@ Trabajos hechos por Alonso:
 26/05/2025 - 4º intento de despliegue de la web, usé el nuevo back corregido para intetar que funcionase
 27/05/2025 - 5º intento de despliegue de la web, cree una instancia nueva y volví a configurarla desde 0. El back recive solicitudes pero no las devuelve
 28/05/2025 - 6º intento de despliegue de la web, continúo intentando desplegar el back y he conseguido desplegar el front y poner una dirección dns y su certificado para usar HTTPS
+29/05/2025 - Cambios generales en la web para que se vea más bonito
+02/05/2025 - Cambios en algunas rutas para ir implementando la centralización de los endpoints
+03/05/2025 - 7º intento de espliegue de la web, esta vez todo en instancias distintas
+04/05/2025 - 8º intento de despliegue intentando ver que es lo que está fallando y añadir además todos los endpoints centralizados y cambios estéticos en la web
+05/05/2025 - 9º intento de despliegue, ya está todo funcional, puedo logearme desde el front y me crea el totem. En el futuro podremos gestionar más solicitudes con los endpoints centralizados
 
 Trabajos hechos por Iván:
 02/04/2025 - Creación Figma con Objetivos del proyecto, Análisis del público objetivo y Estudio de la competencia
