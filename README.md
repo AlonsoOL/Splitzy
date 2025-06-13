@@ -25,3 +25,7 @@ Link a figma: https://www.figma.com/files/team/1491065268619070677/project/36376
 Video para uso de la aplicación:
 parte Alonso:
 https://youtu.be/2FvJtUaTHoI
+
+Vídeo para uso de la aplicación:
+parte Iván:
+https://drive.google.com/file/d/1SbZs2qAXPEuWu_XKrH2s9o8B3cVdv0Vx/view?usp=drive_link
