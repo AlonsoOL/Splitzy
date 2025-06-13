@@ -42,3 +42,5 @@ Trabajos hechos por Iván:
 12/06/2025 - Gestíon de invitaciones a grupos en tiempo real en Frontend y Backend
 12/06/2025 - Gestíon de creación de gastos, pagos y actualizaciones de deudad en Frontend y Backend
 12/06/2025 - Creación de página de actividad reciente en frontend con lógica de Backend
+13/06/2025 - Header y Footer responsive
+13/06/2025 - Protección con Authorize de los metodos de Grupos y invitaciones a grupos
