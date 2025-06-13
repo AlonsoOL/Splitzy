@@ -19,3 +19,5 @@ https://splitzy.duckdns.org/
 
 Video de avance del proyecto:
 [Enlace a Youtube](https://youtu.be/Sf8EIQ-Qa7Q?si=8mSXn9jmWGfuhWeN)
+
+Link a figma: https://www.figma.com/files/team/1491065268619070677/project/363762722/Team-project?fuid=1299831320213118331
