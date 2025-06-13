@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { type Group, type GroupBalance, groupService } from "@/services/groupService"
 import { Separator } from "@/components/ui/separator"
 import { Link } from "react-router-dom"
+import { API_BASE_URL } from "@/config"
 
 interface GroupListProps {
   userId: number
@@ -99,7 +100,7 @@ export function GroupList({ userId, refreshSignal }: GroupListProps) {
                 <p className="text-sm font-semibold">{day}</p>
               </div>
               <img
-                src={group.imageUrl || "/placeholder.svg?height=40&width=40"}
+                src={`${API_BASE_URL}${group.imageUrl}`}
                 className="w-10 h-10 mr-4 rounded-[4px] object-cover"
                 alt={group.name}
               />

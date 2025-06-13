@@ -183,7 +183,7 @@ export function GroupDetailPage() {
             </Link>
             <div className="flex items-center gap-4">
               <img
-                src={group.imageUrl || "/placeholder.svg?height=60&width=60"}
+                src={`${API_BASE_URL}${group.imageUrl}`}
                 className="w-15 h-15 rounded-lg object-cover"
                 alt={group.name}
               />

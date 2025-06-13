@@ -45,7 +45,7 @@ namespace Splitzy.Controllers
 
         [Authorize]
         [HttpPost("CreateGroup")]
-        public async Task<IActionResult> CreateGroup([FromBody] CreateGroupRequest request)
+        public async Task<IActionResult> CreateGroup([FromForm] CreateGroupRequest request)
         {
             if (request == null || string.IsNullOrEmpty(request.Name))
             {
@@ -255,7 +255,7 @@ namespace Splitzy.Controllers
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ImageUrl { get; set; }
+        public IFormFile? ImageUrl { get; set; }
     }
 
     public class UpdateGroupRequest

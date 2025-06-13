@@ -31,7 +31,7 @@ public class GroupService
         return groups.ToList();
     }
 
-    public async Task<Group> CreateGroupAsync(int userId, string name, string description, string imageUrl)
+    public async Task<Group> CreateGroupAsync(int userId, string name, string description, IFormFile? imageUrl)
     {
         User user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
         if (user == null)
@@ -39,12 +39,31 @@ public class GroupService
             throw new Exception("Usuario no encontrado");
         }
 
+        string imagePath;
+
+        if (imageUrl == null)
+        {
+            imagePath = $"/Images/defaultgroup.jpg";
+        }
+        else
+        {
+            var extension = Path.GetExtension(imageUrl.FileName);
+            var fileName = $"{name}_groupicture{extension}";
+            var filePath = Path.Combine("wwwroot/Images", fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageUrl.CopyToAsync(stream);
+            }
+            imagePath = $"/Images/{fileName}";
+        }
+
         var group = new Group
         {
             Id = Guid.NewGuid(),
             Name = name,
             Description = description,
-            ImageUrl = imageUrl,
+            ImageUrl = imagePath,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
             Users = new List<User> { user },
