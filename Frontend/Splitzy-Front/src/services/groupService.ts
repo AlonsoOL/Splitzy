@@ -57,7 +57,7 @@ export interface CreateGroupRequest {
   userId: number
   name: string
   description: string
-  imageUrl: string
+  imageUrl: File | null
 }
 
 export interface AddExpenseRequest {
@@ -88,7 +88,6 @@ export interface GroupInvitationManageDto {
 const getAuthHeaders = () => {
   const token = localStorage.getItem("user") || sessionStorage.getItem("user")
   return {
-    "Content-Type": "application/json",
     ...(token && { Authorization: `Bearer ${token}` }),
   }
 }
@@ -232,12 +231,12 @@ export const groupService = {
     }
   },
 
-  async createGroup(request: CreateGroupRequest): Promise<Group> {
+  async createGroup(formData: FormData): Promise<Group> {
     try {
       const response = await fetch(`${API_BASE_URL}/api/Group/CreateGroup`, {
         method: "POST",
         headers: getAuthHeaders(),
-        body: JSON.stringify(request),
+        body: formData,
       })
       return await handleResponse(response)
     } catch (error) {

@@ -8,20 +8,24 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import type { CreateGroupRequest } from "@/services/groupService"
+
 
 interface CreateGroupModalProps {
   isOpen: boolean
   onClose: () => void
-  onCreateGroup: (request: CreateGroupRequest) => Promise<void>
+  onCreateGroup: (formData: FormData) => Promise<void>
   userId: number
 }
 
 export function CreateGroupModal({ isOpen, onClose, onCreateGroup, userId }: CreateGroupModalProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+  name: string
+  description: string
+  imageUrl: File | null
+}>({
     name: "",
     description: "",
-    imageUrl: "",
+    imageUrl: null,
   })
   const [isLoading, setIsLoading] = useState(false)
 
@@ -30,14 +34,22 @@ export function CreateGroupModal({ isOpen, onClose, onCreateGroup, userId }: Cre
     if (!formData.name.trim()) return
 
     setIsLoading(true)
+
+    const fd = new FormData()
+    fd.append("userId", userId.toString())
+    fd.append("name", formData.name)
+    fd.append("description", formData.description)
+    if (formData.imageUrl) {
+      const file = formData.imageUrl
+      const extension = file.name.substring(file.name.lastIndexOf('.'))
+      const customFileName = `${formData.name}_groupicture${extension}`
+      const renamedFile = new File([file], customFileName, { type: file.type })
+      fd.append("imageUrl", renamedFile)
+    }
+
     try {
-      await onCreateGroup({
-        userId,
-        name: formData.name,
-        description: formData.description,
-        imageUrl: formData.imageUrl || "/placeholder.svg?height=40&width=40",
-      })
-      setFormData({ name: "", description: "", imageUrl: "" })
+      await onCreateGroup(fd)
+      setFormData({ name: "", description: "", imageUrl: null })
       onClose()
     } catch (error) {
       console.error("Error creating group:", error)
@@ -83,11 +95,13 @@ export function CreateGroupModal({ isOpen, onClose, onCreateGroup, userId }: Cre
               URL de imagen (opcional)
             </Label>
             <Input
+              type="file"
               id="imageUrl"
-              value={formData.imageUrl}
-              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+              onChange={(e) =>{
+                const file = e.target.files?.[0] || null
+                 setFormData({ ...formData, imageUrl: file })}}
               placeholder="https://ejemplo.com/imagen.jpg"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-white file:hidden"
             />
           </div>
           <div className="flex gap-2 pt-4">

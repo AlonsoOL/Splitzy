@@ -14,7 +14,7 @@ import { API_BASE_URL } from "@/config"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { Link } from "react-router-dom"
 import { CreateGroupModal } from "@/components/CreateGroupModal"
-import { groupService, type CreateGroupRequest } from "@/services/groupService"
+import { groupService } from "@/services/groupService"
 import { GroupList } from "@/components/GroupList"
 
 interface JwtPayload {
@@ -181,9 +181,9 @@ function MenuUser() {
     }
   }
 
-  const handleCreateGroup = async (request: CreateGroupRequest) => {
+  const handleCreateGroup = async (formData: FormData) => {
     try {
-      await groupService.createGroup(request)
+      await groupService.createGroup(formData)
       setRefreshGroupList((prev) => !prev)
     } catch (error) {
       console.error("Error creating group:", error)

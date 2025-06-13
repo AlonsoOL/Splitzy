@@ -2,6 +2,13 @@ import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 import { API_BASE_URL, GETALLUSERS } from "@/config"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
+import { Link } from "react-router-dom"
+import { jwtDecode } from "jwt-decode"
+
+interface JwtPayload {
+  id: number
+}
 
 interface User {
     id: number,
@@ -25,11 +32,21 @@ export function AddFriendModal({
 }: AddFriendModalProps){
     const[searchTerm, setSearchTerm] = useState("")
     const [users, setUsers] = useState<User[]>([])
+    const token = localStorage.getItem("user") || sessionStorage.getItem("user")
+    const [userId, setUserId] = useState<number>(0)
+
+    useEffect(() => {
+        if (token) {
+        const decoded = jwtDecode<JwtPayload>(token)
+        setUserId(decoded.id)
+        }
+    }, [])
 
     useEffect(() => {
         if(isOpen){
+            console.log(userId)
             document.body.style.overflow = "hidden"
-            fetch(GETALLUSERS)
+            fetch(`${GETALLUSERS}/?userId=${userId}`)
             .then((res) => res.json()
             .then((data) =>setUsers(data.filter((u: User) => u.id !== currentUserId ))))
         }
@@ -64,7 +81,23 @@ export function AddFriendModal({
                                         <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
                                 </div>
-                                <span className="w-1/3! sr-only xl:not-sr-only lg:not-sr-only md:not-sr-only"><a href={`/user-name`}>{user.name}</a></span>
+                                <div className="w-1/3! cursor-pointer sr-only xl:not-sr-only lg:not-sr-only md:not-sr-only">
+                                <HoverCard>
+                                    <HoverCardTrigger>
+                                        <span className="w-1/3! sr-only xl:not-sr-only lg:not-sr-only md:not-sr-only">{user.name}</span>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent className="bg-[#262626] space-y-3">
+                                        <div className="flex flex-row text-white items-center">
+                                            <img src={`${API_BASE_URL}${user.imageUrl}`} className="w-10 h-10 mr-4 rounded-full space-y2"/>
+                                            <div className="flex flex-col">
+                                                <Link to={`/user-profile/${user.id}`}><strong>@{user.name}</strong></Link>
+                                                <span className="text-sm text-gray-400">{user.email}</span>
+                                            </div>
+                                        </div>
+                                        <div className="text-white">Aquí puede ir una futura descripción corta</div>
+                                    </HoverCardContent>
+                                </HoverCard>
+                                </div>
                                 <span className="w-1/3! not-sr-only">{user.email}</span>
                                 <Button onClick={() => onSendRequest(user.id)}>Enviar solicitud</Button>
                             </div>
