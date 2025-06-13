@@ -35,7 +35,7 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
-
+    [Authorize]
     [HttpGet("GetCurrentUser/{id}")]
     public async Task<ActionResult<int>>GetCurrentUser(int id) 
     {
@@ -69,6 +69,7 @@ public class UserController : ControllerBase
         return Ok(await _service.UpdateRole(userRole));
     }
 
+    [Authorize]
     [HttpGet("RecentActivity/{userId}")]
     public async Task<IActionResult> GetUserRecentActivity(int userId)
     {
@@ -83,7 +84,7 @@ public class UserController : ControllerBase
         }
     }
 
-
+    [Authorize]
     [HttpDelete("Delete_User/{id}")]
     public async Task<ActionResult> DeleteAsyncUser(int id)
     {

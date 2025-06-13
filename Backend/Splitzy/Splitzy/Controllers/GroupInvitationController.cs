@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Splitzy.Models;
 using Splitzy.Services;
@@ -16,6 +17,7 @@ namespace Splitzy.Controllers
             _groupService = groupService;
         }
 
+        [Authorize]
         [HttpPost("invite")]
         public async Task<IActionResult> SendGroupInvitation([FromBody] GroupInvitationRequestDto dto)
         {
@@ -30,6 +32,7 @@ namespace Splitzy.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("accept")]
         public async Task<IActionResult> AcceptInvitation([FromBody] GroupInvitationManageDto dto)
         {
@@ -44,6 +47,7 @@ namespace Splitzy.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("reject")]
         public async Task<IActionResult> RejectInvitation([FromBody] GroupInvitationManageDto dto)
         {
@@ -58,6 +62,7 @@ namespace Splitzy.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("pending/{userId}")]
         public async Task<IActionResult> GetPendingInvitations(int userId)
         {

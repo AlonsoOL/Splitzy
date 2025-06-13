@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Splitzy.Database;
 using Splitzy.Services;
@@ -18,6 +19,7 @@ namespace Splitzy.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet("GetGroups")]
         public async Task<IActionResult> GetGroups()
         {
@@ -29,6 +31,7 @@ namespace Splitzy.Controllers
             return Ok(groups);
         }
 
+        [Authorize]
         [HttpGet("GetGroup/{groupId}")]
         public async Task<IActionResult> GetGroupById(Guid groupId)
         {
@@ -40,6 +43,7 @@ namespace Splitzy.Controllers
             return Ok(group);
         }
 
+        [Authorize]
         [HttpPost("CreateGroup")]
         public async Task<IActionResult> CreateGroup([FromBody] CreateGroupRequest request)
         {
@@ -59,6 +63,7 @@ namespace Splitzy.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("UpdateGroup/{groupId}")]
         public async Task<IActionResult> UpdateGroup(Guid groupId, [FromBody] UpdateGroupRequest request)
         {
@@ -86,6 +91,7 @@ namespace Splitzy.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("DeleteGroup/{groupId}")]
         public async Task<IActionResult> DeleteGroup(Guid groupId)
         {
@@ -97,7 +103,7 @@ namespace Splitzy.Controllers
             return NoContent();
         }
 
-
+        [Authorize]
         [HttpPost("AddMemberToGroup/{groupId}/{userId}")]
         public async Task<IActionResult> AddMemberToGroup(Guid groupId, int userId)
         {
@@ -110,6 +116,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpDelete("RemoveMemberFromGroup/{groupId}/{userId}")]
         public async Task<IActionResult> RemoveMemberFromGroup(Guid groupId, int userId)
         {
@@ -122,6 +129,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetGroupMembers/{groupId}")]
         public async Task<IActionResult> GetGroupMembers(Guid groupId)
         {
@@ -140,6 +148,7 @@ namespace Splitzy.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("GetGroupsOfUser/{userId}")]
         public async Task<IActionResult> GetGroupsOfUser(int userId)
         {
@@ -152,7 +161,8 @@ namespace Splitzy.Controllers
             return result;
         }
 
-      
+
+        [Authorize]
         [HttpPost("AddExpenseToGroup/{groupId}")]
         public async Task<IActionResult> AddExpenseToGroup(Guid groupId, [FromBody] AddExpenseRequest request)
         {
@@ -165,6 +175,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetExpensesByGroupId/{groupId}")]
         public async Task<IActionResult> GetExpensesByGroupId(Guid groupId)
         {
@@ -172,6 +183,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpDelete("DeleteExpense/{expenseId}")]
         public async Task<IActionResult> DeleteExpense(Guid expenseId)
         {
@@ -179,6 +191,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpPost("AddPaymentToGroup/{groupId}")]
         public async Task<IActionResult> AddPaymentToGroup(Guid groupId, [FromBody] AddPaymentRequest request)
         {
@@ -196,6 +209,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetPaymentsByGroupId/{groupId}")]
         public async Task<IActionResult> GetPaymentsByGroupId(Guid groupId)
         {
@@ -203,6 +217,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpDelete("DeletePayment/{paymentId}")]
         public async Task<IActionResult> DeletePayment(Guid paymentId)
         {
@@ -210,6 +225,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetGroupBalances/{groupId}")]
         public async Task<IActionResult> GetGroupBalances(Guid groupId)
         {
@@ -217,6 +233,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetGroupDebts/{groupId}")]
         public async Task<IActionResult> GetGroupDebts(Guid groupId)
         {
@@ -224,6 +241,7 @@ namespace Splitzy.Controllers
             return result;
         }
 
+        [Authorize]
         [HttpGet("GetGroupSummary/{groupId}")]
         public async Task<IActionResult> GetGroupSummary(Guid groupId)
         {

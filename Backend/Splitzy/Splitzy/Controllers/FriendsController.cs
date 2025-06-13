@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Splitzy.Database;
 using Splitzy.Services;
@@ -20,6 +21,8 @@ public class FriendsController : Controller
         _smartSearchService = smartSearchService;
     }
 
+    
+    [Authorize]
     [HttpGet("friends/{userId}")]
     public async Task<IActionResult> GetFriends(int userId)
     {
@@ -44,6 +47,7 @@ public class FriendsController : Controller
         return Ok(friends);
     }
 
+    [Authorize]
     [HttpGet("GetAllUsers")]
     public ActionResult<IEnumerable<User>> Search([FromQuery] string? query)
     {
